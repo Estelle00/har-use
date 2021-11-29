@@ -1,0 +1,53 @@
+{
+  "name": "@har/use",
+  "version": "1.0.0",
+  "description": "",
+  "main": "disk/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "dev": "rollup --config rollup.config.js --watch",
+    "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
+    "build:bundle": "rollup --config rollup.config.js",
+    "build": "pnpm clean && pnpm build:bundle && pnpm build:types",
+    "release": "pnpm build && release-it",
+    "prepare": "pnpm build"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.huianrong.com/repository/npm-hosted/"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.16.3",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^9.1.0",
+    "esbuild": "^0.14.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-vue": "^7.20.0",
+    "prettier": "^2.4.1",
+    "release-it": "^14.11.8",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.60.1",
+    "rollup-plugin-esbuild": "^4.7.2",
+    "typescript": "4.5.2",
+    "vue": "^3.2.22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@192.168.3.199:10022/frontend/har-use.git"
+  },
+  "author": "liubingwen",
+  "license": "ISC",
+  "release-it": {
+    "git": {
+      "tag": false,
+      "commitMessage": "release: @har/use ${version}"
+    }
+  }
+}
