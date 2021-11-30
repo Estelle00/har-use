@@ -12,7 +12,7 @@ export default function useRequestImplement<TData, TParams extends any[]>(
   const serviceRef = ref<Service<TData, TParams>>(service);
   const fetchInstance = useFetch(serviceRef, fetchOptions, plugins);
 
-  const { state, refresh, refreshAsync, run, runAsync } = fetchInstance;
+  const { state, refresh, refreshAsync, run, runAsync, mutate } = fetchInstance;
   onMounted(() => {
     if (!manual) {
       const params = state.params || [];
@@ -31,5 +31,6 @@ export default function useRequestImplement<TData, TParams extends any[]>(
     refreshAsync,
     run,
     runAsync,
+    mutate,
   };
 }

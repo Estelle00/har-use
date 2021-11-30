@@ -60,6 +60,7 @@ export interface FetchResult<TData, TParams extends any[]> {
   runAsync: (...params: TParams) => Promise<TData>;
   cancel: () => void;
   setState: (s: PartialState<TData, TParams>) => void;
+  mutate: (data: TData | ((oldData?: TData) => TData | undefined)) => void;
 }
 
 export type Plugin<TData, TParams extends any[]> = (
