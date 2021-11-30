@@ -2,7 +2,7 @@ import { Options, Service, Plugin } from "./types";
 import { filterObjectKeys } from "./utils";
 import { onMounted, ref, onUnmounted } from "vue";
 import useFetch from "./useFetch";
-export default function useRequestImplement<TData, TParams extends unknown[]>(
+export default function useRequestImplement<TData, TParams extends any[]>(
   service: Service<TData, TParams>,
   options: Options<TData, TParams> = {},
   plugins: Plugin<TData, TParams>[] = []

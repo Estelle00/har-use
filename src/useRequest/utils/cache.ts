@@ -1,19 +1,13 @@
 type Timer = ReturnType<typeof setTimeout>;
 export type CacheKey = string | number;
 type CacheValue = {
-  data: unknown;
+  data: any;
   params: any;
   timer: Timer | undefined;
   time: number;
 };
 const cache = new Map<CacheKey, CacheValue>();
-
-export function setCache(
-  key: CacheKey,
-  cacheTime: number,
-  data: unknown,
-  params: unknown[]
-) {
+function setCache(key: CacheKey, cacheTime: number, data: any, params: any[]) {
   const currentCache = cache.get(key);
   if (currentCache?.timer) {
     clearTimeout(currentCache.timer);
@@ -31,6 +25,8 @@ export function setCache(
     time: Date.now(),
   });
 }
-export function getCache(key: CacheKey) {
+function getCache(key: CacheKey) {
   return cache.get(key);
 }
+
+export { setCache, getCache };

@@ -1,5 +1,5 @@
 export function filterObjectKeys(
-  data: Record<string, unknown>,
+  data: Record<string, any>,
   keys: string | string[]
 ) {
   if (typeof keys === "string") {
@@ -10,5 +10,5 @@ export function filterObjectKeys(
       newData[key] = data[key];
     }
     return newData;
-  }, {} as Record<string, unknown>);
+  }, {} as Record<string, any>);
 }

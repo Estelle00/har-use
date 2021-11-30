@@ -8,7 +8,7 @@ import {
   Service,
 } from "./types";
 
-function useState<TData, TParams extends unknown[]>(
+function useState<TData, TParams extends any[]>(
   options: Options<TData, TParams> = {}
 ): [
   ShallowReactive<FetchState<TData, TParams>>,
@@ -26,16 +26,16 @@ function useState<TData, TParams extends unknown[]>(
   return [state, setState];
 }
 
-export function usePlugins<TData, TParams extends unknown[]>(
+export function usePlugins<TData, TParams extends any[]>(
   plugins: Plugin<TData, TParams>[],
   instance: FetchResult<TData, TParams>,
   options: Options<TData, TParams>
 ) {
   // 初始化插件
-  const pluginImpls = plugins.map((p) => p(instance, options));
+  const pluginImpls = plugins.map((p) => p(options));
   function runPluginHandler(
     event: keyof PluginReturn<TData, TParams>,
-    ...rest: unknown[]
+    ...rest: any[]
   ) {
     const r = pluginImpls
       .map((i) => {
@@ -45,10 +45,11 @@ export function usePlugins<TData, TParams extends unknown[]>(
       .filter(Boolean);
     return Object.assign({}, ...r);
   }
+  runPluginHandler("onInit", instance);
   return runPluginHandler;
 }
 
-export default function useFetch<TData, TParams extends unknown[]>(
+export default function useFetch<TData, TParams extends any[]>(
   serviceRef: Ref<Service<TData, TParams>>,
   options: Options<TData, TParams>,
   plugins: Plugin<TData, TParams>[]
@@ -63,6 +64,7 @@ export default function useFetch<TData, TParams extends unknown[]>(
     refreshAsync,
     cancel,
     setState,
+    mutate,
   };
 
   // 初始化插件
@@ -73,7 +75,7 @@ export default function useFetch<TData, TParams extends unknown[]>(
     const {
       stopNow = false,
       returnNow = false,
-      ...state
+      ...others
     } = runPluginHandler("onBefore", params);
     if (stopNow) {
       return new Promise(() => {});
@@ -81,10 +83,10 @@ export default function useFetch<TData, TParams extends unknown[]>(
     setState({
       loading: true,
       params,
-      ...state,
+      ...others,
     });
     if (returnNow) {
-      return state.data;
+      return others.data;
     }
     options.onBefore?.(params);
     try {
@@ -145,5 +147,13 @@ export default function useFetch<TData, TParams extends unknown[]>(
     runPluginHandler("onCancel");
   }
   // 直接修改data；
+  function mutate(data: TData | ((oldData?: TData) => TData | undefined)) {
+    // @ts-ignore
+    const targetData = typeof data === "function" ? data(state.data) : data;
+    runPluginHandler("onMutate", targetData, state.params);
+    setState({
+      data: targetData,
+    });
+  }
   return result;
 }
