@@ -2,7 +2,7 @@ type Timer = ReturnType<typeof setTimeout>;
 export type CacheKey = string | number;
 type CacheValue = {
   data: unknown;
-  params: unknown;
+  params: any;
   timer: Timer | undefined;
   time: number;
 };
@@ -12,7 +12,7 @@ export function setCache(
   key: CacheKey,
   cacheTime: number,
   data: unknown,
-  params: unknown
+  params: unknown[]
 ) {
   const currentCache = cache.get(key);
   if (currentCache?.timer) {

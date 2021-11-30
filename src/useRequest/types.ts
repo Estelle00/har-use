@@ -12,7 +12,10 @@ export interface Options<TData, TParams extends unknown[]> {
   onError?: (e: Error, params: TParams) => void; // service reject时触发
   onFinally?: (params: TParams, data?: TData | undefined, e?: Error) => void; // service执行完成是触发
 
-  [key: string]: unknown;
+  // cache
+  cacheKey?: string;
+  cacheTime?: number;
+  staleTime?: number;
 }
 
 export interface FetchState<TData, TParams extends unknown[]> {
@@ -41,9 +44,12 @@ export interface PluginReturn<TData, TParams extends unknown[]> {
   onCancel?: () => void;
   onMutate?: (data: TData) => void;
 }
+type PartialState<TData, TParams extends unknown[]> = Partial<
+  FetchState<TData, TParams>
+>;
 export interface StateResult<TData, TParams extends unknown[]> {
   state: ShallowReactive<FetchState<TData, TParams>>;
-  setState: (state: Partial<FetchState<TData, TParams>>) => void;
+  setState: (state: PartialState<TData, TParams>) => void;
 }
 export interface FetchResult<TData, TParams extends unknown[]> {
   state: StateResult<TData, TParams>["state"];
@@ -52,6 +58,7 @@ export interface FetchResult<TData, TParams extends unknown[]> {
   run: (...params: TParams) => void;
   runAsync: (...params: TParams) => Promise<TData>;
   cancel: () => void;
+  setState: (s: PartialState<TData, TParams>) => void;
 }
 
 export type Plugin<TData, TParams extends unknown[]> = (

@@ -20,11 +20,34 @@ function useState<TData, TParams extends unknown[]>(
     data: undefined,
     error: undefined,
   });
-  function setState(s: Partial<FetchState<TData, TParams>> = {}) {
+  function setState(s: Partial<FetchState<TData, TParams>>) {
     Object.assign(state, s);
   }
   return [state, setState];
 }
+
+export function usePlugins<TData, TParams extends unknown[]>(
+  plugins: Plugin<TData, TParams>[],
+  instance: FetchResult<TData, TParams>,
+  options: Options<TData, TParams>
+) {
+  // 初始化插件
+  const pluginImpls = plugins.map((p) => p(instance, options));
+  function runPluginHandler(
+    event: keyof PluginReturn<TData, TParams>,
+    ...rest: unknown[]
+  ) {
+    const r = pluginImpls
+      .map((i) => {
+        // @ts-ignore
+        return i[event]?.(...rest);
+      })
+      .filter(Boolean);
+    return Object.assign({}, ...r);
+  }
+  return runPluginHandler;
+}
+
 export default function useFetch<TData, TParams extends unknown[]>(
   serviceRef: Ref<Service<TData, TParams>>,
   options: Options<TData, TParams>,
@@ -39,17 +62,11 @@ export default function useFetch<TData, TParams extends unknown[]>(
     refresh,
     refreshAsync,
     cancel,
+    setState,
   };
+
   // 初始化插件
-  const pluginImpls = plugins.map((p) => p(result, options));
-  function runPluginHandler(
-    event: keyof PluginReturn<TData, TParams>,
-    ...rest: unknown[]
-  ) {
-    // @ts-ignore
-    const r = pluginImpls.map((i) => i[event]?.(...rest)).filter(Boolean);
-    return Object.assign({}, ...r);
-  }
+  const runPluginHandler = usePlugins(plugins, result, options);
   async function runAsync(...params: TParams): Promise<TData> {
     count.value++;
     const currentCount = toRaw(count.value);
