@@ -46,7 +46,7 @@
   "license": "ISC",
   "release-it": {
     "git": {
-      "tag": false,
+      "tag": true,
       "commitMessage": "release: @har/use ${version}"
     }
   }
