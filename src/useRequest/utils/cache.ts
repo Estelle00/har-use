@@ -7,6 +7,8 @@ type CacheValue = {
   time: number;
 };
 const cache = new Map<CacheKey, CacheValue>();
+export type Listener = (data: any) => void;
+const listeners: Record<string, Listener[]> = {};
 function setCache(key: CacheKey, cacheTime: number, data: any, params: any[]) {
   const currentCache = cache.get(key);
   if (currentCache?.timer) {
@@ -18,6 +20,10 @@ function setCache(key: CacheKey, cacheTime: number, data: any, params: any[]) {
       cache.delete(key);
     }, cacheTime);
   }
+  // trigger listeners
+  if (listeners[key]) {
+    listeners[key].forEach((item) => item(data));
+  }
   cache.set(key, {
     data,
     params,
@@ -28,5 +34,14 @@ function setCache(key: CacheKey, cacheTime: number, data: any, params: any[]) {
 function getCache(key: CacheKey) {
   return cache.get(key);
 }
-
-export { setCache, getCache };
+function subscribe(key: string, listener: Listener) {
+  if (!listeners[key]) {
+    listeners[key] = [];
+  }
+  listeners[key].push(listener);
+  return function unsubscribe() {
+    const index = listeners[key].indexOf(listener);
+    listeners[key].splice(index, 1);
+  };
+}
+export { setCache, getCache, subscribe };
