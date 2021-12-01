@@ -16,6 +16,9 @@ export interface Options<TData, TParams extends any[]> {
   cacheKey?: string;
   cacheTime?: number;
   staleTime?: number;
+
+  // loading delay
+  loadingDelay?: number;
 }
 
 export interface FetchState<TData, TParams extends any[]> {
@@ -27,6 +30,7 @@ export interface FetchState<TData, TParams extends any[]> {
 
 export interface PluginReturn<TData, TParams extends any[]> {
   onInit?: (instance: FetchResult<TData, TParams>) => void;
+  onBeforeRequest?: (instance: FetchResult<TData, TParams>) => void;
   onBefore?: (params: TParams) =>
     | ({
         stopNow?: boolean;

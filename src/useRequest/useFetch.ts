@@ -32,7 +32,11 @@ export function usePlugins<TData, TParams extends any[]>(
   options: Options<TData, TParams>
 ) {
   // 初始化插件
-  const pluginImpls = plugins.map((p) => p(options));
+  const pluginImpls = plugins.map((p) => {
+    const plugin = p(options);
+    plugin.onInit?.(instance);
+    return plugin;
+  });
   function runPluginHandler(
     event: keyof PluginReturn<TData, TParams>,
     ...rest: any[]
@@ -45,7 +49,7 @@ export function usePlugins<TData, TParams extends any[]>(
       .filter(Boolean);
     return Object.assign({}, ...r);
   }
-  runPluginHandler("onInit", instance);
+  // runPluginHandler("onInit", instance);
   return runPluginHandler;
 }
 
@@ -80,16 +84,20 @@ export default function useFetch<TData, TParams extends any[]>(
     if (stopNow) {
       return new Promise(() => {});
     }
-    setState({
-      loading: true,
-      params,
-      ...others,
-    });
     if (returnNow) {
-      return others.data;
+      // runPluginHandler("onSuccess", others.data, params);
+      // runPluginHandler("onFinally", params, others.data, state.error);
+      return Promise.resolve(others.data);
     }
     options.onBefore?.(params);
     try {
+      setState({
+        loading: true,
+        params,
+        ...others,
+      });
+      // 特殊场景使用，不推荐业务插件接入
+      runPluginHandler("onBeforeRequest", result);
       let { servicePromise } = runPluginHandler(
         "onRequest",
         serviceRef.value,
@@ -124,6 +132,7 @@ export default function useFetch<TData, TParams extends any[]>(
     } finally {
       const { data, error } = state;
       options.onFinally?.(params, data, error);
+      runPluginHandler("onFinally", params, data, error);
     }
   }
   function run(...params: TParams) {

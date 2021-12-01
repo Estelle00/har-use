@@ -18,22 +18,22 @@ const useCache: Plugin<any, any[]> = ({
   cacheTime = 5 * 60 * 1000,
   staleTime = 0,
 }) => {
+  if (!cacheKey) {
+    return {};
+  }
   const promiseRef = ref();
   const subscribeRef = ref();
 
   function changeCache(data: any, params: any[]) {
-    if (cacheKey) {
-      const [on, off] = subscribeRef.value;
-      // 先关闭当前实例订阅避免重复触发
-      off();
-      setCache(cacheKey, cacheTime, data, params);
-      on();
-    }
+    const [on, off] = subscribeRef.value;
+    // 先关闭当前实例订阅避免重复触发
+    off();
+    setCache(cacheKey!, cacheTime, data, params);
+    on();
   }
 
   return {
     onInit(instance) {
-      if (!cacheKey) return {};
       const cacheData = getCache(cacheKey);
       if (cacheData) {
         instance.setState({
@@ -50,12 +50,11 @@ const useCache: Plugin<any, any[]> = ({
       subscribeRef.value[0]();
     },
     onBefore() {
-      const cacheData = cacheKey && getCache(cacheKey);
+      const cacheData = getCache(cacheKey);
       if (cacheData) {
         const { data } = cacheData;
         if (staleTime === -1 || Date.now() - cacheData.time <= staleTime) {
           return {
-            loading: false,
             returnNow: true,
             data,
           };
@@ -67,7 +66,6 @@ const useCache: Plugin<any, any[]> = ({
       }
     },
     onRequest(service, args) {
-      if (!cacheKey) return {};
       let servicePromise = getCachePromise(cacheKey);
       if (servicePromise && servicePromise !== promiseRef.value) {
         return {
