@@ -1,7 +1,7 @@
 import { Plugin } from "../types";
 import { ref } from "vue";
 
-const useLoadingDelay: Plugin<any, any[]> = ({ loadingDelay }) => {
+const useLoadingDelay: Plugin<any, any[]> = (instance, { loadingDelay }) => {
   if (!loadingDelay) {
     return {};
   }
@@ -13,8 +13,11 @@ const useLoadingDelay: Plugin<any, any[]> = ({ loadingDelay }) => {
     }
   };
   return {
-    onBeforeRequest(instance) {
+    onBeforeRequest() {
       cancelTimeout();
+      instance.setState({
+        loading: false,
+      });
       timerRef.value = setTimeout(() => {
         instance.setState({
           loading: true,

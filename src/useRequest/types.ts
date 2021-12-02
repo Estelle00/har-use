@@ -31,7 +31,9 @@ export interface FetchState<TData, TParams extends any[]> {
 }
 
 export interface PluginReturn<TData, TParams extends any[]> {
-  onInit?: (instance: FetchResult<TData, TParams>) => void;
+  onInit?: (
+    options: Options<TData, TParams>
+  ) => Partial<FetchState<TData, TParams>> | void;
   onBeforeRequest?: (instance: FetchResult<TData, TParams>) => void;
   onBefore?: (params: TParams) =>
     | ({
@@ -70,6 +72,6 @@ export interface FetchResult<TData, TParams extends any[]> {
 }
 
 export type Plugin<TData, TParams extends any[]> = (
-  // fetchInstance: FetchResult<TData, TParams>,
+  fetchInstance: FetchResult<TData, TParams>,
   options: Options<TData, TParams>
 ) => PluginReturn<TData, TParams>;

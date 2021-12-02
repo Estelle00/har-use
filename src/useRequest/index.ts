@@ -8,8 +8,8 @@ export function useRequest<TData, TParams extends any[]>(
   plugins?: Plugin<TData, TParams>[]
 ) {
   return useRequestImplement<TData, TParams>(service, options, [
-    useLoadingDelay,
     useCache,
+    useLoadingDelay,
     ...(plugins || []),
   ] as Plugin<TData, TParams>[]);
 }

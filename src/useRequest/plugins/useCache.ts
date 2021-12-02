@@ -13,16 +13,29 @@ function useSubscribe(key: string, callback: Listener) {
   }
   return [on, off];
 }
-const useCache: Plugin<any, any[]> = ({
-  cacheKey,
-  cacheTime = 5 * 60 * 1000,
-  staleTime = 0,
-}) => {
+const useCache: Plugin<any, any[]> = (
+  instance,
+  { cacheKey, cacheTime = 5 * 60 * 1000, staleTime = 0 }
+) => {
   if (!cacheKey) {
     return {};
   }
   const promiseRef = ref();
   const subscribeRef = ref();
+  const cacheData = getCache(cacheKey);
+  if (cacheData) {
+    instance.setState({
+      data: cacheData.data,
+      params: cacheData.params,
+    });
+  }
+  // 启动缓存发送变化时同步更新data
+  subscribeRef.value = useSubscribe(cacheKey, (data) => {
+    instance.setState({
+      data,
+    });
+  });
+  subscribeRef.value[0]();
 
   function changeCache(data: any, params: any[]) {
     const [on, off] = subscribeRef.value;
@@ -33,22 +46,6 @@ const useCache: Plugin<any, any[]> = ({
   }
 
   return {
-    onInit(instance) {
-      const cacheData = getCache(cacheKey);
-      if (cacheData) {
-        instance.setState({
-          data: cacheData.data,
-          params: cacheData.params,
-        });
-      }
-      // 启动缓存发送变化时同步更新data
-      subscribeRef.value = useSubscribe(cacheKey, (data) => {
-        instance.setState({
-          data,
-        });
-      });
-      subscribeRef.value[0]();
-    },
     onBefore() {
       const cacheData = getCache(cacheKey);
       if (cacheData) {

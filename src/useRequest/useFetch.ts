@@ -32,11 +32,7 @@ export function usePlugins<TData, TParams extends any[]>(
   options: Options<TData, TParams>
 ) {
   // 初始化插件
-  const pluginImpls = plugins.map((p) => {
-    const plugin = p(options);
-    plugin.onInit?.(instance);
-    return plugin;
-  });
+  const pluginImpls = plugins.map((p) => p(instance, options));
   function runPluginHandler(
     event: keyof PluginReturn<TData, TParams>,
     ...rest: any[]
@@ -97,7 +93,7 @@ export default function useFetch<TData, TParams extends any[]>(
         ...others,
       });
       // 特殊场景使用，不推荐业务插件接入
-      runPluginHandler("onBeforeRequest", result);
+      runPluginHandler("onBeforeRequest");
       let { servicePromise } = runPluginHandler(
         "onRequest",
         serviceRef.value,
