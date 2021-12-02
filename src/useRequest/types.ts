@@ -21,6 +21,9 @@ export interface Options<TData, TParams extends any[]> {
 
   // loading delay
   loadingDelay?: number;
+
+  //refreshDeps
+  refreshDeps?: boolean | ReadonlyArray<any>;
 }
 
 export interface FetchState<TData, TParams extends any[]> {
