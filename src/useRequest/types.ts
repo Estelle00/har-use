@@ -12,6 +12,8 @@ export interface Options<TData, TParams extends any[]> {
   onError?: (e: Error, params: TParams) => void; // service reject时触发
   onFinally?: (params: TParams, data?: TData | undefined, e?: Error) => void; // service执行完成是触发
 
+  defaultParams?: TParams;
+
   // cache
   cacheKey?: string;
   cacheTime?: number;

@@ -15,7 +15,7 @@ export default function useRequestImplement<TData, TParams extends any[]>(
   const { state, refresh, refreshAsync, run, runAsync, mutate } = fetchInstance;
   onMounted(() => {
     if (!manual) {
-      const params = state.params || [];
+      const params = state.params || options.defaultParams || [];
       run(...(params as TParams));
     }
   });
