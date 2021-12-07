@@ -1,4 +1,4 @@
-import {ShallowReactive} from "vue-demi";
+import { ShallowReactive } from "vue-demi";
 
 export type Service<TData, TParams extends any[]> = (
   ...args: TParams
@@ -25,14 +25,12 @@ export interface Options<TData, TParams extends any[]> {
   //refreshDeps
   refreshDeps?: boolean | ReadonlyArray<any>;
 }
-
 export interface FetchState<TData, TParams extends any[]> {
   loading: boolean;
   params?: TParams;
   data?: TData;
   error?: Error;
 }
-
 export interface PluginReturn<TData, TParams extends any[]> {
   onInit?: (
     options: Options<TData, TParams>

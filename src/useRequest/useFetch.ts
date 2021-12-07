@@ -16,7 +16,7 @@ function useState<TData, TParams extends any[]>(
 ] {
   const state = shallowReactive<FetchState<TData, TParams>>({
     loading: !options.manual,
-    params: undefined,
+    params: options.defaultParams || undefined,
     data: undefined,
     error: undefined,
   });
