@@ -1,5 +1,6 @@
 import { Plugin } from "../types";
-import { watch } from "vue";
+import { watch } from "vue-demi";
+
 const useRefreshDeps: Plugin<any, any[]> = (instance, { refreshDeps }) => {
   if (refreshDeps) {
     watch(

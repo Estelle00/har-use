@@ -1,5 +1,5 @@
 import { Plugin } from "../types";
-import { ref } from "vue";
+import { ref } from "vue-demi";
 
 const useLoadingDelay: Plugin<any, any[]> = (instance, { loadingDelay }) => {
   if (!loadingDelay) {

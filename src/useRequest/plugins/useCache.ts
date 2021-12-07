@@ -1,7 +1,7 @@
-import { Plugin } from "../types";
-import { getCache, Listener, setCache, subscribe } from "../utils/cache";
-import { ref } from "vue";
-import { getCachePromise, setCachePromise } from "../utils/cachePromise";
+import {Plugin} from "../types";
+import {getCache, Listener, setCache, subscribe} from "../utils/cache";
+import {ref} from "vue-demi";
+import {getCachePromise, setCachePromise} from "../utils/cachePromise";
 
 function useSubscribe(key: string, callback: Listener) {
   const unsubscribe = ref<() => void>();

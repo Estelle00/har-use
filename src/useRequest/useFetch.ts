@@ -1,7 +1,7 @@
-import { shallowReactive, Ref, ref, toRaw, ShallowReactive } from "vue";
+import { Ref, ref, shallowReactive, ShallowReactive, toRaw } from "vue-demi";
 import {
-  FetchState,
   FetchResult,
+  FetchState,
   Options,
   Plugin,
   PluginReturn,

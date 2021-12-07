@@ -1,4 +1,4 @@
-import { ShallowReactive } from "vue";
+import {ShallowReactive} from "vue-demi";
 
 export type Service<TData, TParams extends any[]> = (
   ...args: TParams

@@ -1,7 +1,8 @@
-import { Options, Service, Plugin } from "./types";
+import { Options, Plugin, Service } from "./types";
 import { filterObjectKeys } from "./utils";
-import { onMounted, ref, onUnmounted } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue-demi";
 import useFetch from "./useFetch";
+
 export default function useRequestImplement<TData, TParams extends any[]>(
   service: Service<TData, TParams>,
   options: Options<TData, TParams> = {},
@@ -22,11 +23,12 @@ export default function useRequestImplement<TData, TParams extends any[]>(
   onUnmounted(() => {
     fetchInstance.cancel();
   });
+  console.log(state);
   return {
-    loading: state.loading,
-    data: state.data,
-    error: state.error,
-    params: state.params || [],
+    loading: computed(() => state.loading),
+    data: computed(() => state.data),
+    error: computed(() => state.error),
+    params: computed(() => state.params),
     refresh,
     refreshAsync,
     run,
