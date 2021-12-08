@@ -1,4 +1,4 @@
-import { ShallowReactive } from "vue-demi";
+import { ComputedRef, Ref, ShallowReactive } from "vue-demi";
 
 export type Service<TData, TParams extends any[]> = (
   ...args: TParams
@@ -28,6 +28,8 @@ export interface Options<TData, TParams extends any[]> {
   // polling
   pollingInterval?: number;
   pollingWhenHidden?: boolean;
+
+  ready?: Ref<boolean> | ComputedRef<boolean>;
 }
 export interface FetchState<TData, TParams extends any[]> {
   loading: boolean;

@@ -1,5 +1,5 @@
 import { defineComponent } from "vue";
-import { useRequest } from "@har/use";
+import { useRequest, useToggle } from "@har/use";
 
 function testService() {
   return new Promise<string>((resolve) => {
@@ -12,11 +12,15 @@ function testService() {
 export default defineComponent({
   name: "App",
   setup() {
-    const { run, data, loading } = useRequest(testService, {});
+    const [ready, toggle] = useToggle(false);
+    const { run, data, loading } = useRequest(testService, {
+      ready,
+    });
     console.log(data, loading);
     return () => (
       <div>
         <button onClick={() => run()}>run</button>
+        <button onClick={() => toggle()}>toggle</button>
         <br />
         {loading.value ? "loading..." : data.value}
       </div>
