@@ -1,3 +1,15 @@
+# [1.1.0](https://192.168.3.199:10022/frontend/har-use/compare/1.0.1...1.1.0) (2021-12-08)
+
+
+### Features
+
+* **useRequest:** 添加错误重试插件 ([9bcf3d7](https://192.168.3.199:10022/frontend/har-use/commits/9bcf3d77e42a5fe118167b60a66c6160474a446c))
+* **useRequest:** 添加防抖 ([d39b10c](https://192.168.3.199:10022/frontend/har-use/commits/d39b10ce4cccc29fdc7820ddb2469199e0512171))
+* **useRequest:** 添加节流插件 ([8e96382](https://192.168.3.199:10022/frontend/har-use/commits/8e96382d519fe75c8dfe782f2ae856fbd252f09f))
+* **useRequest:** 添加轮询插件 ([d26f0c9](https://192.168.3.199:10022/frontend/har-use/commits/d26f0c9699e9f529b215d9f30be9ff518a780c8f))
+* **useRequest:** 添加依赖请求 ([d36d116](https://192.168.3.199:10022/frontend/har-use/commits/d36d116a9f0a6ae86b0f24cccf7d3eca3e27eefd))
+* **useToggle:** 添加组件 ([5d66b57](https://192.168.3.199:10022/frontend/har-use/commits/5d66b5795ed8c3fbccdce894ecbb7b6fed76c7a6))
+
 ## [1.0.1](https://192.168.3.199:10022/frontend/har-use/compare/1.0.0...1.0.1) (2021-12-07)
 
 
