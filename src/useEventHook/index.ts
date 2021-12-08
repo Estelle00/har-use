@@ -1,13 +1,15 @@
-type Listener<T> = (p: T) => void;
-export type EventHookOff<T = any> = (param: T) => void;
-export type EventHookOn<T = any> = (fn: (params: T) => void) => EventHookOff;
-export type EventHookTrigger<T = any> = (params: T) => void;
+type Listener<T> = (p?: T) => void;
+export type EventHookOff = () => void;
+export type EventHookOn<T = unknown> = (
+  fn: (params?: T) => void
+) => EventHookOff;
+export type EventHookTrigger<T = unknown> = (params?: T) => void;
 
-export interface EventHook<T = any> {
+export interface EventHook<T = unknown> {
   on: EventHookOn<T>;
   trigger: EventHookTrigger<T>;
 }
-export function useEventHook<T = any>(): EventHook<T> {
+export function useEventHook<T = unknown>(): EventHook<T> {
   const fns: Listener<T>[] = [];
   function on(fn: Listener<T>) {
     fns.push(fn);
@@ -18,7 +20,7 @@ export function useEventHook<T = any>(): EventHook<T> {
       }
     };
   }
-  function trigger(param: T) {
+  function trigger(param?: T) {
     fns.forEach((fn) => fn(param));
   }
   return {

@@ -1,5 +1,5 @@
-import {defineComponent} from "vue";
-import {useRequest} from "@har/use";
+import { defineComponent } from "vue";
+import { useRequest } from "@har/use";
 
 function testService() {
   return new Promise<string>((resolve) => {
@@ -12,7 +12,7 @@ function testService() {
 export default defineComponent({
   name: "App",
   setup() {
-    const { run, data, loading } = useRequest(testService);
+    const { run, data, loading } = useRequest(testService, {});
     console.log(data, loading);
     return () => (
       <div>

@@ -24,6 +24,10 @@ export interface Options<TData, TParams extends any[]> {
 
   //refreshDeps
   refreshDeps?: boolean | ReadonlyArray<any>;
+
+  // polling
+  pollingInterval?: number;
+  pollingWhenHidden?: boolean;
 }
 export interface FetchState<TData, TParams extends any[]> {
   loading: boolean;
