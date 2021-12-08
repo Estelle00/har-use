@@ -9,7 +9,8 @@ const useReady: Plugin<any, any[]> = (
     () => ready.value,
     (val) => {
       if (!manual && val) {
-        instance.run(...defaultParams);
+        instance.refresh();
+        // instance.run(...(instance.state.params || defaultParams || []));
       }
     }
   );

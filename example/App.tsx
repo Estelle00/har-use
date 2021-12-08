@@ -1,5 +1,6 @@
 import { defineComponent } from "vue";
 import { useRequest, useToggle } from "@har/use";
+import { computed } from "vue-demi";
 
 function testService() {
   return new Promise<string>((resolve) => {
