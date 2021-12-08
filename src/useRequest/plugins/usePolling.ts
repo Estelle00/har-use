@@ -1,40 +1,7 @@
 import { Plugin } from "../types";
-import { onUnmounted, ref, watch } from "vue-demi";
-import {
-  EventHookOff,
-  useEventHook,
-  useEventListener,
-  useGlobalState,
-} from "@har/use";
+import { onUnmounted, ref } from "vue-demi";
+import { createPageVisibility, EventHookOff, useEventHook } from "@har/use";
 const { on, trigger } = useEventHook();
-function isDocumentVisible() {
-  return document.visibilityState !== "hidden";
-}
-function useVisibility() {
-  const visible = useGlobalState(function () {
-    const visible = ref(isDocumentVisible());
-    useEventListener(
-      "visibilitychange",
-      function () {
-        visible.value = isDocumentVisible();
-      },
-      {
-        target: document,
-      }
-    );
-    return visible;
-  });
-  watch(
-    () => visible.value,
-    (val) => {
-      if (val) {
-        trigger();
-      }
-    }
-  );
-  return visible;
-}
-
 const usePolling: Plugin<any, any[]> = (
   instance,
   { pollingInterval, pollingWhenHidden = true }
@@ -51,7 +18,9 @@ const usePolling: Plugin<any, any[]> = (
     }
     off.value?.();
   };
-  const visible = useVisibility();
+  const visible = createPageVisibility((val) => {
+    if (val) trigger();
+  });
   onUnmounted(() => {
     stopPolling();
   });

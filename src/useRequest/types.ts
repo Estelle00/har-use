@@ -1,4 +1,5 @@
 import { ComputedRef, Ref, ShallowReactive } from "vue-demi";
+import type { DebounceSettings } from "lodash";
 
 export type Service<TData, TParams extends any[]> = (
   ...args: TParams
@@ -30,6 +31,15 @@ export interface Options<TData, TParams extends any[]> {
   pollingWhenHidden?: boolean;
 
   ready?: Ref<boolean> | ComputedRef<boolean>;
+
+  // debounce
+  debounceWait?: number;
+  debounceOptions?: DebounceSettings;
+
+  // throttle
+  throttleWait?: number;
+  throttleLeading?: boolean;
+  throttleTrailing?: boolean;
 }
 export interface FetchState<TData, TParams extends any[]> {
   loading: boolean;

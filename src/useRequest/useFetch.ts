@@ -132,7 +132,8 @@ export default function useFetch<TData, TParams extends any[]>(
     }
   }
   function run(...params: TParams) {
-    runAsync(...params).catch((e) => {
+    // 运行插件重写方法
+    result.runAsync(...params).catch((e) => {
       if (!options.onError) {
         console.error(e);
       }

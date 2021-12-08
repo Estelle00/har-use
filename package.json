@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "clean": "rimraf ./dist",
-    "dev": "vite ./example",
+    "dev": "vite ./example --config vite.config.ts",
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
     "build:bundle": "rollup --config rollup.config.js",
     "build": "pnpm clean && pnpm build:bundle && pnpm build:types",

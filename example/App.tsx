@@ -12,9 +12,10 @@ function testService() {
 export default defineComponent({
   name: "App",
   setup() {
-    const [ready, toggle] = useToggle(false);
+    const [ready, toggle] = useToggle(true);
     const { run, data, loading } = useRequest(testService, {
       ready,
+      debounceWait: 2000,
     });
     console.log(data, loading);
     return () => (
