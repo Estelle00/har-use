@@ -39,6 +39,10 @@ export interface Options<TData, TParams extends any[]> {
   // throttle
   throttleWait?: number;
   throttleOptions?: ThrottleSettings;
+
+  // retry
+  retryCount?: number;
+  retryInterval?: number;
 }
 export interface FetchState<TData, TParams extends any[]> {
   loading: boolean;

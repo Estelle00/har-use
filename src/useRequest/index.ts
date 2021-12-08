@@ -6,6 +6,7 @@ import usePolling from "./plugins/usePolling";
 import useReady from "./plugins/useReady";
 import useDebounce from "./plugins/useDebounce";
 import useThrottle from "./plugins/useThrottle";
+import useRetry from "./plugins/useRetry";
 export function useRequest<TData, TParams extends any[]>(
   service: Service<TData, TParams>,
   options?: Options<TData, TParams>,
@@ -18,6 +19,7 @@ export function useRequest<TData, TParams extends any[]>(
     useReady,
     useDebounce,
     useThrottle,
+    useRetry,
     ...(plugins || []),
   ] as Plugin<TData, TParams>[]);
 }

@@ -1,5 +1,5 @@
 import { Plugin } from "../types";
-import { onUnmounted, ref } from "vue-demi";
+import { ref } from "vue-demi";
 import { createPageVisibility, EventHookOff, useEventHook } from "@har/use";
 const { on, trigger } = useEventHook();
 const usePolling: Plugin<any, any[]> = (
@@ -20,9 +20,6 @@ const usePolling: Plugin<any, any[]> = (
   };
   const visible = createPageVisibility((val) => {
     if (val) trigger();
-  });
-  onUnmounted(() => {
-    stopPolling();
   });
   return {
     onBefore: stopPolling,
