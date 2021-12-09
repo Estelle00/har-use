@@ -1,3 +1,10 @@
+# [1.2.0](https://192.168.3.199:10022/frontend/har-use/compare/1.1.0...1.2.0) (2021-12-09)
+
+
+### Features
+
+* **build:** 调整构建工具 ([f14ee0c](https://192.168.3.199:10022/frontend/har-use/commits/f14ee0cfdf7cc291639c2a362bd3f2156e0c4db5))
+
 # [1.1.0](https://192.168.3.199:10022/frontend/har-use/compare/1.0.1...1.1.0) (2021-12-08)
 
 
