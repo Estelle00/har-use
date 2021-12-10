@@ -1,3 +1,10 @@
+## [1.3.2](https://192.168.3.199:10022/frontend/har-use/compare/1.3.1...1.3.2) (2021-12-10)
+
+
+### Bug Fixes
+
+* type Option扩展提示 ([47483cc](https://192.168.3.199:10022/frontend/har-use/commits/47483cc5d0a7a7fa339107f58e8e979aab58c476))
+
 ## [1.3.1](https://192.168.3.199:10022/frontend/har-use/compare/1.3.0...1.3.1) (2021-12-10)
 
 
