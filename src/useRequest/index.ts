@@ -7,6 +7,7 @@ import useReady from "./plugins/useReady";
 import useDebounce from "./plugins/useDebounce";
 import useThrottle from "./plugins/useThrottle";
 import useRetry from "./plugins/useRetry";
+export * from "./types";
 export function useRequest<TData, TParams extends any[]>(
   service: Service<TData, TParams>,
   options?: Options<TData, TParams>,
