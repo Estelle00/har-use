@@ -43,6 +43,7 @@ export interface Options<TData, TParams extends any[]> {
   // retry
   retryCount?: number;
   retryInterval?: number;
+  [key: string]: any;
 }
 export interface FetchState<TData, TParams extends any[]> {
   loading: boolean;
