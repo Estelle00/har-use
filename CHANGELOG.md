@@ -1,3 +1,10 @@
+## [1.3.1](https://192.168.3.199:10022/frontend/har-use/compare/1.3.0...1.3.1) (2021-12-10)
+
+
+### Bug Fixes
+
+* 输出types异常 ([660c199](https://192.168.3.199:10022/frontend/har-use/commits/660c199056ee9f8b0a208c8a0f69559f91b9eaaf))
+
 # [1.3.0](https://192.168.3.199:10022/frontend/har-use/compare/1.2.0...1.3.0) (2021-12-10)
 
 
