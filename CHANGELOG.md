@@ -1,3 +1,15 @@
+# [1.3.0](https://192.168.3.199:10022/frontend/har-use/compare/1.2.0...1.3.0) (2021-12-10)
+
+
+### Bug Fixes
+
+* 输出types异常 ([5413eb3](https://192.168.3.199:10022/frontend/har-use/commits/5413eb385ef86035acb3965114479bde93bce62f))
+
+
+### Features
+
+* **build:** 调整构建工具 ([af7dfcd](https://192.168.3.199:10022/frontend/har-use/commits/af7dfcdb138208065bd9a6abb8d8b4b3d4e9b945))
+
 # [1.2.0](https://192.168.3.199:10022/frontend/har-use/compare/1.1.0...1.2.0) (2021-12-09)
 
 
