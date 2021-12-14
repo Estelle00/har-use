@@ -1,11 +1,16 @@
 import { ComputedRef, Ref, ShallowReactive } from "vue-demi";
 import type { DebounceSettings, ThrottleSettings } from "lodash";
 
-export type Service<TData, TParams extends any[]> = (
+export type Service<TData, TParams extends unknown[]> = (
   ...args: TParams
 ) => Promise<TData>;
+export interface CacheType {
+  cacheKey?: string;
+  cacheTime?: number;
+  staleTime?: number;
+}
 
-export interface Options<TData, TParams extends any[]> {
+export interface Options<TData, TParams> extends CacheType {
   manual?: boolean; // 初始化是否立即执行
 
   onBefore?: (params: TParams) => void; // service 执行前
@@ -14,11 +19,6 @@ export interface Options<TData, TParams extends any[]> {
   onFinally?: (params: TParams, data?: TData | undefined, e?: Error) => void; // service执行完成是触发
 
   defaultParams?: TParams;
-
-  // cache
-  cacheKey?: string;
-  cacheTime?: number;
-  staleTime?: number;
 
   // loading delay
   loadingDelay?: number;
@@ -43,7 +43,6 @@ export interface Options<TData, TParams extends any[]> {
   // retry
   retryCount?: number;
   retryInterval?: number;
-  [key: string]: any;
 }
 export interface FetchState<TData, TParams extends any[]> {
   loading: boolean;

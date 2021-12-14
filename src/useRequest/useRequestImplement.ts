@@ -7,10 +7,10 @@ export default function useRequestImplement<TData, TParams extends any[]>(
   options: Options<TData, TParams> = {},
   plugins: Plugin<TData, TParams>[] = []
 ) {
-  const serviceRef = ref<Service<TData, TParams>>(service);
-  const fetchInstance = useFetch(serviceRef, options, plugins);
+  const serviceRef = ref(service);
 
-  const { state, refresh, refreshAsync, run, runAsync, mutate } = fetchInstance;
+  const { state, refresh, refreshAsync, run, runAsync, mutate, cancel } =
+    useFetch(serviceRef, options, plugins);
   onMounted(() => {
     if (!options.manual) {
       const params = state.params || [];
@@ -18,9 +18,8 @@ export default function useRequestImplement<TData, TParams extends any[]>(
     }
   });
   onUnmounted(() => {
-    fetchInstance.cancel();
+    cancel();
   });
-  console.log(state);
   return {
     loading: computed(() => state.loading),
     data: computed(() => state.data),
@@ -31,5 +30,6 @@ export default function useRequestImplement<TData, TParams extends any[]>(
     run,
     runAsync,
     mutate,
+    cancel,
   };
 }

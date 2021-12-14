@@ -3,9 +3,10 @@ import { defineComponent } from "vue-demi";
 
 function testService() {
   return new Promise<string>((resolve) => {
+    console.log(111);
     setTimeout(() => {
       resolve("success");
-    }, 1000);
+    }, 5000);
   });
 }
 
@@ -15,8 +16,15 @@ export default defineComponent({
     const [ready, toggle] = useToggle(true);
     const { run, data, loading } = useRequest(testService, {
       ready,
-      debounceWait: 2000,
+      cacheKey: "test",
+      staleTime: 200000,
     });
+    const temp1 = useRequest(testService, {
+      ready,
+      cacheKey: "test",
+      staleTime: 200000,
+    });
+    console.log(temp1);
     console.log(data, loading);
     return () => (
       <div>

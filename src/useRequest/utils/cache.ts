@@ -1,6 +1,6 @@
 type Timer = ReturnType<typeof setTimeout>;
 export type CacheKey = string | number;
-type CacheValue = {
+export type CacheValue = {
   data: any;
   params: any;
   timer: Timer | undefined;

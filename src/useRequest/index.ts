@@ -1,7 +1,6 @@
 import { Options, Service, Plugin } from "./types";
 import useRequestImplement from "./useRequestImplement";
 import useLoadingDelay from "./plugins/useLoadingDelay";
-import useCache from "./plugins/useCache";
 import usePolling from "./plugins/usePolling";
 import useReady from "./plugins/useReady";
 import useDebounce from "./plugins/useDebounce";
@@ -14,7 +13,7 @@ export function useRequest<TData, TParams extends any[]>(
   plugins?: Plugin<TData, TParams>[]
 ) {
   return useRequestImplement<TData, TParams>(service, options, [
-    useCache,
+    // useCache,
     useLoadingDelay,
     usePolling,
     useReady,
