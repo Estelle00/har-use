@@ -63,14 +63,14 @@ function useCache<TData, TParams extends unknown[]>(
   setState: (s: Partial<FetchState<TData, TParams>>) => void
 ): [
   () => TData | false | void,
-  (service: Ref<Service<TData, TParams>>, args: TParams) => Promise<TData>,
+  (service: Service<TParams>, args: TParams) => Promise<TData>,
   (data: TData, params: TParams) => void
 ] {
   function getServicePromise(
-    service: Ref<Service<TData, TParams>>,
+    service: Service<TParams>,
     args: TParams
-  ): Promise<TData> {
-    return service.value(...args);
+  ): Promise<any> {
+    return service(...args);
   }
   if (!cacheKey) {
     return [() => {}, getServicePromise, () => {}];
@@ -103,9 +103,9 @@ function useCache<TData, TParams extends unknown[]>(
     return false;
   }
   function onRequest(
-    service: Ref<Service<TData, TParams>>,
+    service: Service<TParams>,
     args: TParams
-  ): Promise<TData> {
+  ): Promise<any> {
     const cachePromise = getCachePromise(cacheKey!);
     if (cachePromise && cachePromise !== promiseRef.value) {
       return cachePromise;
@@ -119,7 +119,7 @@ function useCache<TData, TParams extends unknown[]>(
 }
 
 export default function useFetch<TData, TParams extends any[]>(
-  serviceRef: Ref<Service<TData, TParams>>,
+  service: Service<TParams>,
   options: Options<TData, TParams>,
   plugins: Plugin<TData, TParams>[]
 ): FetchResult<TData, TParams> {
@@ -156,7 +156,6 @@ export default function useFetch<TData, TParams extends any[]>(
     const currentCount = toRaw(count.value);
     const cache = onCacheBefore();
     if (cache) {
-      debugger;
       return Promise.resolve(cache);
     }
     const {
@@ -181,10 +180,15 @@ export default function useFetch<TData, TParams extends any[]>(
       });
       // 特殊场景使用，不推荐业务插件接入
       runPluginHandler("onBeforeRequest");
-      const servicePromise = onCacheRequest(serviceRef, params);
-      const res = await servicePromise;
+      const result = await onCacheRequest(service, params);
+      let res: TData;
       if (currentCount !== count.value) {
         return new Promise(() => {});
+      }
+      if (options.formatResult) {
+        res = options.formatResult(result);
+      } else {
+        res = result;
       }
       setState({
         data: res,

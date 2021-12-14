@@ -8,7 +8,7 @@ import useThrottle from "./plugins/useThrottle";
 import useRetry from "./plugins/useRetry";
 export * from "./types";
 export function useRequest<TData, TParams extends any[]>(
-  service: Service<TData, TParams>,
+  service: Service<TParams>,
   options?: Options<TData, TParams>,
   plugins?: Plugin<TData, TParams>[]
 ) {

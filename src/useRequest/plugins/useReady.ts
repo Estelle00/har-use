@@ -3,7 +3,7 @@ import { ref, watch } from "vue-demi";
 
 const useReady: Plugin<any, any[]> = (
   instance,
-  { ready = ref(true), defaultParams = [], manual }
+  { ready = ref(true), manual }
 ) => {
   watch(
     () => ready.value,

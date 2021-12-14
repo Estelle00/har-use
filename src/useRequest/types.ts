@@ -1,9 +1,9 @@
 import { ComputedRef, Ref, ShallowReactive } from "vue-demi";
 import type { DebounceSettings, ThrottleSettings } from "lodash";
 
-export type Service<TData, TParams extends unknown[]> = (
+export type Service<TParams extends unknown[]> = (
   ...args: TParams
-) => Promise<TData>;
+) => Promise<unknown>;
 export interface CacheType {
   cacheKey?: string;
   cacheTime?: number;
@@ -19,6 +19,8 @@ export interface Options<TData, TParams> extends CacheType {
   onFinally?: (params: TParams, data?: TData | undefined, e?: Error) => void; // service执行完成是触发
 
   defaultParams?: TParams;
+
+  formatResult?: (data: any) => TData;
 
   // loading delay
   loadingDelay?: number;
@@ -44,13 +46,13 @@ export interface Options<TData, TParams> extends CacheType {
   retryCount?: number;
   retryInterval?: number;
 }
-export interface FetchState<TData, TParams extends any[]> {
+export interface FetchState<TData, TParams> {
   loading: boolean;
   params?: TParams;
   data?: TData;
   error?: Error;
 }
-export interface PluginReturn<TData, TParams extends any[]> {
+export interface PluginReturn<TData, TParams extends unknown[]> {
   onInit?: (
     options: Options<TData, TParams>
   ) => Partial<FetchState<TData, TParams>> | void;
@@ -61,26 +63,24 @@ export interface PluginReturn<TData, TParams extends any[]> {
         returnNow?: boolean;
       } & Partial<FetchState<TData, TParams>>)
     | void;
-  onRequest?: (
-    service: Service<TData, TParams>,
-    params: TParams
-  ) => {
-    servicePromise?: Promise<TData>;
-  };
+  // onRequest?: (
+  //   service: Service<TParams>,
+  //   params: TParams
+  // ) => {
+  //   servicePromise?: Promise<TData>;
+  // };
   onSuccess?: (data: TData, params: TParams) => void;
   onError?: (e: Error, params: TParams) => void;
   onFinally?: (params: TParams, data?: TData, e?: Error) => void;
   onCancel?: () => void;
   onMutate?: (data: TData, params: TParams) => void;
 }
-type PartialState<TData, TParams extends any[]> = Partial<
-  FetchState<TData, TParams>
->;
-export interface StateResult<TData, TParams extends any[]> {
+type PartialState<TData, TParams> = Partial<FetchState<TData, TParams>>;
+export interface StateResult<TData, TParams> {
   state: ShallowReactive<FetchState<TData, TParams>>;
   setState: (state: PartialState<TData, TParams>) => void;
 }
-export interface FetchResult<TData, TParams extends any[]> {
+export interface FetchResult<TData, TParams extends unknown[]> {
   state: StateResult<TData, TParams>["state"];
   refresh: () => void;
   refreshAsync: () => Promise<TData>;
@@ -91,7 +91,7 @@ export interface FetchResult<TData, TParams extends any[]> {
   mutate: (data: TData | ((oldData?: TData) => TData | undefined)) => void;
 }
 
-export type Plugin<TData, TParams extends any[]> = (
+export type Plugin<TData, TParams extends unknown[]> = (
   fetchInstance: FetchResult<TData, TParams>,
   options: Options<TData, TParams>
 ) => PluginReturn<TData, TParams>;

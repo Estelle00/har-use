@@ -24,9 +24,6 @@ const useLoadingDelay: Plugin<any, any[]> = (instance, { loadingDelay }) => {
         });
       }, loadingDelay);
     },
-    onBefore() {
-      return { loading: false };
-    },
     onFinally: cancelTimeout,
     onCancel: cancelTimeout,
   };
