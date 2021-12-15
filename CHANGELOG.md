@@ -1,3 +1,15 @@
+# [2.1.0](https://192.168.3.199:10022/frontend/har-use/compare/1.3.2...2.1.0) (2021-12-15)
+
+
+### Bug Fixes
+
+* **useRequest:** onRequest插件模式预缓存插件冲突，移除hooks ([8b18c97](https://192.168.3.199:10022/frontend/har-use/commits/8b18c97d537fd2c607a0b4332e24119894596bbf))
+
+
+### Features
+
+* **useTitle:** 添加标题设置 ([3459f9c](https://192.168.3.199:10022/frontend/har-use/commits/3459f9c7ee66e6a09c6be8a085292c1537354f64))
+
 # [2.0.0](https://192.168.3.199:10022/frontend/har-use/compare/1.3.2...2.0.0) (2021-12-15)
 
 
