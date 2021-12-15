@@ -1,23 +1,21 @@
-import { useEventListener, useGlobalState } from "@har/use";
+import { useEventListener } from "@har/use";
 import { ref, watch } from "vue-demi";
 
 function isDocumentVisible() {
   return document.visibilityState !== "hidden";
 }
+
 export function createPageVisibility(callback: (val: boolean) => void) {
-  const visible = useGlobalState(function () {
-    const visible = ref(isDocumentVisible());
-    useEventListener(
-      "visibilitychange",
-      function () {
-        visible.value = isDocumentVisible();
-      },
-      {
-        target: document,
-      }
-    );
-    return visible;
-  });
+  const visible = ref(isDocumentVisible());
+  useEventListener(
+    "visibilitychange",
+    function () {
+      visible.value = isDocumentVisible();
+    },
+    {
+      target: document,
+    }
+  );
   watch(
     () => visible.value,
     (val) => {
