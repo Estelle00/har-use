@@ -102,10 +102,7 @@ function useCache<TData, TParams extends unknown[]>(
     }
     return false;
   }
-  function onRequest(
-    service: Service<TParams>,
-    args: TParams
-  ): Promise<any> {
+  function onRequest(service: Service<TParams>, args: TParams): Promise<any> {
     const cachePromise = getCachePromise(cacheKey!);
     if (cachePromise && cachePromise !== promiseRef.value) {
       return cachePromise;

@@ -1,4 +1,4 @@
-import { Options, Plugin, Service } from "./types";
+import { Options, Plugin, Service, RequestResult } from "./types";
 import { computed, onMounted, onUnmounted } from "vue-demi";
 import useFetch from "./useFetch";
 
@@ -6,7 +6,7 @@ export default function useRequestImplement<TData, TParams extends any[]>(
   service: Service<TParams>,
   options: Options<TData, TParams> = {},
   plugins: Plugin<TData, TParams>[] = []
-) {
+): RequestResult<TData, TParams> {
   const { state, refresh, refreshAsync, run, runAsync, mutate, cancel } =
     useFetch(service, options, plugins);
   onMounted(() => {

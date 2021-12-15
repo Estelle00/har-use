@@ -45,6 +45,7 @@ export interface Options<TData, TParams> extends CacheType {
   // retry
   retryCount?: number;
   retryInterval?: number;
+  [key: string]: any;
 }
 export interface FetchState<TData, TParams> {
   loading: boolean;
@@ -95,3 +96,11 @@ export type Plugin<TData, TParams extends unknown[]> = (
   fetchInstance: FetchResult<TData, TParams>,
   options: Options<TData, TParams>
 ) => PluginReturn<TData, TParams>;
+
+export interface RequestResult<TData, TParams extends unknown[]>
+  extends Omit<FetchResult<TData, TParams>, "setState" | "state"> {
+  loading: ComputedRef<boolean>;
+  data: ComputedRef<TData | undefined>;
+  params: ComputedRef<TParams | undefined>;
+  error: ComputedRef<Error | undefined>;
+}
