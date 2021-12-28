@@ -1,3 +1,11 @@
+## [2.1.2](https://192.168.3.199:10022/frontend/har-use/compare/2.1.0...2.1.2) (2021-12-28)
+
+
+### Bug Fixes
+
+* 导出useTitle ([d6a41e8](https://192.168.3.199:10022/frontend/har-use/commits/d6a41e83ef457697db67f2668c21963ac854774e))
+* **useRequest:** 非setup中执行bug处理 ([1681084](https://192.168.3.199:10022/frontend/har-use/commits/168108463cfec98c02320c5648f432748a5f40b4))
+
 ## [2.1.1](https://192.168.3.199:10022/frontend/har-use/compare/2.1.0...2.1.1) (2021-12-15)
 
 
