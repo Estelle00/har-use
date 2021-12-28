@@ -1,6 +1,7 @@
 import { Options, Plugin, Service, RequestResult } from "./types";
-import { computed, onMounted, onUnmounted } from "vue-demi";
+import { computed } from "vue-demi";
 import useFetch from "./useFetch";
+import { tryOnMounted, tryOnUnmounted } from "@har/use";
 
 export default function useRequestImplement<TData, TParams extends any[]>(
   service: Service<TParams>,
@@ -9,13 +10,13 @@ export default function useRequestImplement<TData, TParams extends any[]>(
 ): RequestResult<TData, TParams> {
   const { state, refresh, refreshAsync, run, runAsync, mutate, cancel } =
     useFetch(service, options, plugins);
-  onMounted(() => {
-    if (!options.manual) {
+  if (!options.manual) {
+    tryOnMounted(() => {
       const params = state.params || [];
       run(...(params as TParams));
-    }
-  });
-  onUnmounted(() => {
+    });
+  }
+  tryOnUnmounted(() => {
     cancel();
   });
   return {

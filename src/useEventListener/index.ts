@@ -1,5 +1,4 @@
-import { onDeactivated, onUnmounted, Ref, watch } from "vue-demi";
-import { isRef, unref } from "vue";
+import { onDeactivated, onUnmounted, Ref, watch, isRef, unref } from "vue-demi";
 import { onMountedOrActivated } from "@har/use";
 
 type TargetRef = EventTarget | Ref<EventTarget | undefined>;

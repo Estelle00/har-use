@@ -26,7 +26,7 @@ export interface Options<TData, TParams> extends CacheType {
   loadingDelay?: number;
 
   //refreshDeps
-  refreshDeps?: boolean | ReadonlyArray<any>;
+  refreshDeps?: ReadonlyArray<any>;
 
   // polling
   pollingInterval?: number;
