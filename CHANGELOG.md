@@ -1,3 +1,10 @@
+## [2.1.3](https://192.168.3.199:10022/frontend/har-use/compare/2.1.2...2.1.3) (2022-01-06)
+
+
+### Bug Fixes
+
+* type文件输出错误 ([136e393](https://192.168.3.199:10022/frontend/har-use/commits/136e39349aded75bd8f56584bd0e3b4fb763c17d))
+
 ## [2.1.2](https://192.168.3.199:10022/frontend/har-use/compare/2.1.0...2.1.2) (2021-12-28)
 
 
