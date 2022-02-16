@@ -1,6 +1,7 @@
 import { Plugin } from "../types";
 import { ref } from "vue-demi";
-import { createPageVisibility, EventHookOff, useEventHook } from "@har/use";
+import { createPageVisibility } from "../../createPageVisibility";
+import { EventHookOff, useEventHook } from "../../useEventHook";
 const { on, trigger } = useEventHook();
 const usePolling: Plugin<any, any[]> = (
   instance,

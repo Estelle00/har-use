@@ -8,3 +8,6 @@ export * from "./createPageVisibility";
 export * from "./useTitle";
 export * from "./tryOnMounted";
 export * from "./tryOnUnmounted";
+export * from "./useClickAway";
+export * from "./useWindowSize";
+export * from "./tryOnScopeDispose";

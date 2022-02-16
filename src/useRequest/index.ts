@@ -6,6 +6,7 @@ import useReady from "./plugins/useReady";
 import useDebounce from "./plugins/useDebounce";
 import useThrottle from "./plugins/useThrottle";
 import useRetry from "./plugins/useRetry";
+import useRefreshDeps from "./plugins/useRefreshDeps";
 export * from "./types";
 export function useRequest<TData, TParams extends any[]>(
   service: Service<TParams>,
@@ -13,7 +14,7 @@ export function useRequest<TData, TParams extends any[]>(
   plugins?: Plugin<TData, TParams>[]
 ) {
   return useRequestImplement<TData, TParams>(service, options, [
-    // useCache,
+    useRefreshDeps,
     useLoadingDelay,
     usePolling,
     useReady,

@@ -1,8 +1,9 @@
 import { ref, Ref, watch } from "vue-demi";
 import isString from "lodash/isString";
-
 type MayBeRef<T> = T | Ref<T>;
-export function useTitle(newTitle: MayBeRef<string | null | undefined> = null) {
+export function useTitle(
+  newTitle: MayBeRef<string | null | undefined> = null
+): Ref<string | null | undefined> {
   const title = ref(newTitle ?? document.title ?? null);
   watch(
     title,

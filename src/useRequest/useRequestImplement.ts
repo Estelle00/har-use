@@ -1,7 +1,8 @@
 import { Options, Plugin, Service, RequestResult } from "./types";
 import { computed } from "vue-demi";
 import useFetch from "./useFetch";
-import { tryOnMounted, tryOnUnmounted } from "@har/use";
+import { tryOnMounted } from "../tryOnMounted";
+import { tryOnScopeDispose } from "../tryOnScopeDispose";
 
 export default function useRequestImplement<TData, TParams extends any[]>(
   service: Service<TParams>,
@@ -16,9 +17,7 @@ export default function useRequestImplement<TData, TParams extends any[]>(
       run(...(params as TParams));
     });
   }
-  tryOnUnmounted(() => {
-    cancel();
-  });
+  tryOnScopeDispose(cancel);
   return {
     loading: computed(() => state.loading),
     data: computed(() => state.data),

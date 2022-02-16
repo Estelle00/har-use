@@ -1,4 +1,4 @@
-import { useEventListener } from "@har/use";
+import { useEventListener } from "../useEventListener";
 import { ref, watch } from "vue-demi";
 
 function isDocumentVisible() {
