@@ -1,3 +1,15 @@
+# [2.2.0](https://192.168.3.199:10022/frontend/har-use/compare/2.1.2...2.2.0) (2022-02-21)
+
+
+### Bug Fixes
+
+* type文件输出错误 ([136e393](https://192.168.3.199:10022/frontend/har-use/commits/136e39349aded75bd8f56584bd0e3b4fb763c17d))
+
+
+### Features
+
+* add tryOnScopeDispose, useClickAway, useRect, useWindowSize ([1123b35](https://192.168.3.199:10022/frontend/har-use/commits/1123b35ac9c98fc460e150230de51269c9f015ec))
+
 ## [2.1.3](https://192.168.3.199:10022/frontend/har-use/compare/2.1.2...2.1.3) (2022-01-06)
 
 
