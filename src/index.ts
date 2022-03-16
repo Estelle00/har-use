@@ -11,3 +11,4 @@ export * from "./tryOnUnmounted";
 export * from "./useClickAway";
 export * from "./useWindowSize";
 export * from "./tryOnScopeDispose";
+export * from "./useCountDown";
