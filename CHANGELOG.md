@@ -1,3 +1,10 @@
+## [2.2.2](https://192.168.3.199:10022/frontend/har-use/compare/2.2.0...2.2.2) (2022-03-21)
+
+
+### Bug Fixes
+
+* **useCountDown:** 代码逻辑错误 ([5283d96](https://192.168.3.199:10022/frontend/har-use/commits/5283d96de9977a9b2e123eee687ab2efb7724d29))
+
 ## [2.2.1](https://192.168.3.199:10022/frontend/har-use/compare/2.2.0...2.2.1) (2022-03-16)
 
 # [2.2.0](https://192.168.3.199:10022/frontend/har-use/compare/2.1.2...2.2.0) (2022-02-21)
