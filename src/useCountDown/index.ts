@@ -1,6 +1,5 @@
 import { computed, onActivated, ref } from "vue-demi";
 import { onDeactivated } from "vue";
-import { parse } from "ts-jest";
 
 export type CurrentTime = {
   days: number;
@@ -63,16 +62,6 @@ export function useCountDown(options: UseCountDownOptions) {
       options.onFinish?.();
     }
   }
-  function microTick() {
-    rafId = requestAnimationFrame(function () {
-      if (counting) {
-        setRemain(getCurrentRemain());
-        if (remain.value > 0) {
-          microTick();
-        }
-      }
-    });
-  }
   function tick() {
     rafId = requestAnimationFrame(function () {
       if (counting) {
@@ -85,7 +74,7 @@ export function useCountDown(options: UseCountDownOptions) {
           setRemain(getCurrentRemain());
         }
         if (remain.value > 0) {
-          microTick();
+          tick();
         }
       }
     });
@@ -120,5 +109,5 @@ export function useCountDown(options: UseCountDownOptions) {
     pause,
     reset,
     current,
-  };
+  } as const;
 }
