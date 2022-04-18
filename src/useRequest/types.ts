@@ -1,5 +1,5 @@
 import { ComputedRef, Ref, ShallowReactive } from "vue-demi";
-import type { DebounceSettings, ThrottleSettings } from "lodash";
+import type { DebounceSettings, ThrottleSettings } from "lodash-es";
 
 export type Service<TParams extends unknown[]> = (
   ...args: TParams

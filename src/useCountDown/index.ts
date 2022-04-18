@@ -10,9 +10,13 @@ export type CurrentTime = {
   milliseconds: number;
 };
 export type UseCountDownOptions = {
+  // 倒计时时长，单位毫秒
   time: number;
+  // 是否开启毫秒级渲染
   millisecond?: boolean;
+  // 倒计时改变时触发的回调函数
   onChange?: (current: any) => void;
+  // 倒计时结束时触发的回调函数
   onFinish?: () => void;
 };
 
@@ -41,11 +45,13 @@ function isSameSecond(time1: number, time2: number): boolean {
 }
 export function useCountDown(options: UseCountDownOptions) {
   const remain = ref(options.time);
+  // 当前剩余的时间
   const current = computed(() => parseTime(remain.value));
   let endTime: number;
   let counting: boolean;
   let rafId: number;
 
+  // 暂停倒计时
   function pause() {
     counting = false;
     cancelAnimationFrame(rafId);
@@ -71,7 +77,7 @@ export function useCountDown(options: UseCountDownOptions) {
           !isSameSecond(remainRemain, remain.value) ||
           remainRemain === 0
         ) {
-          setRemain(getCurrentRemain());
+          setRemain(remainRemain);
         }
         if (remain.value > 0) {
           tick();
@@ -79,6 +85,7 @@ export function useCountDown(options: UseCountDownOptions) {
       }
     });
   }
+  // 	开始倒计时
   function start() {
     if (!counting) {
       endTime = Date.now() + remain.value;
@@ -86,6 +93,7 @@ export function useCountDown(options: UseCountDownOptions) {
       tick();
     }
   }
+  // 	重置倒计时，支持传入新的倒计时时长
   function reset(totalTime: number = options.time) {
     pause();
     remain.value = totalTime;

@@ -1,7 +1,7 @@
 import { Plugin } from "../types";
-import type { DebouncedFunc } from "lodash";
+import type { DebouncedFunc } from "lodash-es";
 import { ref } from "vue-demi";
-import debounce from "lodash/debounce";
+import debounce from "lodash-es/debounce";
 
 const useDebounce: Plugin<any, any[]> = (
   instance,
