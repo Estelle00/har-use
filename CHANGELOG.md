@@ -1,3 +1,10 @@
+## [2.2.3](https://git.huianrong.com/frontend/har-use/compare/2.2.2...2.2.3) (2022-04-27)
+
+
+### Bug Fixes
+
+* **useCountDown:** 修复倒计时结束未reset时间问题 ([ea3548a](https://git.huianrong.com/frontend/har-use/commits/ea3548a34a49bebb153010cb547b7c16e3fb378d))
+
 ## [2.2.2](https://192.168.3.199:10022/frontend/har-use/compare/2.2.0...2.2.2) (2022-03-21)
 
 
