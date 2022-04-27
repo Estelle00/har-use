@@ -63,7 +63,7 @@ export function useCountDown(options: UseCountDownOptions) {
     remain.value = value;
     options.onChange?.(current.value);
     if (value === 0) {
-      pause();
+      reset(options.time);
       // 暂停
       options.onFinish?.();
     }
