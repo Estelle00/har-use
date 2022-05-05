@@ -1,5 +1,6 @@
 import { computed, onActivated, ref } from "vue-demi";
 import { onDeactivated } from "vue";
+import { cancelRaf, raf } from "../utils";
 
 export type CurrentTime = {
   days: number;
@@ -54,7 +55,7 @@ export function useCountDown(options: UseCountDownOptions) {
   // 暂停倒计时
   function pause() {
     counting = false;
-    cancelAnimationFrame(rafId);
+    cancelRaf(rafId);
   }
   function getCurrentRemain() {
     return Math.max(endTime - Date.now(), 0);
@@ -69,7 +70,7 @@ export function useCountDown(options: UseCountDownOptions) {
     }
   }
   function tick() {
-    rafId = requestAnimationFrame(function () {
+    rafId = raf(function () {
       if (counting) {
         const remainRemain = getCurrentRemain();
         if (
