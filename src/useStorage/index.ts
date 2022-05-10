@@ -12,13 +12,13 @@ export interface StorageOptions<T> {
   serializer?: Serializer<T>;
 }
 enum Type {
-  set,
-  map,
-  date,
-  boolean,
-  string,
-  object,
-  array,
+  set = "set",
+  map = "map",
+  date = "date",
+  boolean = "boolean",
+  string = "string",
+  object = "object",
+  array = "array",
 }
 type GuestType = keyof typeof Type | "any";
 function guessType(data: any): GuestType {
@@ -28,7 +28,7 @@ function guessType(data: any): GuestType {
   }
   return "any";
 }
-// todo any问题后面处理
+// todo any问题后面处理 复杂对象待处理
 export const StorageSerializers: Record<GuestType, Serializer<any>> = {
   set: {
     read: (v) => new Set(JSON.parse(v)),
@@ -75,13 +75,9 @@ export function useStorage<T extends string | number | boolean | object | null>(
   const rawInit = unref(initialValue);
   const type = guessType(rawInit);
   const serializer = options.serializer ?? StorageSerializers[type];
-  const { resume: resumeWatch, pause: pauseWatch } = watchPusable(
-    data,
-    (v: T) => write(v),
-    {
-      deep,
-    }
-  );
+  const { pause, resume } = watchPusable(data, (v: T) => write(v), {
+    deep,
+  });
 
   function write(v: T) {
     if (v === null) {
@@ -90,23 +86,17 @@ export function useStorage<T extends string | number | boolean | object | null>(
       storage!.setItem(key, serializer.write(v));
     }
   }
-  function read() {
-    pauseWatch();
-    try {
-      const rawVal = storage!.getItem(key);
-      if (rawVal === null) {
-        storage!.setItem(key, serializer.write(rawInit));
-        return rawInit;
-      }
-      if (typeOf(rawVal) !== "string") return rawInit;
-      return serializer.read(key);
-    } finally {
-      resumeWatch();
+  function init() {
+    pause();
+    const rawVal = storage!.getItem(key);
+    if (rawVal === null) {
+      data.value = rawInit;
+      storage!.setItem(key, serializer.write(rawInit));
+    } else {
+      data.value = serializer.read(rawVal);
     }
+    resume();
   }
-  function update() {
-    data.value = read();
-  }
-  update();
+  init();
   return data;
 }

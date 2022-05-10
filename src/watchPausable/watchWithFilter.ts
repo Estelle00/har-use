@@ -1,4 +1,4 @@
-import { watch, WatchCallback, WatchSource, WatchStopHandle } from "vue";
+import { watch } from "vue";
 import type { WatchOptions } from "vue";
 import {
   bypassFilter,
