@@ -2,7 +2,7 @@ import type { MayBeRef, StorageLike } from "../type";
 import { ref, unref } from "vue";
 import { typeOf } from "../utils";
 import { watchPusable } from "../watchPausable";
-
+import cloneDeepWith from "lodash-es/cloneDeepWith";
 export interface Serializer<T> {
   read: (v: string) => T;
   write: (v: T) => string;
@@ -29,7 +29,7 @@ function guessType(data: any): GuestType {
   return "any";
 }
 // todo any问题后面处理 复杂对象待处理
-export const StorageSerializers: Record<GuestType, Serializer<any>> = {
+export const storageSerializers: Record<GuestType, Serializer<any>> = {
   set: {
     read: (v) => new Set(JSON.parse(v)),
     write: (v) => JSON.stringify(Array.from(v)),
@@ -63,6 +63,20 @@ export const StorageSerializers: Record<GuestType, Serializer<any>> = {
     write: (v) => String(v),
   },
 };
+const defaultSerializer = {
+  read(v: any) {
+    return cloneDeepWith(v, (value) => {
+      const type = guessType(value);
+      return storageSerializers[type].read(value);
+    });
+  },
+  write(v: any) {
+    return cloneDeepWith(v, (value) => {
+      const type = guessType(value);
+      return storageSerializers[type].write(value);
+    });
+  },
+};
 export function useStorage<T extends string | number | boolean | object | null>(
   key: string,
   initialValue: MayBeRef<T>,
@@ -73,8 +87,7 @@ export function useStorage<T extends string | number | boolean | object | null>(
   const data = ref(initialValue);
   if (!storage) return data;
   const rawInit = unref(initialValue);
-  const type = guessType(rawInit);
-  const serializer = options.serializer ?? StorageSerializers[type];
+  const serializer = options.serializer ?? defaultSerializer;
   const { pause, resume } = watchPusable(data, (v: T) => write(v), {
     deep,
   });

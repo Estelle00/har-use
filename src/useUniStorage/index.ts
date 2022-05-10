@@ -3,7 +3,8 @@ import { useStorage } from "../useStorage";
 import type { StorageOptions } from "../useStorage";
 const storage: StorageLike = {
   getItem(key) {
-    return uni.getStorageSync(key);
+    const { keys } = uni.getStorageInfoSync();
+    return keys.includes(key) ? uni.getStorageSync(key) : null;
   },
   setItem(key, value) {
     uni.setStorageSync(key, value);
