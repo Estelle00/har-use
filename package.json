@@ -26,6 +26,7 @@
     "registry": "https://nexus.huianrong.com/repository/npm-hosted/"
   },
   "devDependencies": {
+    "@dcloudio/types": "^2.6.6",
     "@har/cli": "^1.0.2",
     "@har/eslint-config": "^1.1.1",
     "@release-it/conventional-changelog": "^3.3.0",
