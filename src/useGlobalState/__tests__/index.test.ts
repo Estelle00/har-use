@@ -1,5 +1,5 @@
 import { useGlobalState } from "../index";
-import { ref } from "vue-demi";
+import { ref } from "vue";
 describe("useGlobalState", () => {
   it("should be defined", () => {
     expect(useGlobalState).toBeDefined();

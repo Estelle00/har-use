@@ -6,3 +6,9 @@ export function raf(fn: FrameRequestCallback): number {
 export function cancelRaf(id: number) {
   inBrowser ? cancelAnimationFrame(id) : clearTimeout(id);
 }
+export function typeOf(data: any) {
+  return {}.toString
+    .call(data)
+    .match(/\[object (\w+)]/)![1]
+    .toLowerCase();
+}

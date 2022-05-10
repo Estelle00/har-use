@@ -1,4 +1,4 @@
-import { ref } from "vue-demi";
+import { ref } from "vue";
 
 export function useToggle(defaultValue = false) {
   const state = ref(defaultValue);

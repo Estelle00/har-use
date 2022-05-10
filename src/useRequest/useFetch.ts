@@ -1,4 +1,4 @@
-import { Ref, ref, shallowReactive, ShallowReactive, toRaw } from "vue-demi";
+import { Ref, ref, shallowReactive, ShallowReactive, toRaw } from "vue";
 import {
   CacheType,
   FetchResult,

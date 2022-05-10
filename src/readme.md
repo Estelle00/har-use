@@ -7,7 +7,7 @@ home: true
 ## 特点
 
 - 易于使用.
-- 同时适用于 Vue3 和 Vue2。( 感谢[vue-demi](https://github.com/antfu/vue-demi) ).
+- 同时适用于 Vue3.
 - 由 TS 编写，完整的类型推导. 
 
 |标题|测试|

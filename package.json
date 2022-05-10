@@ -1,6 +1,6 @@
 {
   "name": "@har/use",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "description": "",
   "main": "./dist/lib/index.js",
   "module": "./dist/es/index.js",
@@ -60,8 +60,10 @@
       }
     }
   },
+  "peerDependencies": {
+    "vue": "^3.2"
+  },
   "dependencies": {
-    "lodash-es": "^4.17.21",
-    "vue-demi": "^0.12.1"
+    "lodash-es": "^4.17.21"
   }
 }

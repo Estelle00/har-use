@@ -1,4 +1,4 @@
-import { Ref, watch, isRef, unref } from "vue-demi";
+import { Ref, watch, isRef, unref } from "vue";
 import { onMountedOrActivated } from "../onMountedOrActivated";
 import { tryOnScopeDispose } from "../tryOnScopeDispose";
 

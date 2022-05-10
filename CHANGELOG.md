@@ -1,3 +1,10 @@
+## [2.2.5](https://git.huianrong.com/frontend/har-use/compare/2.2.4...2.2.5) (2022-05-05)
+
+
+### Bug Fixes
+
+* **useCountDown:** 兼容处理 ([b200f1b](https://git.huianrong.com/frontend/har-use/commits/b200f1b5cc730f38bbcf1b39b1dcbd16206ef9da))
+
 ## [2.2.4](https://git.huianrong.com/frontend/har-use/compare/2.2.3...2.2.4) (2022-05-05)
 
 

@@ -1,5 +1,5 @@
 import { useGlobalState } from "../useGlobalState";
-import { Ref, ref } from "vue-demi";
+import { Ref, ref } from "vue";
 import { inBrowser } from "../utils";
 import { useEventListener } from "../useEventListener";
 import { tryOnMounted } from "../tryOnMounted";

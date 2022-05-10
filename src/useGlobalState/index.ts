@@ -1,4 +1,4 @@
-import { effectScope } from "vue-demi";
+import { effectScope } from "vue";
 
 export function useGlobalState<T>(factory: () => T): () => T {
   let state: T;

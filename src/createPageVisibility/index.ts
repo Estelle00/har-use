@@ -1,5 +1,5 @@
 import { useEventListener } from "../useEventListener";
-import { ref, watch } from "vue-demi";
+import { ref, watch } from "vue";
 
 function isDocumentVisible() {
   return document.visibilityState !== "hidden";

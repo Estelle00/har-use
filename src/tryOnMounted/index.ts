@@ -1,5 +1,5 @@
 import { Fn } from "../type";
-import { getCurrentInstance, nextTick, onMounted } from "vue-demi";
+import { getCurrentInstance, nextTick, onMounted } from "vue";
 
 export function tryOnMounted(fn: Fn, sync = true) {
   if (getCurrentInstance()) {

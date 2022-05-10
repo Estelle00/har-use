@@ -1,5 +1,5 @@
 import { Plugin } from "../types";
-import { ref, watch } from "vue-demi";
+import { ref, watch } from "vue";
 
 const useReady: Plugin<any, any[]> = (
   instance,

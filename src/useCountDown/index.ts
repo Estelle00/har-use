@@ -1,4 +1,4 @@
-import { computed, onActivated, ref } from "vue-demi";
+import { computed, onActivated, ref } from "vue";
 import { onDeactivated } from "vue";
 import { cancelRaf, raf } from "../utils";
 

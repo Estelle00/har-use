@@ -1,5 +1,5 @@
 import { Fn } from "../type";
-import { getCurrentInstance, onUnmounted } from "vue-demi";
+import { getCurrentInstance, onUnmounted } from "vue";
 
 export function tryOnUnmounted(fn: Fn) {
   if (getCurrentInstance()) {

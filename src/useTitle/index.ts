@@ -1,4 +1,4 @@
-import { ref, Ref, watch } from "vue-demi";
+import { ref, Ref, watch } from "vue";
 import isString from "lodash-es/isString";
 type MayBeRef<T> = T | Ref<T>;
 export function useTitle(

@@ -1,5 +1,5 @@
 import { Plugin } from "../types";
-import { ref } from "vue-demi";
+import { ref } from "vue";
 import { createPageVisibility } from "../../createPageVisibility";
 import { EventHookOff, useEventHook } from "../../useEventHook";
 const { on, trigger } = useEventHook();

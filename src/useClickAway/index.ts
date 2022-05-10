@@ -1,4 +1,4 @@
-import { Ref, unref } from "vue-demi";
+import { Ref, unref } from "vue";
 import { inBrowser } from "../utils";
 import { useEventListener } from "../useEventListener";
 export type UseClickAwayOptions = {
