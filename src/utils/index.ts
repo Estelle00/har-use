@@ -1,3 +1,4 @@
+export * from "./cache";
 export const inBrowser = typeof window !== "undefined";
 export const isWindow = (val: unknown): val is Window => val === window;
 export function raf(fn: FrameRequestCallback): number {

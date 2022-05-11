@@ -1,5 +1,5 @@
-import { Ref, ref, shallowReactive, ShallowReactive, toRaw } from "vue";
-import {
+import { ref, shallowReactive, ShallowReactive, toRaw } from "vue";
+import type {
   CacheType,
   FetchResult,
   FetchState,
@@ -8,9 +8,11 @@ import {
   PluginReturn,
   Service,
 } from "./types";
-import { getCache, Listener, setCache, subscribe } from "./utils/cache";
 import { getCachePromise, setCachePromise } from "./utils/cachePromise";
-
+import { createCache } from "../utils/";
+import type { CacheListener } from "../utils/";
+const requestKey = Symbol("useRequest");
+const { getCache, setCache, subscribe } = createCache(requestKey);
 function useState<TData, TParams extends any[]>(
   fetchState: FetchState<TData, TParams>
 ): [
@@ -47,7 +49,7 @@ export function usePlugins<TData, TParams extends any[]>(
   return runPluginHandler;
 }
 
-function useSubscribe(key: string, callback: Listener) {
+function useSubscribe(key: string, callback: CacheListener) {
   const unsubscribe = ref<() => void>();
   function on() {
     unsubscribe.value = subscribe(key, callback);
