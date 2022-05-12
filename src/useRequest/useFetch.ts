@@ -94,7 +94,7 @@ function useCache<TData, TParams extends unknown[]>(
   function onChange(data: TData, params: TParams) {
     const [on, off] = subscribeRef.value!;
     off();
-    setCache(cacheKey!, cacheTime, data, params);
+    setCache(cacheKey!, data, cacheTime, params);
     on();
   }
   function onBefore() {

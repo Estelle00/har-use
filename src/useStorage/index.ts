@@ -1,8 +1,9 @@
 import type { MayBeRef, StorageLike } from "../type";
 import { ref, unref } from "vue";
-import { typeOf } from "../utils";
+import { typeOf, createCache } from "../utils";
 import { watchPusable } from "../watchPausable";
 import cloneDeepWith from "lodash-es/cloneDeepWith";
+const { setCache, subscribe, deleteCache } = createCache(Symbol("useStorage"));
 export interface Serializer<T> {
   read: (v: string) => T;
   write: (v: T) => string;
@@ -95,13 +96,17 @@ export function useStorage<T extends string | number | boolean | object | null>(
   function write(v: T) {
     if (v === null) {
       storage!.removeItem(key);
+      deleteCache(key);
     } else {
-      storage!.setItem(key, serializer.write(v));
+      const data = serializer.write(v);
+      storage!.setItem(key, data);
+      setCache(key, data);
     }
   }
-  function init() {
+  subscribe(key, read);
+  function read(newValue?: T) {
     pause();
-    const rawVal = storage!.getItem(key);
+    const rawVal = newValue ?? storage!.getItem(key);
     if (rawVal === null) {
       data.value = rawInit;
       storage!.setItem(key, serializer.write(rawInit));
@@ -110,6 +115,6 @@ export function useStorage<T extends string | number | boolean | object | null>(
     }
     resume();
   }
-  init();
+  read();
   return data;
 }

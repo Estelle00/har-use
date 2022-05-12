@@ -1,18 +1,18 @@
 type Timer = ReturnType<typeof setTimeout>;
-export type CacheKey = string | number;
+export type CacheKey = string | number | symbol;
 export type CacheValue = {
   data: any;
   params: any;
   timer: Timer | undefined;
   time: number;
 };
-export type CacheListener = (data: any) => void;
-const instanceCache = new Map<CacheKey | symbol, Cache>();
+export type CacheListener = (data: any, params: any[]) => void;
+const instanceCache = new Map<CacheKey, Cache>();
 
 class Cache {
   cache = new Map<CacheKey, CacheValue>();
   listeners: Record<CacheKey, CacheListener[]> = {};
-  setCache(key: CacheKey, cacheTime: number, data: any, params: any[]) {
+  setCache(key: CacheKey, data: any, cacheTime = -1, params: any[] = []) {
     const currentCache = this.cache.get(key);
     if (currentCache?.timer) {
       clearTimeout(currentCache.timer);
@@ -25,7 +25,7 @@ class Cache {
     }
     // trigger listeners
     if (this.listeners[key]) {
-      this.listeners[key].forEach((item) => item(data));
+      this.listeners[key].forEach((item) => item(data, params));
     }
     this.cache.set(key, {
       data,
@@ -36,6 +36,9 @@ class Cache {
   }
   getCache(key: CacheKey) {
     return this.cache.get(key);
+  }
+  deleteCache(key: CacheKey) {
+    this.cache.delete(key);
   }
   subscribe(key: string, listener: CacheListener) {
     if (!this.listeners[key]) {
@@ -48,7 +51,7 @@ class Cache {
     };
   }
 }
-export function createCache(name: CacheKey | symbol) {
+export function createCache(name: CacheKey) {
   const cacheInstance = instanceCache.get(name);
   if (cacheInstance) return cacheInstance;
   const instance = new Cache();
