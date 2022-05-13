@@ -1,23 +1,17 @@
 ---
 title: 首页
 home: true
+tagline: 常用的 composables 方法，便于业务的快速开发
+actionText: 快速开始
+actionLink: /guide/
 ---
-## 介绍
-添加常规使用的hooks方法，便于业务开发使用
-## 特点
 
+### 特点
 - 易于使用.
 - 同时适用于 Vue3.
 - 由 TS 编写，完整的类型推导. 
 
-|标题|测试|
-|-|-|
-
-## 安装
-
+### 安装
 ```
 yarn add @har/use
 ```
-
-## 使用
-

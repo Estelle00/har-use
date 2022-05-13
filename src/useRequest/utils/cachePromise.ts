@@ -1,4 +1,4 @@
-import { CacheKey } from "./cache";
+import type { CacheKey } from "../../utils";
 const cachePromise = new Map<CacheKey, Promise<any>>();
 
 export function getCachePromise(key: CacheKey) {
