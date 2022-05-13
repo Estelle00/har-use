@@ -1,6 +1,11 @@
 ---
 title: useToggle
 ---
+
+# {{ $frontmatter.title }}
+示例
+
+@import "./__demo__/index.vue"
 ## 介绍
 设置页面标题
 ## 使用
@@ -11,4 +16,3 @@ title: useToggle
 import { useToggle } from "@har/use";
 ```
 
-@import "./__demo__/index.vue"

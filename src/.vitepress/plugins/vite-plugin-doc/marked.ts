@@ -75,7 +75,7 @@ const fileImport = {
   name: "fileImport",
   level: "block",
   tokenizer(src: string) {
-    const rule = /^@import\s+(.+)(?:;\n|$)/;
+    const rule = /^@import\s+(.+)(?:\n|$)/;
     const match = rule.exec(src);
     if (match) {
       const filename = match[1].replace(/['"]/g, "");
