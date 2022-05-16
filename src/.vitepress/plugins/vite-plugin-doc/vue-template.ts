@@ -1,13 +1,3 @@
-export interface MainVueType {
-  content: string;
-  imports: string[];
-}
-export function getMainVue({ content, imports }: MainVueType) {
-  return `${content}
-<script setup>
-	${imports.join(";\n")}
-</script>`;
-}
 export interface DemoVueType {
   virtualPath: string;
   code: string;

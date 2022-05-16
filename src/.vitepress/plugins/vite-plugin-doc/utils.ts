@@ -6,5 +6,5 @@ export function isVirtualModule(id: string) {
   return new RegExp(VIRTUAL_KEY).test(id);
 }
 export function isDemo(id: string) {
-  return /\/__demo__\//.test(id);
+  return /\/demo\//.test(id);
 }

@@ -1,18 +1,38 @@
 ---
 title: useToggle
 ---
+## 示例
+@import "./demo/index.vue"
 
-# {{ $frontmatter.title }}
-示例
-
-@import "./__demo__/index.vue"
 ## 介绍
 设置页面标题
 ## 使用
 
-### test
 
-```js
+```ts
 import { useToggle } from "@har/use";
 ```
+
+## API
+
+### 类型定义
+
+```ts
+function useToggle(
+  defaultValue: boolean
+): [Ref<boolean>, (newValue: boolean) => void];
+```
+
+### 参数
+
+| 参数         | 说明   | 类型      | 默认值  |
+| ------------ | ------ | --------- | ------- |
+| defaultValue | 默认值 | _boolean_ | `false` |
+
+### 返回值
+
+| 参数   | 说明             | 类型                           |
+| ------ | ---------------- | ------------------------------ |
+| state  | 状态值           | _Ref\<boolean>_                |
+| toggle | 切换状态值的函数 | _(newValue?: boolean) => void_ |
 

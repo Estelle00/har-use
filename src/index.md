@@ -1,9 +1,7 @@
 ---
 title: 首页
-home: true
+navbar: true
 tagline: 常用的 composables 方法，便于业务的快速开发
-actionText: 快速开始
-actionLink: /guide/
 ---
 
 ### 特点

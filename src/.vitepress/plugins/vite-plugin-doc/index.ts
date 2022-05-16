@@ -1,18 +1,8 @@
 import type { Plugin } from "vite";
 import { getCache } from "./cache";
-import { transformDemo, transformMain } from "./markdownToVue";
+import { transformDemo } from "./markdownToVue";
 import {getVirtualPath, isDemo, isVirtualModule} from "./utils";
-export interface Options {
-  srcDir?: string;
-}
-export default function createVueDoc(options: Options = {}): Plugin {
-  const { srcDir } = Object.assign(
-    {
-      srcDir: process.cwd(),
-    },
-    options
-  );
-
+export default function createVueDoc(): Plugin {
   let vuePlugin: Plugin | undefined;
   return {
     name: "vite:vue-doc",
@@ -35,8 +25,6 @@ export default function createVueDoc(options: Options = {}): Plugin {
       if (isDemo(id)) {
         return transformDemo(code, id);
       }
-      if (!id.endsWith(".md")) return null;
-      return transformMain(code);
     },
     async handleHotUpdate(ctx) {
       const { file, read, server, timestamp, modules } = ctx;

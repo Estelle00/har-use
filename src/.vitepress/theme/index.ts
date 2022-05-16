@@ -1,5 +1,6 @@
 import type { Theme } from "vitepress";
 import DefaultTheme from "vitepress/theme";
+import "./styles/index.less";
 import "@arco-design/web-vue/dist/arco.less";
 import "prismjs/themes/prism-tomorrow.css";
 import ArcoVue from "@arco-design/web-vue";
