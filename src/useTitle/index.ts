@@ -1,5 +1,5 @@
 import { ref, Ref, watch } from "vue";
-import isString from "lodash-es/isString";
+import isString from "lodash/isString";
 type MayBeRef<T> = T | Ref<T>;
 export function useTitle(
   newTitle: MayBeRef<string | null | undefined> = null

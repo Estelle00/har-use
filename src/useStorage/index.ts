@@ -2,7 +2,7 @@ import type { MayBeRef, StorageLike } from "../type";
 import { ref, unref } from "vue";
 import { typeOf, createCache } from "../utils";
 import { watchPusable } from "../watchPausable";
-import cloneDeepWith from "lodash-es/cloneDeepWith";
+import cloneDeepWith from "lodash/cloneDeepWith";
 const { setCache, subscribe, deleteCache } = createCache(Symbol("useStorage"));
 export interface Serializer<T> {
   read: (v: string) => T;

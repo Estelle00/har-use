@@ -16,7 +16,7 @@ export type UseCountDownOptions = {
   // 是否开启毫秒级渲染
   millisecond?: boolean;
   // 倒计时改变时触发的回调函数
-  onChange?: (current: any) => void;
+  onChange?: (current: CurrentTime) => void;
   // 倒计时结束时触发的回调函数
   onFinish?: () => void;
 };
@@ -95,7 +95,7 @@ export function useCountDown(options: UseCountDownOptions) {
     }
   }
   // 	重置倒计时，支持传入新的倒计时时长
-  function reset(totalTime: number = options.time) {
+  function reset(totalTime = options.time) {
     pause();
     remain.value = totalTime;
   }

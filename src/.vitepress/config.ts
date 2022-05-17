@@ -4,7 +4,7 @@ import base from "@vue/theme/config";
 // @ts-ignore
 import pkg from "../../package.json";
 import path from "node:path";
-import {pascalCase} from "change-case";
+import { pascalCase } from "change-case";
 import Token from "markdown-it/lib/token";
 
 function insertStr(source: string, start: number, newStr: string) {
@@ -118,7 +118,6 @@ export default defineConfig({
       md.renderer.rules.table_close = function (tokens, idx) {
         return `</a-table>`;
       }
-      md.renderer.r
     },
   },
   themeConfig: {
@@ -137,13 +136,13 @@ export default defineConfig({
     sidebar: {
       "/": [
         {
+          text: "useCountDown",
+          link: "/useCountDown/"
+        },
+        {
           text: "useToggle",
           link: "/useToggle/"
         },
-        {
-          text: "useTitle",
-          link: "/useTitle/"
-        }
       ]
     }
   }

@@ -16,5 +16,6 @@
     },
     "types": ["@dcloudio/types", "ts-jest"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["src/.vitepress/*", "src/vite.config.ts"]
 }
