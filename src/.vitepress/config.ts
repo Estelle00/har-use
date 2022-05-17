@@ -144,6 +144,10 @@ export default defineConfig({
           link: "/useCountDown/"
         },
         {
+          text: "useEventHook",
+          link: "/useEventHook/"
+        },
+        {
           text: "useToggle",
           link: "/useToggle/"
         },

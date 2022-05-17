@@ -1,8 +1,6 @@
 type Listener<T> = (p?: T) => void;
 export type EventHookOff = () => void;
-export type EventHookOn<T = unknown> = (
-  fn: (params?: T) => void
-) => EventHookOff;
+export type EventHookOn<T = unknown> = (fn: Listener<T>) => EventHookOff;
 export type EventHookTrigger<T = unknown> = (params?: T) => void;
 
 export interface EventHook<T = unknown> {
