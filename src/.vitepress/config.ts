@@ -136,6 +136,10 @@ export default defineConfig({
     sidebar: {
       "/": [
         {
+          text: "useClickAway",
+          link: "/useClickAway/"
+        },
+        {
           text: "useCountDown",
           link: "/useCountDown/"
         },
