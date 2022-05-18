@@ -1,17 +1,16 @@
 import { Plugin } from "../types";
-import { watch } from "vue-demi";
+import { ref, watch } from "vue";
 
 const useRefreshDeps: Plugin<any, any[]> = (instance, { refreshDeps }) => {
   if (refreshDeps) {
+    const deps = ref(refreshDeps);
     watch(
-      () => {
-        if (Array.isArray(refreshDeps)) {
-          return refreshDeps;
-        }
-        return instance.state.params;
-      },
+      deps,
       () => {
         instance.refresh();
+      },
+      {
+        deep: true,
       }
     );
   }

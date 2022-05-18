@@ -1,6 +1,6 @@
-import { onDeactivated, onUnmounted, Ref, watch } from "vue-demi";
-import { isRef, unref } from "vue";
-import { onMountedOrActivated } from "@har/use";
+import { Ref, watch, isRef, unref } from "vue";
+import { onMountedOrActivated } from "../onMountedOrActivated";
+import { tryOnScopeDispose } from "../tryOnScopeDispose";
 
 type TargetRef = EventTarget | Ref<EventTarget | undefined>;
 export type UseEventListenerOptions = {
@@ -29,8 +29,7 @@ export function useEventListener(
       attached = false;
     }
   }
-  onUnmounted(() => remove(target));
-  onDeactivated(() => remove(target));
+  tryOnScopeDispose(() => remove(target));
   onMountedOrActivated(() => add(target));
   if (isRef(target)) {
     watch(target, (val, oldValue) => {

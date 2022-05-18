@@ -1,3 +1,86 @@
+## [2.2.5](https://git.huianrong.com/frontend/har-use/compare/2.2.4...2.2.5) (2022-05-05)
+
+
+### Bug Fixes
+
+* **useCountDown:** 兼容处理 ([b200f1b](https://git.huianrong.com/frontend/har-use/commits/b200f1b5cc730f38bbcf1b39b1dcbd16206ef9da))
+
+## [2.2.4](https://git.huianrong.com/frontend/har-use/compare/2.2.3...2.2.4) (2022-05-05)
+
+
+### Bug Fixes
+
+* **useCountDown:** 兼容处理 ([5dc81ff](https://git.huianrong.com/frontend/har-use/commits/5dc81ff653d4b17099769fc54d264a8027534565))
+
+## [2.2.3](https://git.huianrong.com/frontend/har-use/compare/2.2.2...2.2.3) (2022-04-27)
+
+
+### Bug Fixes
+
+* **useCountDown:** 修复倒计时结束未reset时间问题 ([ea3548a](https://git.huianrong.com/frontend/har-use/commits/ea3548a34a49bebb153010cb547b7c16e3fb378d))
+
+## [2.2.2](https://192.168.3.199:10022/frontend/har-use/compare/2.2.0...2.2.2) (2022-03-21)
+
+
+### Bug Fixes
+
+* **useCountDown:** 代码逻辑错误 ([5283d96](https://192.168.3.199:10022/frontend/har-use/commits/5283d96de9977a9b2e123eee687ab2efb7724d29))
+
+## [2.2.1](https://192.168.3.199:10022/frontend/har-use/compare/2.2.0...2.2.1) (2022-03-16)
+
+# [2.2.0](https://192.168.3.199:10022/frontend/har-use/compare/2.1.2...2.2.0) (2022-02-21)
+
+
+### Bug Fixes
+
+* type文件输出错误 ([136e393](https://192.168.3.199:10022/frontend/har-use/commits/136e39349aded75bd8f56584bd0e3b4fb763c17d))
+
+
+### Features
+
+* add tryOnScopeDispose, useClickAway, useRect, useWindowSize ([1123b35](https://192.168.3.199:10022/frontend/har-use/commits/1123b35ac9c98fc460e150230de51269c9f015ec))
+
+## [2.1.3](https://192.168.3.199:10022/frontend/har-use/compare/2.1.2...2.1.3) (2022-01-06)
+
+
+### Bug Fixes
+
+* type文件输出错误 ([136e393](https://192.168.3.199:10022/frontend/har-use/commits/136e39349aded75bd8f56584bd0e3b4fb763c17d))
+
+## [2.1.2](https://192.168.3.199:10022/frontend/har-use/compare/2.1.0...2.1.2) (2021-12-28)
+
+
+### Bug Fixes
+
+* 导出useTitle ([d6a41e8](https://192.168.3.199:10022/frontend/har-use/commits/d6a41e83ef457697db67f2668c21963ac854774e))
+* **useRequest:** 非setup中执行bug处理 ([1681084](https://192.168.3.199:10022/frontend/har-use/commits/168108463cfec98c02320c5648f432748a5f40b4))
+
+## [2.1.1](https://192.168.3.199:10022/frontend/har-use/compare/2.1.0...2.1.1) (2021-12-15)
+
+
+### Bug Fixes
+
+* 导出useTitle ([d6a41e8](https://192.168.3.199:10022/frontend/har-use/commits/d6a41e83ef457697db67f2668c21963ac854774e))
+
+# [2.1.0](https://192.168.3.199:10022/frontend/har-use/compare/1.3.2...2.1.0) (2021-12-15)
+
+
+### Bug Fixes
+
+* **useRequest:** onRequest插件模式预缓存插件冲突，移除hooks ([8b18c97](https://192.168.3.199:10022/frontend/har-use/commits/8b18c97d537fd2c607a0b4332e24119894596bbf))
+
+
+### Features
+
+* **useTitle:** 添加标题设置 ([3459f9c](https://192.168.3.199:10022/frontend/har-use/commits/3459f9c7ee66e6a09c6be8a085292c1537354f64))
+
+# [2.0.0](https://192.168.3.199:10022/frontend/har-use/compare/1.3.2...2.0.0) (2021-12-15)
+
+
+### Bug Fixes
+
+* **useRequest:** onRequest插件模式预缓存插件冲突，移除hooks ([8b18c97](https://192.168.3.199:10022/frontend/har-use/commits/8b18c97d537fd2c607a0b4332e24119894596bbf))
+
 ## [1.3.2](https://192.168.3.199:10022/frontend/har-use/compare/1.3.1...1.3.2) (2021-12-10)
 
 

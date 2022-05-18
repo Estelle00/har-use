@@ -1,9 +1,9 @@
 import { Plugin } from "../types";
-import { ref, watch } from "vue-demi";
+import { ref, watch } from "vue";
 
 const useReady: Plugin<any, any[]> = (
   instance,
-  { ready = ref(true), defaultParams = [], manual }
+  { ready = ref(true), manual }
 ) => {
   watch(
     () => ready.value,

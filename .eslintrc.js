@@ -1,6 +1,7 @@
 module.exports = {
   root: true,
-  extends: [
-    "@har",
-  ],
+  extends: ["@har"],
+  globals: {
+    uni: true,
+  },
 };

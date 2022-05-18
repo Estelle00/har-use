@@ -1,4 +1,4 @@
-import { onActivated, onMounted, nextTick } from "vue-demi";
+import { onActivated, onMounted, nextTick } from "vue";
 
 export function onMountedOrActivated(hook: () => any) {
   let mounted: boolean;

@@ -1,5 +1,6 @@
-import { Ref, ref, shallowReactive, ShallowReactive, toRaw } from "vue-demi";
-import {
+import { ref, shallowReactive, ShallowReactive, toRaw } from "vue";
+import type {
+  CacheType,
   FetchResult,
   FetchState,
   Options,
@@ -7,19 +8,18 @@ import {
   PluginReturn,
   Service,
 } from "./types";
-
+import { getCachePromise, setCachePromise } from "./utils/cachePromise";
+import { createCache } from "../utils/";
+import type { CacheListener } from "../utils/";
+const requestKey = Symbol("useRequest");
+const { getCache, setCache, subscribe } = createCache(requestKey);
 function useState<TData, TParams extends any[]>(
-  options: Options<TData, TParams> = {}
+  fetchState: FetchState<TData, TParams>
 ): [
   ShallowReactive<FetchState<TData, TParams>>,
   (s: Partial<FetchState<TData, TParams>>) => void
 ] {
-  const state = shallowReactive<FetchState<TData, TParams>>({
-    loading: !options.manual && (options?.ready?.value ?? true),
-    params: options.defaultParams || undefined,
-    data: undefined,
-    error: undefined,
-  });
+  const state = shallowReactive<FetchState<TData, TParams>>(fetchState);
   function setState(s: Partial<FetchState<TData, TParams>>) {
     Object.assign(state, s);
   }
@@ -49,12 +49,93 @@ export function usePlugins<TData, TParams extends any[]>(
   return runPluginHandler;
 }
 
+function useSubscribe(key: string, callback: CacheListener) {
+  const unsubscribe = ref<() => void>();
+  function on() {
+    unsubscribe.value = subscribe(key, callback);
+  }
+  function off() {
+    unsubscribe.value && unsubscribe.value();
+  }
+  return [on, off];
+}
+
+function useCache<TData, TParams extends unknown[]>(
+  { cacheKey, cacheTime = 5 * 60 * 1000, staleTime = 0 }: CacheType,
+  setState: (s: Partial<FetchState<TData, TParams>>) => void
+): [
+  () => TData | false | void,
+  (service: Service<TParams>, args: TParams) => Promise<TData>,
+  (data: TData, params: TParams) => void
+] {
+  function getServicePromise(
+    service: Service<TParams>,
+    args: TParams
+  ): Promise<any> {
+    return service(...args);
+  }
+  if (!cacheKey) {
+    return [() => {}, getServicePromise, () => {}];
+  }
+  const subscribeRef = ref();
+  const promiseRef = ref();
+  const cacheData = getCache(cacheKey);
+  if (cacheData) {
+    setState({
+      data: cacheData.data,
+      params: cacheData.params,
+    });
+  }
+  // 启动缓存发送变化时同步更新data
+  subscribeRef.value = useSubscribe(cacheKey, (data) => {
+    setState({ data });
+  });
+  subscribeRef.value[0]();
+  function onChange(data: TData, params: TParams) {
+    const [on, off] = subscribeRef.value!;
+    off();
+    setCache(cacheKey!, data, cacheTime, params);
+    on();
+  }
+  function onBefore() {
+    const d = getCache(cacheKey!);
+    if (d && (staleTime === -1 || Date.now() - d.time <= staleTime)) {
+      return d.data;
+    }
+    return false;
+  }
+  function onRequest(service: Service<TParams>, args: TParams): Promise<any> {
+    const cachePromise = getCachePromise(cacheKey!);
+    if (cachePromise && cachePromise !== promiseRef.value) {
+      return cachePromise;
+    }
+    const servicePromise = getServicePromise(service, args);
+    promiseRef.value = servicePromise;
+    setCachePromise(cacheKey!, servicePromise);
+    return servicePromise;
+  }
+  return [onBefore, onRequest, onChange];
+}
+
 export default function useFetch<TData, TParams extends any[]>(
-  serviceRef: Ref<Service<TData, TParams>>,
+  service: Service<TParams>,
   options: Options<TData, TParams>,
   plugins: Plugin<TData, TParams>[]
 ): FetchResult<TData, TParams> {
-  const [state, setState] = useState<TData, TParams>(options);
+  const initState = {
+    loading: !options.manual && (options?.ready?.value ?? true),
+    params: options.defaultParams || undefined,
+    data: undefined,
+    error: undefined,
+  };
+  const [state, setState] = useState<TData, TParams>(initState);
+
+  // cache
+  const { cacheKey, cacheTime, staleTime } = options;
+  const [onCacheBefore, onCacheRequest, onCacheChange] = useCache<
+    TData,
+    TParams
+  >({ cacheKey, cacheTime, staleTime }, setState);
   const count = ref(0);
   const result = {
     state,
@@ -72,6 +153,10 @@ export default function useFetch<TData, TParams extends any[]>(
   async function runAsync(...params: TParams): Promise<TData> {
     count.value++;
     const currentCount = toRaw(count.value);
+    const cache = onCacheBefore();
+    if (cache) {
+      return Promise.resolve(cache);
+    }
     const {
       stopNow = false,
       returnNow = false,
@@ -94,17 +179,15 @@ export default function useFetch<TData, TParams extends any[]>(
       });
       // 特殊场景使用，不推荐业务插件接入
       runPluginHandler("onBeforeRequest");
-      let { servicePromise } = runPluginHandler(
-        "onRequest",
-        serviceRef.value,
-        params
-      );
-      if (!servicePromise) {
-        servicePromise = serviceRef.value(...params);
-      }
-      const res = await servicePromise;
+      const result = await onCacheRequest(service, params);
+      let res: TData;
       if (currentCount !== count.value) {
         return new Promise(() => {});
+      }
+      if (options.formatResult) {
+        res = options.formatResult(result);
+      } else {
+        res = result;
       }
       setState({
         data: res,
@@ -113,6 +196,7 @@ export default function useFetch<TData, TParams extends any[]>(
       });
       options.onSuccess?.(res, params);
       runPluginHandler("onSuccess", res, params);
+      onCacheChange(res, params);
       return res;
     } catch (error) {
       if (currentCount !== count.value) {
@@ -157,6 +241,7 @@ export default function useFetch<TData, TParams extends any[]>(
     // @ts-ignore
     const targetData = typeof data === "function" ? data(state.data) : data;
     runPluginHandler("onMutate", targetData, state.params);
+    onCacheChange(targetData, state.params!);
     setState({
       data: targetData,
     });

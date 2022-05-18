@@ -1,5 +1,5 @@
 import { Plugin } from "../types";
-import { ref } from "vue-demi";
+import { ref } from "vue";
 
 const useLoadingDelay: Plugin<any, any[]> = (instance, { loadingDelay }) => {
   if (!loadingDelay) {
@@ -23,9 +23,6 @@ const useLoadingDelay: Plugin<any, any[]> = (instance, { loadingDelay }) => {
           loading: true,
         });
       }, loadingDelay);
-    },
-    onBefore() {
-      return { loading: false };
     },
     onFinally: cancelTimeout,
     onCancel: cancelTimeout,

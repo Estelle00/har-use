@@ -1,6 +1,6 @@
 import { Plugin } from "../types";
 import type { DebouncedFunc } from "lodash";
-import { ref } from "vue-demi";
+import { ref } from "vue";
 import throttle from "lodash/throttle";
 const useThrottle: Plugin<any, any[]> = (
   instance,

@@ -1,13 +1,14 @@
-import { shallowReactive } from "vue-demi";
+import { effectScope } from "vue";
 
-export function useGlobalState<T>(factory: () => T) {
-  const state = shallowReactive({
-    initialized: false,
-    obj: undefined as undefined | T,
-  });
-  if (!state.initialized) {
-    state.obj = factory();
-    state.initialized = true;
-  }
-  return state.obj as T;
+export function useGlobalState<T>(factory: () => T): () => T {
+  let state: T;
+  let initialized = false;
+  const scope = effectScope(true);
+  return () => {
+    if (!initialized) {
+      state = scope.run(factory)!;
+      initialized = true;
+    }
+    return state;
+  };
 }

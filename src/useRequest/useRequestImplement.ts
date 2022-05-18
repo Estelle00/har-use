@@ -1,26 +1,23 @@
-import { Options, Plugin, Service } from "./types";
-import { computed, onMounted, onUnmounted, ref } from "vue-demi";
+import { Options, Plugin, Service, RequestResult } from "./types";
+import { computed } from "vue";
 import useFetch from "./useFetch";
+import { tryOnMounted } from "../tryOnMounted";
+import { tryOnScopeDispose } from "../tryOnScopeDispose";
 
 export default function useRequestImplement<TData, TParams extends any[]>(
-  service: Service<TData, TParams>,
+  service: Service<TParams>,
   options: Options<TData, TParams> = {},
   plugins: Plugin<TData, TParams>[] = []
-) {
-  const serviceRef = ref<Service<TData, TParams>>(service);
-  const fetchInstance = useFetch(serviceRef, options, plugins);
-
-  const { state, refresh, refreshAsync, run, runAsync, mutate } = fetchInstance;
-  onMounted(() => {
-    if (!options.manual) {
+): RequestResult<TData, TParams> {
+  const { state, refresh, refreshAsync, run, runAsync, mutate, cancel } =
+    useFetch(service, options, plugins);
+  if (!options.manual) {
+    tryOnMounted(() => {
       const params = state.params || [];
       run(...(params as TParams));
-    }
-  });
-  onUnmounted(() => {
-    fetchInstance.cancel();
-  });
-  console.log(state);
+    });
+  }
+  tryOnScopeDispose(cancel);
   return {
     loading: computed(() => state.loading),
     data: computed(() => state.data),
@@ -31,5 +28,6 @@ export default function useRequestImplement<TData, TParams extends any[]>(
     run,
     runAsync,
     mutate,
+    cancel,
   };
 }
