@@ -1,8 +1,8 @@
 import { Plugin } from "../types";
 import { ref } from "vue";
-import { createPageVisibility } from "../../createPageVisibility";
-import { EventHookOff, useEventHook } from "../../useEventHook";
-const { on, trigger } = useEventHook();
+import { createPageVisibility } from "@har/use";
+import { EventBusOff, useEventBus } from "@har/use";
+const { on, trigger } = useEventBus();
 const usePolling: Plugin<any, any[]> = (
   instance,
   { pollingInterval, pollingWhenHidden = true }
@@ -11,7 +11,7 @@ const usePolling: Plugin<any, any[]> = (
     return {};
   }
   const timerRef = ref<NodeJS.Timeout>();
-  const off = ref<EventHookOff>();
+  const off = ref<EventBusOff>();
   const stopPolling = () => {
     if (timerRef.value) {
       clearTimeout(timerRef.value);

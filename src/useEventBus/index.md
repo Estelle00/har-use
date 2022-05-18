@@ -1,4 +1,4 @@
-# useEventHook
+# useEventBus
 
 ### 介绍
 提供简单的事件发布订阅。
@@ -16,16 +16,16 @@
 
 ```ts
 type Listener<T> = (p?: T) => void;
-export type EventHookOff = () => void;
-export type EventHookOn<T = unknown> = (
+export type EventBusOff = () => void;
+export type EventBusOn<T = unknown> = (
   fn: Listener<T>
-) => EventHookOff;
-type EventHookTrigger<T = unknown> = (params?: T) => void;
-interface EventHook<T = unknown> {
-  on: EventHookOn<T>;
-  trigger: EventHookTrigger<T>;
+) => EventBusOff;
+type EventBusTrigger<T = unknown> = (params?: T) => void;
+interface EventBus<T = unknown> {
+  on: EventBusOn<T>;
+  trigger: EventBusTrigger<T>;
 }
-function useEventHook<T = unknown>(): EventHook<T>;
+function useEventBus<T = unknown>(): EventBus<T>;
 ```
 ### 返回值
 

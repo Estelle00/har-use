@@ -1,5 +1,5 @@
 export * from "./useRequest";
-export * from "./useEventHook";
+export * from "./useEventBus";
 export * from "./useToggle";
 export * from "./onMountedOrActivated";
 export * from "./useEventListener";

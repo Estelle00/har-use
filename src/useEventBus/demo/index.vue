@@ -10,16 +10,16 @@
 </template>
 
 <script setup lang="ts">
-import { EventHookOff, useEventHook } from "@har/use";
+import { EventBusOff, useEventBus } from "@har/use";
 import { reactive } from "vue";
 const formData = reactive({
   text: "111",
 });
-const { on, trigger } = useEventHook<typeof formData>();
+const { on, trigger } = useEventBus<typeof formData>();
 function publish() {
   trigger(formData);
 }
-const listeners: EventHookOff[] = [];
+const listeners: EventBusOff[] = [];
 function add() {
   const index = listeners.length;
   const listener = on((t) => {

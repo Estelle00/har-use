@@ -14,6 +14,7 @@ function insertStr(source: string, start: number, newStr: string) {
 export default defineConfig({
   title: "har-use",
   lang: "zh-CN",
+  outDir: "../public",
   vue: {
     reactivityTransform: true
   },
@@ -144,8 +145,12 @@ export default defineConfig({
           link: "/useCountDown/"
         },
         {
-          text: "useEventHook",
-          link: "/useEventHook/"
+          text: "useEventBus",
+          link: "/useEventBus/"
+        },
+        {
+          text: "useEventListener",
+          link: "/useEventListener/"
         },
         {
           text: "useToggle",
