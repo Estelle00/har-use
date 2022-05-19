@@ -7,7 +7,7 @@ pages:
     paths:
       - node_modules/
   script:
-    - yarn install # npm install
+    - yarn install --register=https://nexus.huianrong.com/repository/npm-group/
     - yarn docs:build # npm run docs:build
   artifacts:
     paths:
