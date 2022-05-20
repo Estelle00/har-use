@@ -4,8 +4,8 @@ pages:
   tags:
     - stg-runner-tag
   script:
-    - yarn install --registry https://nexus.huianrong.com/repository/npm-group/
-    - yarn docs:build # npm run docs:build
+    - pnpm install --registry https://nexus.huianrong.com/repository/npm-group/
+    - pnpm run docs:build # npm run docs:build
   artifacts:
     paths:
       - public
