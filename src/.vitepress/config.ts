@@ -153,6 +153,10 @@ export default defineConfig({
           link: "/useEventListener/"
         },
         {
+          text: "useGlobalState",
+          link: "/useGlobalState/"
+        },
+        {
           text: "useToggle",
           link: "/useToggle/"
         },

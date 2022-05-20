@@ -7,48 +7,9 @@
 ## 代码演示
 
 ### 基本用法
-
-```js
-import { ref } from 'vue';
-import { useEventListener } from '@vant/use';
-
-export default {
-  setup() {
-    // 在 window 上绑定 resize 事件
-    // 未指定监听对象时，默认会监听 window 的事件
-    useEventListener('resize', () => {
-      console.log('window resize');
-    });
-
-    // 在 body 元素上绑定 click 事件
-    useEventListener(
-      'click',
-      () => {
-        console.log('click body');
-      },
-      { target: document.body }
-    );
-  },
-};
-```
-
+@import "./demo/index.vue"
 ## API
 
-### 类型定义
-
-```ts
-type Options = {
-  target?: EventTarget | Ref<EventTarget>;
-  capture?: boolean;
-  passive?: boolean;
-};
-
-function useEventListener(
-  type: string,
-  listener: EventListener,
-  options?: Options
-): void;
-```
 
 ### 参数
 
@@ -65,3 +26,8 @@ function useEventListener(
 | target | 绑定事件的元素 | _EventTarget \| Ref\<EventTarget>_ | `window` |
 | capture | 是否在事件捕获阶段触发 | _boolean_ | `false` |
 | passive | 设置为 `true` 时，表示 `listener` 永远不会调用 `preventDefault` | _boolean_ | `false` |
+
+### 源文件
+::: details
+<<< @/useEventListener/index.ts
+:::

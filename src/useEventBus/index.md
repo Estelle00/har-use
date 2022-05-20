@@ -25,7 +25,7 @@ interface EventBus<T = unknown> {
   on: EventBusOn<T>;
   trigger: EventBusTrigger<T>;
 }
-function useEventBus<T = unknown>(): EventBus<T>;
+export declare function useEventBus<T = unknown>(): EventBus<T>;
 ```
 ### 返回值
 

@@ -19,7 +19,7 @@ import { useToggle } from "@har/use";
 ### 类型定义
 
 ```ts
-function useToggle(
+export declare function useToggle(
   defaultValue: boolean
 ): [Ref<boolean>, (newValue: boolean) => void];
 ```
