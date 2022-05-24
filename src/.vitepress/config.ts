@@ -15,6 +15,7 @@ export default defineConfig({
   title: "har-use",
   lang: "zh-CN",
   outDir: "../public",
+  base: "/har-use/",
   vue: {
     reactivityTransform: true
   },
