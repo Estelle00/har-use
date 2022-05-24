@@ -157,6 +157,10 @@ export default defineConfig({
           link: "/useGlobalState/"
         },
         {
+          text: "useRect",
+          link: "/useRect/"
+        },
+        {
           text: "useToggle",
           link: "/useToggle/"
         },

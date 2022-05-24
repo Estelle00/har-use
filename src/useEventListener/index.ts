@@ -1,6 +1,7 @@
 import { Ref, watch, isRef, unref } from "vue";
 import { onMountedOrActivated } from "../onMountedOrActivated";
 import { tryOnScopeDispose } from "../tryOnScopeDispose";
+import { inBrowser } from "../utils";
 
 type TargetRef = EventTarget | Ref<EventTarget | undefined>;
 export type UseEventListenerOptions = {
@@ -19,6 +20,9 @@ export function useEventListener(
   // 可选的配置项
   options: UseEventListenerOptions = {}
 ) {
+  if (!inBrowser) {
+    return;
+  }
   const { target = window, capture = false, passive = false } = options;
   let attached: boolean;
   function add(target?: TargetRef) {

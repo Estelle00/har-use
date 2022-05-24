@@ -1,14 +1,14 @@
 image: node:16.5.0
+before_script:
+  - npm i pnpm -g
+  - pnpm install --registry=https://nexus.huianrong.com/repository/npm-group/
 pages:
   stage: deploy
-  tags:
-    - stg-runner-tag
   cache:
     paths:
       - node_modules/
   script:
-    - yarn install --register=https://nexus.huianrong.com/repository/npm-group/
-    - yarn docs:build # npm run docs:build
+    - pnpm run docs:build
   artifacts:
     paths:
       - public
