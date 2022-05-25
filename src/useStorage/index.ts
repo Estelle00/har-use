@@ -1,8 +1,7 @@
 import type { MayBeRef, StorageLike } from "../type";
-import { ref, unref } from "vue";
+import { nextTick, Ref, ref, unref } from "vue";
 import { typeOf, createCache } from "../utils";
-import { watchPusable } from "../watchPausable";
-import cloneDeepWith from "lodash/cloneDeepWith";
+import { pausableWatch } from "../pausableWatch";
 const { setCache, subscribe, deleteCache } = createCache(Symbol("useStorage"));
 export interface Serializer<T> {
   read: (v: string) => T;
@@ -64,20 +63,6 @@ export const storageSerializers: Record<GuestType, Serializer<any>> = {
     write: (v) => String(v),
   },
 };
-const defaultSerializer = {
-  read(v: any) {
-    return cloneDeepWith(v, (value) => {
-      const type = guessType(value);
-      return storageSerializers[type].read(value);
-    });
-  },
-  write(v: any) {
-    return cloneDeepWith(v, (value) => {
-      const type = guessType(value);
-      return storageSerializers[type].write(value);
-    });
-  },
-};
 export function useStorage<T extends string | number | boolean | object | null>(
   key: string,
   initialValue: MayBeRef<T>,
@@ -88,23 +73,30 @@ export function useStorage<T extends string | number | boolean | object | null>(
   const data = ref(initialValue);
   if (!storage) return data;
   const rawInit = unref(initialValue);
-  const serializer = options.serializer ?? defaultSerializer;
-  const { pause, resume } = watchPusable(data, (v: T) => write(v), {
-    deep,
-  });
+  const type = guessType(initialValue);
+  const serializer = options.serializer ?? storageSerializers[type];
+  const { pause, resume } = pausableWatch(
+    data,
+    (v: T) => {
+      write(v);
+    },
+    {
+      deep,
+    }
+  );
 
   function write(v: T) {
     if (v === null) {
       storage!.removeItem(key);
       deleteCache(key);
     } else {
-      const data = serializer.write(v);
-      storage!.setItem(key, data);
-      setCache(key, data);
+      const d = serializer.write(v);
+      storage!.setItem(key, d);
+      setCache(key, d);
     }
   }
   subscribe(key, read);
-  function read(newValue?: T) {
+  function read(newValue?: string) {
     pause();
     const rawVal = newValue ?? storage!.getItem(key);
     if (rawVal === null) {
@@ -113,7 +105,7 @@ export function useStorage<T extends string | number | boolean | object | null>(
     } else {
       data.value = serializer.read(rawVal);
     }
-    resume();
+    nextTick(resume);
   }
   read();
   return data;

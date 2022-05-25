@@ -7,8 +7,13 @@ export type CacheValue = {
   time: number;
 };
 export type CacheListener = (data: any, params: any[]) => void;
-const instanceCache = new Map<CacheKey, Cache>();
-
+export type ReturnCache = {
+  getCache: Cache["getCache"];
+  setCache: Cache["setCache"];
+  subscribe: Cache["subscribe"];
+  deleteCache: Cache["deleteCache"];
+};
+const instanceCache = new Map<CacheKey, ReturnCache>();
 class Cache {
   cache = new Map<CacheKey, CacheValue>();
   listeners: Record<CacheKey, CacheListener[]> = {};
@@ -41,6 +46,7 @@ class Cache {
     this.cache.delete(key);
   }
   subscribe(key: string, listener: CacheListener) {
+    console.log(this);
     if (!this.listeners[key]) {
       this.listeners[key] = [];
     }
@@ -55,6 +61,12 @@ export function createCache(name: CacheKey) {
   const cacheInstance = instanceCache.get(name);
   if (cacheInstance) return cacheInstance;
   const instance = new Cache();
-  instanceCache.set(name, instance);
-  return instance;
+  const returnData = {
+    getCache: instance.getCache.bind(instance),
+    setCache: instance.setCache.bind(instance),
+    subscribe: instance.subscribe.bind(instance),
+    deleteCache: instance.deleteCache.bind(instance),
+  };
+  instanceCache.set(name, returnData);
+  return returnData;
 }

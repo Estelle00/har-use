@@ -15,8 +15,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite ./example --config vite.config.ts",
-    "docs": "vitepress dev src",
+    "docs:dev": "vitepress dev src",
     "docs:build": "vitepress build src",
     "build": "rimraf dist && har build:component",
     "release": "pnpm build && release-it",

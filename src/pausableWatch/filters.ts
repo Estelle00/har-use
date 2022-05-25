@@ -1,4 +1,4 @@
-import { useToggle } from "../useToggle";
+import { useToggle } from "@har/use";
 import type { Fn } from "../type";
 
 export interface ConfigurableEventFilter {
@@ -32,10 +32,9 @@ export function createFilterWrapper<T extends FunctionArgs>(
   function wrapper(this: any, ...args: any[]) {
     filter(() => fn.apply(this, args), { fn, thisArg: this, args });
   }
-
-  return wrapper as any as T;
+  return wrapper as T;
 }
-export function pusableFilter(cb = bypassFilter) {
+export function pausableFilter(cb = bypassFilter) {
   const [isActive, toggle] = useToggle(true);
   function pause() {
     toggle(false);

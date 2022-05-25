@@ -13,3 +13,11 @@ export function typeOf(data: any) {
     .match(/\[object (\w+)]/)![1]
     .toLowerCase();
 }
+
+export function tryParse(data: any) {
+  try {
+    return JSON.parse(data);
+  } catch (e) {
+    return data;
+  }
+}
