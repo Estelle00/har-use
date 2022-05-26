@@ -169,6 +169,10 @@ export default defineConfig({
           text: "useStorage",
           link: "/useStorage/"
         },
+        {
+          text: "useTitle",
+          link: "/useTitle/"
+        },
       ]
     }
   }

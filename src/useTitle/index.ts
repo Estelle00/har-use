@@ -1,15 +1,20 @@
-import { ref, Ref, watch } from "vue";
+import { ref, watch } from "vue";
 import isString from "lodash/isString";
-type MayBeRef<T> = T | Ref<T>;
+import { MayBeRef } from "../type";
+export interface UseTitleOptions {
+  template?: string;
+}
 export function useTitle(
-  newTitle: MayBeRef<string | null | undefined> = null
-): Ref<string | null | undefined> {
+  newTitle: MayBeRef<string | null | undefined> = null,
+  options: UseTitleOptions = {}
+) {
+  const { template = "%s" } = options;
   const title = ref(newTitle ?? document.title ?? null);
   watch(
     title,
     (t, o) => {
       if (isString(t) && t !== o) {
-        document.title = t;
+        document.title = template.replace("%s", t);
       }
     },
     {
