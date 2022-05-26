@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watchEffect } from 'vue'
-import { useData } from 'vitepress'
+import { ref, computed, onMounted, watchEffect } from "vue";
+import { useData } from "vitepress";
 
-const { theme, page } = useData()
+const { theme, page } = useData();
 
 const hasLastUpdated = computed(() => {
-  const lu = theme.value.lastUpdated
+  const lu = theme.value.lastUpdated;
 
-  return lu !== undefined && lu !== false && page.value.lastUpdated !== 0
-})
+  return lu !== undefined && lu !== false && page.value.lastUpdated !== 0;
+});
 
 const prefix = computed(() => {
-  const p = theme.value.lastUpdated
-  return p === true ? 'Last Updated' : p
-})
+  const p = theme.value.lastUpdated;
+  return p === true ? "Last Updated" : p;
+});
 
-const datetime = ref('')
+const datetime = ref("");
 onMounted(() => {
   watchEffect(() => {
-    datetime.value = new Date(page.value.lastUpdated!).toLocaleString()
-  })
-})
+    datetime.value = new Date(page.value.lastUpdated!).toLocaleString();
+  });
+});
 </script>
 
 <template>

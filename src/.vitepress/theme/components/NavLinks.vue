@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useData } from 'vitepress'
-import { useLanguageLinks } from '../composables/nav'
-import { useRepo } from '../composables/repo'
-import NavLink from './NavLink.vue'
-import NavDropdownLink from './NavDropdownLink.vue'
+import { computed } from "vue";
+import { useData } from "vitepress";
+import { useLanguageLinks } from "../composables/nav";
+import { useRepo } from "../composables/repo";
+import NavLink from "./NavLink.vue";
+import NavDropdownLink from "./NavDropdownLink.vue";
 
-const { theme } = useData()
-const localeLinks = useLanguageLinks()
-const repo = useRepo()
-const show = computed(() => theme.value.nav || repo.value || localeLinks.value)
+const { theme } = useData();
+const localeLinks = useLanguageLinks();
+const repo = useRepo();
+const show = computed(() => theme.value.nav || repo.value || localeLinks.value);
 </script>
 
 <template>

@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 
 const { code, placement } = defineProps<{
-  code: string
-  placement: string
-}>()
+  code: string;
+  placement: string;
+}>();
 
-const el = ref()
+const el = ref();
 
 onMounted(() => {
-  const s = document.createElement('script')
-  s.id = '_carbonads_js'
-  s.src = `//cdn.carbonads.com/carbon.js?serve=${code}&placement=${placement}`
-  el.value.appendChild(s)
-})
+  const s = document.createElement("script");
+  s.id = "_carbonads_js";
+  s.src = `//cdn.carbonads.com/carbon.js?serve=${code}&placement=${placement}`;
+  el.value.appendChild(s);
+});
 </script>
 
 <template>
@@ -34,7 +34,7 @@ onMounted(() => {
 .carbon-ads::after {
   clear: both;
   display: block;
-  content: '';
+  content: "";
 }
 
 @media (min-width: 420px) {

@@ -1,26 +1,26 @@
-import { computed } from 'vue'
-import { useData } from 'vitepress'
-import { isArray, ensureStartingSlash, removeExtention } from '../utils'
-import { getSideBarConfig, getFlatSideBarLinks } from '../support/sideBar'
+import { computed } from "vue";
+import { useData } from "vitepress";
+import { isArray, ensureStartingSlash, removeExtention } from "../utils";
+import { getSideBarConfig, getFlatSideBarLinks } from "../support/sideBar";
 
 export function useNextAndPrevLinks() {
-  const { page, theme } = useData()
+  const { page, theme } = useData();
 
   const path = computed(() => {
-    return removeExtention(ensureStartingSlash(page.value.relativePath))
-  })
+    return removeExtention(ensureStartingSlash(page.value.relativePath));
+  });
 
   const candidates = computed(() => {
-    const config = getSideBarConfig(theme.value.sidebar, path.value)
+    const config = getSideBarConfig(theme.value.sidebar, path.value);
 
-    return isArray(config) ? getFlatSideBarLinks(config) : []
-  })
+    return isArray(config) ? getFlatSideBarLinks(config) : [];
+  });
 
   const index = computed(() => {
     return candidates.value.findIndex((item) => {
-      return item.link === path.value
-    })
-  })
+      return item.link === path.value;
+    });
+  });
 
   const next = computed(() => {
     if (
@@ -28,21 +28,21 @@ export function useNextAndPrevLinks() {
       index.value > -1 &&
       index.value < candidates.value.length - 1
     ) {
-      return candidates.value[index.value + 1]
+      return candidates.value[index.value + 1];
     }
-  })
+  });
 
   const prev = computed(() => {
     if (theme.value.prevLinks !== false && index.value > 0) {
-      return candidates.value[index.value - 1]
+      return candidates.value[index.value - 1];
     }
-  })
+  });
 
-  const hasLinks = computed(() => !!next.value || !!prev.value)
+  const hasLinks = computed(() => !!next.value || !!prev.value);
 
   return {
     next,
     prev,
-    hasLinks
-  }
+    hasLinks,
+  };
 }

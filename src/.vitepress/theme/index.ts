@@ -6,8 +6,8 @@ import ArcoIcon from "@arco-design/web-vue/lib/icon";
 import CellDemo from "./components/cell-demo/index.vue";
 import CellCode from "./components/cell-code/index.vue";
 import CodeBlock from "./components/code-block/index.vue";
-import Layout from './Layout.vue'
-import NotFound from './NotFound.vue'
+import Layout from "./Layout.vue";
+import NotFound from "./NotFound.vue";
 const theme: Theme = {
   Layout,
   NotFound,

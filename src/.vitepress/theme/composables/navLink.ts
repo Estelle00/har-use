@@ -1,49 +1,49 @@
-import { computed, Ref } from 'vue'
-import { useRoute, withBase } from 'vitepress'
-import { isExternal as isExternalCheck } from '../utils'
-import type { DefaultTheme } from '../config'
+import { computed, Ref } from "vue";
+import { useRoute, withBase } from "vitepress";
+import { isExternal as isExternalCheck } from "../utils";
+import type { DefaultTheme } from "../config";
 
 export function useNavLink(item: Ref<DefaultTheme.NavItemWithLink>) {
-  const route = useRoute()
+  const route = useRoute();
 
-  const isExternal = isExternalCheck(item.value.link)
+  const isExternal = isExternalCheck(item.value.link);
 
   const props = computed(() => {
-    const routePath = normalizePath(`/${route.data.relativePath}`)
+    const routePath = normalizePath(`/${route.data.relativePath}`);
 
-    let active = false
+    let active = false;
     if (item.value.activeMatch) {
-      active = new RegExp(item.value.activeMatch).test(routePath)
+      active = new RegExp(item.value.activeMatch).test(routePath);
     } else {
-      const itemPath = normalizePath(item.value.link)
+      const itemPath = normalizePath(item.value.link);
       active =
-        itemPath === '/'
+        itemPath === "/"
           ? itemPath === routePath
-          : routePath.startsWith(itemPath)
+          : routePath.startsWith(itemPath);
     }
 
     return {
       class: {
         active,
-        isExternal
+        isExternal,
       },
       href: isExternal ? item.value.link : withBase(item.value.link),
       target: item.value.target || (isExternal ? `_blank` : null),
       rel: item.value.rel || (isExternal ? `noopener noreferrer` : null),
-      'aria-label': item.value.ariaLabel
-    }
-  })
+      "aria-label": item.value.ariaLabel,
+    };
+  });
 
   return {
     props,
-    isExternal
-  }
+    isExternal,
+  };
 }
 
 function normalizePath(path: string): string {
   return path
-    .replace(/#.*$/, '')
-    .replace(/\?.*$/, '')
-    .replace(/\.(html|md)$/, '')
-    .replace(/\/index$/, '/')
+    .replace(/#.*$/, "")
+    .replace(/\?.*$/, "")
+    .replace(/\.(html|md)$/, "")
+    .replace(/\/index$/, "/");
 }

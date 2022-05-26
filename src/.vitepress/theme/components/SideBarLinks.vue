@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useSideBar } from '../composables/sideBar'
-import { SideBarLink } from './SideBarLink'
+import { useSideBar } from "../composables/sideBar";
+import { SideBarLink } from "./SideBarLink";
 
-const items = useSideBar()
+const items = useSideBar();
 </script>
 
 <template>

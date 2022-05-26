@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import EditLink from './EditLink.vue'
-import LastUpdated from './LastUpdated.vue'
-import { useData } from 'vitepress'
+import EditLink from "./EditLink.vue";
+import LastUpdated from "./LastUpdated.vue";
+import { useData } from "vitepress";
 
-const { page } = useData()
+const { page } = useData();
 </script>
 
 <template>

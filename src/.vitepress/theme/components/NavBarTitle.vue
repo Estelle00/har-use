@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { withBase, useData } from 'vitepress'
-const { site, theme, localePath } = useData()
+import { withBase, useData } from "vitepress";
+const { site, theme, localePath } = useData();
 </script>
 
 <template>

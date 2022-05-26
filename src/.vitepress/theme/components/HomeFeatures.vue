@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useData } from 'vitepress'
+import { computed } from "vue";
+import { useData } from "vitepress";
 
-const { frontmatter } = useData()
+const { frontmatter } = useData();
 
 const hasFeatures = computed(() => {
-  return frontmatter.value.features && frontmatter.value.features.length > 0
-})
+  return frontmatter.value.features && frontmatter.value.features.length > 0;
+});
 
 interface Feature {
-  title?: string
-  details?: string
+  title?: string;
+  details?: string;
 }
 
 const features = computed<Feature[]>(() => {
-  return frontmatter.value.features ? frontmatter.value.features : []
-})
+  return frontmatter.value.features ? frontmatter.value.features : [];
+});
 </script>
 
 <template>

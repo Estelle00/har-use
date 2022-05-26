@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import HomeHero from './HomeHero.vue'
-import HomeFeatures from './HomeFeatures.vue'
-import HomeFooter from './HomeFooter.vue'
+import HomeHero from "./HomeHero.vue";
+import HomeFeatures from "./HomeFeatures.vue";
+import HomeFooter from "./HomeFooter.vue";
 </script>
 
 <template>

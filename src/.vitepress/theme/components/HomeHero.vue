@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useData, withBase } from 'vitepress'
-import NavLink from './NavLink.vue'
+import { computed } from "vue";
+import { useData, withBase } from "vitepress";
+import NavLink from "./NavLink.vue";
 
-const { site, frontmatter } = useData()
+const { site, frontmatter } = useData();
 
 const showHero = computed(() => {
   const { heroImage, heroText, tagline, actionLink, actionText } =
-    frontmatter.value
-  return heroImage || heroText || tagline || (actionLink && actionText)
-})
+    frontmatter.value;
+  return heroImage || heroText || tagline || (actionLink && actionText);
+});
 
-const heroText = computed(() => frontmatter.value.heroText || site.value.title)
+const heroText = computed(() => frontmatter.value.heroText || site.value.title);
 const tagline = computed(
   () => frontmatter.value.tagline || site.value.description
-)
+);
 </script>
 
 <template>
@@ -40,7 +40,7 @@ const tagline = computed(
       v-if="frontmatter.altActionLink && frontmatter.altActionText"
       :item="{
         link: frontmatter.altActionLink,
-        text: frontmatter.altActionText
+        text: frontmatter.altActionText,
       }"
       class="action alt"
     />

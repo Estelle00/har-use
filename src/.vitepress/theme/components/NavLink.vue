@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { toRefs } from 'vue'
-import type { DefaultTheme } from '../config'
-import { useNavLink } from '../composables/navLink'
-import OutboundLink from './icons/OutboundLink.vue'
+import { toRefs } from "vue";
+import type { DefaultTheme } from "../config";
+import { useNavLink } from "../composables/navLink";
+import OutboundLink from "./icons/OutboundLink.vue";
 
 const props = defineProps<{
-  item: DefaultTheme.NavItemWithLink
-}>()
+  item: DefaultTheme.NavItemWithLink;
+}>();
 
-const propsRefs = toRefs(props)
+const propsRefs = toRefs(props);
 
-const { props: linkProps, isExternal } = useNavLink(propsRefs.item)
+const { props: linkProps, isExternal } = useNavLink(propsRefs.item);
 </script>
 
 <template>

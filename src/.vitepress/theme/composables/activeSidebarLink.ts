@@ -1,93 +1,93 @@
-import { onMounted, onUnmounted, onUpdated } from 'vue'
+import { onMounted, onUnmounted, onUpdated } from "vue";
 
 export function useActiveSidebarLinks() {
-  let rootActiveLink: HTMLAnchorElement | null = null
-  let activeLink: HTMLAnchorElement | null = null
+  let rootActiveLink: HTMLAnchorElement | null = null;
+  let activeLink: HTMLAnchorElement | null = null;
 
-  const onScroll = throttleAndDebounce(setActiveLink, 300)
+  const onScroll = throttleAndDebounce(setActiveLink, 300);
 
   function setActiveLink(): void {
-    const sidebarLinks = getSidebarLinks()
-    const anchors = getAnchors(sidebarLinks)
+    const sidebarLinks = getSidebarLinks();
+    const anchors = getAnchors(sidebarLinks);
 
     for (let i = 0; i < anchors.length; i++) {
-      const anchor = anchors[i]
-      const nextAnchor = anchors[i + 1]
+      const anchor = anchors[i];
+      const nextAnchor = anchors[i + 1];
 
-      const [isActive, hash] = isAnchorActive(i, anchor, nextAnchor)
+      const [isActive, hash] = isAnchorActive(i, anchor, nextAnchor);
 
       if (isActive) {
-        history.replaceState(null, document.title, hash ? hash : ' ')
-        activateLink(hash)
-        return
+        history.replaceState(null, document.title, hash ? hash : " ");
+        activateLink(hash);
+        return;
       }
     }
   }
 
   function activateLink(hash: string | null): void {
-    deactiveLink(activeLink)
-    deactiveLink(rootActiveLink)
+    deactiveLink(activeLink);
+    deactiveLink(rootActiveLink);
 
-    activeLink = document.querySelector(`.sidebar a[href="${hash}"]`)
+    activeLink = document.querySelector(`.sidebar a[href="${hash}"]`);
 
     if (!activeLink) {
-      return
+      return;
     }
 
-    activeLink.classList.add('active')
+    activeLink.classList.add("active");
 
     // also add active class to parent h2 anchors
-    const rootLi = activeLink.closest('.sidebar-links > ul > li')
+    const rootLi = activeLink.closest(".sidebar-links > ul > li");
 
     if (rootLi && rootLi !== activeLink.parentElement) {
-      rootActiveLink = rootLi.querySelector('a')
-      rootActiveLink && rootActiveLink.classList.add('active')
+      rootActiveLink = rootLi.querySelector("a");
+      rootActiveLink && rootActiveLink.classList.add("active");
     } else {
-      rootActiveLink = null
+      rootActiveLink = null;
     }
   }
 
   function deactiveLink(link: HTMLAnchorElement | null): void {
-    link && link.classList.remove('active')
+    link && link.classList.remove("active");
   }
 
   onMounted(() => {
-    setActiveLink()
-    window.addEventListener('scroll', onScroll)
-  })
+    setActiveLink();
+    window.addEventListener("scroll", onScroll);
+  });
 
   onUpdated(() => {
     // sidebar update means a route change
-    activateLink(decodeURIComponent(location.hash))
-  })
+    activateLink(decodeURIComponent(location.hash));
+  });
 
   onUnmounted(() => {
-    window.removeEventListener('scroll', onScroll)
-  })
+    window.removeEventListener("scroll", onScroll);
+  });
 }
 
 function getSidebarLinks(): HTMLAnchorElement[] {
   return [].slice.call(
-    document.querySelectorAll('.sidebar a.sidebar-link-item')
-  )
+    document.querySelectorAll(".sidebar a.sidebar-link-item")
+  );
 }
 
 function getAnchors(sidebarLinks: HTMLAnchorElement[]): HTMLAnchorElement[] {
   return [].slice
-    .call(document.querySelectorAll('.header-anchor'))
+    .call(document.querySelectorAll(".header-anchor"))
     .filter((anchor: HTMLAnchorElement) =>
       sidebarLinks.some((sidebarLink) => sidebarLink.hash === anchor.hash)
-    ) as HTMLAnchorElement[]
+    ) as HTMLAnchorElement[];
 }
 
 function getPageOffset(): number {
-  return (document.querySelector('.nav-bar') as HTMLElement).offsetHeight
+  return (document.querySelector(".nav-bar") as HTMLElement).offsetHeight;
 }
 
 function getAnchorTop(anchor: HTMLAnchorElement): number {
-  const pageOffset = getPageOffset()
+  const pageOffset = getPageOffset();
 
-  return anchor.parentElement!.offsetTop - pageOffset - 15
+  return anchor.parentElement!.offsetTop - pageOffset - 15;
 }
 
 function isAnchorActive(
@@ -95,40 +95,40 @@ function isAnchorActive(
   anchor: HTMLAnchorElement,
   nextAnchor: HTMLAnchorElement
 ): [boolean, string | null] {
-  const scrollTop = window.scrollY
+  const scrollTop = window.scrollY;
 
   if (index === 0 && scrollTop === 0) {
-    return [true, null]
+    return [true, null];
   }
 
   if (scrollTop < getAnchorTop(anchor)) {
-    return [false, null]
+    return [false, null];
   }
 
   if (!nextAnchor || scrollTop < getAnchorTop(nextAnchor)) {
-    return [true, decodeURIComponent(anchor.hash)]
+    return [true, decodeURIComponent(anchor.hash)];
   }
 
-  return [false, null]
+  return [false, null];
 }
 
 function throttleAndDebounce(fn: () => void, delay: number): () => void {
-  let timeout: number
-  let called = false
+  let timeout: number;
+  let called = false;
 
   return () => {
     if (timeout) {
-      clearTimeout(timeout)
+      clearTimeout(timeout);
     }
 
     if (!called) {
-      fn()
-      called = true
+      fn();
+      called = true;
       setTimeout(() => {
-        called = false
-      }, delay)
+        called = false;
+      }, delay);
     } else {
-      timeout = setTimeout(fn, delay)
+      timeout = setTimeout(fn, delay);
     }
-  }
+  };
 }

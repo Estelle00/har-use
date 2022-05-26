@@ -28,16 +28,16 @@
           <icon-copy />
         </a-button>
       </a-tooltip>
-<!--      <a-tooltip content="在CodeSandbox打开">-->
-<!--        <a-button-->
-<!--          class="cell-code-operation-btn"-->
-<!--          shape="circle"-->
-<!--          size="small"-->
-<!--          @click="handleClickCodeSandbox"-->
-<!--        >-->
-<!--          <icon-code-sandbox />-->
-<!--        </a-button>-->
-<!--      </a-tooltip>-->
+      <!--      <a-tooltip content="在CodeSandbox打开">-->
+      <!--        <a-button-->
+      <!--          class="cell-code-operation-btn"-->
+      <!--          shape="circle"-->
+      <!--          size="small"-->
+      <!--          @click="handleClickCodeSandbox"-->
+      <!--        >-->
+      <!--          <icon-code-sandbox />-->
+      <!--        </a-button>-->
+      <!--      </a-tooltip>-->
     </div>
     <div ref="contentRef" class="cell-code-content" :style="style">
       <slot />

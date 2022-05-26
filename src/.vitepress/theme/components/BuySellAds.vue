@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted } from "vue";
 
 // global _bsa
-const ID = 'bsa-cpc-script'
+const ID = "bsa-cpc-script";
 
 declare global {
-  var _bsa: BSA | undefined
+  var _bsa: BSA | undefined;
 
   interface BSA {
     init(
@@ -13,47 +13,47 @@ declare global {
       code: string,
       placement: string,
       options: {
-        target: string
-        align: string
-        disable_css?: 'true' | 'false'
+        target: string;
+        align: string;
+        disable_css?: "true" | "false";
       }
-    ): void
+    ): void;
   }
 }
 
 const { code, placement } = defineProps<{
-  code: string
-  placement: string
-}>()
+  code: string;
+  placement: string;
+}>();
 
 onMounted(() => {
   if (!document.getElementById(ID)) {
-    const s = document.createElement('script')
+    const s = document.createElement("script");
 
-    s.id = ID
-    s.src = '//m.servedby-buysellads.com/monetization.js'
+    s.id = ID;
+    s.src = "//m.servedby-buysellads.com/monetization.js";
 
-    document.head.appendChild(s)
+    document.head.appendChild(s);
 
     s.onload = () => {
-      load()
-    }
+      load();
+    };
   } else {
-    load()
+    load();
   }
-})
+});
 
 function load() {
-  if (typeof _bsa !== 'undefined' && _bsa) {
-    const parent = document.querySelector('.bsa-cpc')!
+  if (typeof _bsa !== "undefined" && _bsa) {
+    const parent = document.querySelector(".bsa-cpc")!;
     // cleanup any existing ad to avoid them stacking
-    parent.innerHTML = ''
+    parent.innerHTML = "";
 
-    _bsa.init('default', code, `placement:${placement}`, {
-      target: '.bsa-cpc',
-      align: 'horizontal',
-      disable_css: 'true'
-    })
+    _bsa.init("default", code, `placement:${placement}`, {
+      target: ".bsa-cpc",
+      align: "horizontal",
+      disable_css: "true",
+    });
   }
 }
 </script>
@@ -120,7 +120,7 @@ function load() {
   font-size: 0.85em;
   font-weight: 500;
   color: #1c90f3;
-  content: 'Sponsored';
+  content: "Sponsored";
 }
 
 @media (min-width: 512px) {

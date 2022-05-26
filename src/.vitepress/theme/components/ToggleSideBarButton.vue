@@ -1,7 +1,7 @@
 <script lang="ts">
 export default {
-  emits: ['toggle']
-}
+  emits: ["toggle"],
+};
 </script>
 
 <template>

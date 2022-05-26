@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import PageFooter from './PageFooter.vue'
-import NextAndPrevLinks from './NextAndPrevLinks.vue'
+import PageFooter from "./PageFooter.vue";
+import NextAndPrevLinks from "./NextAndPrevLinks.vue";
 </script>
 
 <template>
