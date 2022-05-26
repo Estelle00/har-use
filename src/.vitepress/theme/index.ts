@@ -1,15 +1,16 @@
 import type { Theme } from "vitepress";
-import DefaultTheme from "vitepress/theme";
 import "./styles/index.less";
-import "prismjs/themes/prism-tomorrow.css";
 import ArcoVue from "@arco-design/web-vue";
 // @ts-ignore
 import ArcoIcon from "@arco-design/web-vue/lib/icon";
 import CellDemo from "./components/cell-demo/index.vue";
 import CellCode from "./components/cell-code/index.vue";
 import CodeBlock from "./components/code-block/index.vue";
+import Layout from './Layout.vue'
+import NotFound from './NotFound.vue'
 const theme: Theme = {
-  ...DefaultTheme,
+  Layout,
+  NotFound,
   enhanceApp({ app }) {
     app.component(CellDemo.name, CellDemo);
     app.component(CellCode.name, CellCode);

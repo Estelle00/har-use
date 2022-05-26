@@ -122,20 +122,29 @@ export default defineConfig({
       }
     },
   },
+  lastUpdated: true,
   themeConfig: {
+    lastUpdated: "最近更新时间",
     docsDir: "src",
     editLinks: true,
     editLinkText: "编辑这个文档",
     repo: pkg.repository.url,
     repoLabel: "gitlab",
-    lastUpdated: true,
     nav: [
       {
         text: "核心方法",
         link: "/"
       },
+      {
+        text: "useRequest",
+        link: "/useRequest/"
+      },
     ],
     sidebar: {
+      "/useRequest":[{
+        text: "快速上手",
+        link: "/useRequest/"
+      }],
       "/": [
         {
           text: "useClickAway",
