@@ -1,6 +1,6 @@
 import type { MayBeRef, StorageLike } from "../type";
-import { useStorage } from "../useStorage";
-import type { StorageOptions } from "../useStorage";
+import { useStorage } from "@har/use";
+import type { StorageOptions } from "@har/use";
 const storage: StorageLike = {
   getItem(key) {
     const { keys } = uni.getStorageInfoSync();

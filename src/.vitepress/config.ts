@@ -162,16 +162,20 @@ export default defineConfig({
           link: "/useRect/"
         },
         {
-          text: "useToggle",
-          link: "/useToggle/"
-        },
-        {
           text: "useStorage",
           link: "/useStorage/"
         },
         {
           text: "useTitle",
           link: "/useTitle/"
+        },
+        {
+          text: "useToggle",
+          link: "/useToggle/"
+        },
+        {
+          text: "useWindowSize",
+          link: "/useWindowSize/"
         },
       ]
     }
