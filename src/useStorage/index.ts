@@ -1,7 +1,8 @@
 import type { MayBeRef, StorageLike } from "../type";
-import { nextTick, Ref, ref, unref } from "vue";
+import { nextTick, ref, unref } from "vue";
 import { typeOf, createCache } from "../utils";
 import { pausableWatch } from "../pausableWatch";
+import { tryOnScopeDispose } from "../tryOnScopeDispose";
 const { setCache, subscribe, deleteCache } = createCache(Symbol("useStorage"));
 export interface Serializer<T> {
   read: (v: string) => T;
@@ -95,8 +96,9 @@ export function useStorage<T extends string | number | boolean | object | null>(
       setCache(key, d);
     }
   }
-  subscribe(key, read);
-  function read(newValue?: string) {
+  const unsubscribe = subscribe(key, read);
+  tryOnScopeDispose(unsubscribe);
+  function read(newValue?: any) {
     pause();
     const rawVal = newValue ?? storage!.getItem(key);
     if (rawVal === null) {

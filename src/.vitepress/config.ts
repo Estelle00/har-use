@@ -165,6 +165,10 @@ export default defineConfig({
           text: "useToggle",
           link: "/useToggle/"
         },
+        {
+          text: "useStorage",
+          link: "/useStorage/"
+        },
       ]
     }
   }
