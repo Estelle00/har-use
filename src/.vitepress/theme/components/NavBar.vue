@@ -23,10 +23,6 @@ defineEmits(["toggle"]);
 
 <style scoped>
 .nav-bar {
-  //position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
   z-index: var(--z-index-navbar);
   display: flex;
   justify-content: space-between;

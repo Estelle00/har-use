@@ -8,6 +8,7 @@ import Home from "./components/Home.vue";
 import NavBar from "./components/NavBar.vue";
 import SideBar from "./components/SideBar.vue";
 import Page from "./components/Page.vue";
+import { useMediaQuery } from "@har/use";
 // generic state
 const route = useRoute();
 const { site, page, theme, frontmatter } = useData();
@@ -29,7 +30,10 @@ const showNavbar = computed(() => {
 
 // sidebar
 const openSideBar = ref(false);
-
+const isLargeScreen = useMediaQuery("(min-width:720px)");
+const showSide = computed(() => {
+  return openSideBar.value || isLargeScreen.value
+})
 const showSidebar = computed(() => {
   if (frontmatter.value.home || frontmatter.value.sidebar === false) {
     return false;
@@ -49,14 +53,13 @@ const hideSidebar = toggleSidebar.bind(null, false);
 watch(route, hideSidebar);
 // TODO: route only changes when the pathname changes
 // listening to hashchange does nothing because it's prevented in router
-
 </script>
 
 <template>
   <a-layout class="theme">
     <NavBar v-if="showNavbar" @toggle="toggleSidebar" />
     <a-layout class="theme-layout" :has-sider="showSidebar">
-      <SideBar v-if="showSidebar" :open="openSideBar"/>
+      <SideBar v-if="showSidebar" :open="showSide" />
       <a-layout-content>
         <Content v-if="isCustomLayout" />
 
