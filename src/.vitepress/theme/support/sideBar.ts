@@ -1,19 +1,19 @@
-import { DefaultTheme } from "vitepress";
+import { SideBarConfig, MultiSideBarConfig, SideBarItem, SideBarGroup, SideBarLink } from "../shared/default-theme";
 import { isArray, ensureStartingSlash, removeExtention } from "../utils";
 
 export function isSideBarConfig(
-  sidebar: DefaultTheme.SideBarConfig | DefaultTheme.MultiSideBarConfig
-): sidebar is DefaultTheme.SideBarConfig {
+  sidebar: SideBarConfig | MultiSideBarConfig
+): sidebar is SideBarConfig {
   return sidebar === false || sidebar === "auto" || isArray(sidebar);
 }
 
 export function isSideBarGroup(
-  item: DefaultTheme.SideBarItem
-): item is DefaultTheme.SideBarGroup {
-  return (item as DefaultTheme.SideBarGroup).children !== undefined;
+  item: SideBarItem
+): item is SideBarGroup {
+  return (item as SideBarGroup).children !== undefined;
 }
 
-export function isSideBarEmpty(sidebar?: DefaultTheme.SideBarConfig): boolean {
+export function isSideBarEmpty(sidebar?: SideBarConfig): boolean {
   return isArray(sidebar) ? sidebar.length === 0 : !sidebar;
 }
 
@@ -24,15 +24,15 @@ export function isSideBarEmpty(sidebar?: DefaultTheme.SideBarConfig): boolean {
  * was found, it will return `auto` as a fallback.
  */
 export function getSideBarConfig(
-  sidebar: DefaultTheme.SideBarConfig | DefaultTheme.MultiSideBarConfig,
+  sidebar: SideBarConfig | MultiSideBarConfig,
   path: string
-): DefaultTheme.SideBarConfig {
+): SideBarConfig {
   if (isSideBarConfig(sidebar)) {
     return sidebar;
   }
 
   path = ensureStartingSlash(path);
-  for (const dir in sidebar as DefaultTheme.MultiSideBarConfig) {
+  for (const dir in sidebar as MultiSideBarConfig) {
     // make sure the multi sidebar key starts with slash too
     if (path.startsWith(ensureStartingSlash(dir))) {
       return sidebar[dir];
@@ -49,9 +49,9 @@ export function getSideBarConfig(
  * link contains it.
  */
 export function getFlatSideBarLinks(
-  sidebar: DefaultTheme.SideBarItem[]
-): DefaultTheme.SideBarLink[] {
-  return sidebar.reduce<DefaultTheme.SideBarLink[]>((links, item) => {
+  sidebar: SideBarItem[]
+): SideBarLink[] {
+  return sidebar.reduce<SideBarLink[]>((links, item) => {
     if (item.link) {
       links.push({ text: item.text, link: removeExtention(item.link) });
     }

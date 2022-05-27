@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { useRoute } from "vitepress";
-import type { DefaultTheme } from "../config";
+import type { NavItemWithChildren } from "../shared/default-theme";
 import NavDropdownLinkItem from "./NavDropdownLinkItem.vue";
 
 defineProps<{
-  item: DefaultTheme.NavItemWithChildren;
+  item: NavItemWithChildren;
 }>();
 
 const route = useRoute();

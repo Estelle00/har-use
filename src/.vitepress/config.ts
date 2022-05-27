@@ -124,7 +124,6 @@ export default defineConfig({
   },
   lastUpdated: true,
   themeConfig: {
-    lastUpdated: "最近更新时间",
     docsDir: "src",
     editLinks: true,
     editLinkText: "编辑这个文档",
@@ -138,6 +137,10 @@ export default defineConfig({
       {
         text: "useRequest",
         link: "/useRequest/"
+      },
+      {
+        text: "test",
+        link: "/useClickAway/"
       },
     ],
     sidebar: {

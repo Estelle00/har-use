@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, defineAsyncComponent } from "vue";
+import { ref, computed, watch } from "vue";
 import { useRoute, useData } from "vitepress";
 import { isSideBarEmpty, getSideBarConfig } from "./support/sideBar";
 
@@ -8,19 +8,6 @@ import Home from "./components/Home.vue";
 import NavBar from "./components/NavBar.vue";
 import SideBar from "./components/SideBar.vue";
 import Page from "./components/Page.vue";
-
-const NoopComponent = () => null;
-
-const CarbonAds = __CARBON__
-  ? defineAsyncComponent(() => import("./components/CarbonAds.vue"))
-  : NoopComponent;
-const BuySellAds = __BSA__
-  ? defineAsyncComponent(() => import("./components/BuySellAds.vue"))
-  : NoopComponent;
-const AlgoliaSearchBox = __ALGOLIA__
-  ? defineAsyncComponent(() => import("./components/AlgoliaSearchBox.vue"))
-  : NoopComponent;
-
 // generic state
 const route = useRoute();
 const { site, page, theme, frontmatter } = useData();
@@ -29,10 +16,6 @@ const { site, page, theme, frontmatter } = useData();
 const isCustomLayout = computed(() => !!frontmatter.value.customLayout);
 // home
 const enableHome = computed(() => !!frontmatter.value.home);
-
-// automatic multilang check for AlgoliaSearchBox
-const isMultiLang = computed(() => Object.keys(site.value.langs).length > 1);
-
 // navbar
 const showNavbar = computed(() => {
   const themeConfig = theme.value;
@@ -67,123 +50,48 @@ watch(route, hideSidebar);
 // TODO: route only changes when the pathname changes
 // listening to hashchange does nothing because it's prevented in router
 
-// page classes
-const pageClasses = computed(() => {
-  return [
-    {
-      "no-navbar": !showNavbar.value,
-      "sidebar-open": openSideBar.value,
-      "no-sidebar": !showSidebar.value,
-    },
-  ];
-});
 </script>
 
 <template>
-  <div class="theme" :class="pageClasses">
-    <NavBar v-if="showNavbar" @toggle="toggleSidebar">
-      <template #search>
-        <slot name="navbar-search">
-          <AlgoliaSearchBox
-            v-if="theme.algolia"
-            :options="theme.algolia"
-            :multilang="isMultiLang"
-          />
-        </slot>
-      </template>
-    </NavBar>
+  <a-layout class="theme">
+    <NavBar v-if="showNavbar" @toggle="toggleSidebar" />
+    <a-layout class="theme-layout" :has-sider="showSidebar">
+      <SideBar v-if="showSidebar" :open="openSideBar"/>
+      <a-layout-content>
+        <Content v-if="isCustomLayout" />
 
-    <SideBar :open="openSideBar">
-      <template #sidebar-top>
-        <slot name="sidebar-top" />
-      </template>
-      <template #sidebar-bottom>
-        <slot name="sidebar-bottom" />
-      </template>
-    </SideBar>
-    <!-- TODO: make this button accessible -->
-    <div class="sidebar-mask" @click="toggleSidebar(false)" />
+        <template v-else-if="enableHome">
+          <!-- A slot for customizing the entire homepage easily -->
+          <slot name="home">
+            <Home>
+              <template #hero>
+                <slot name="home-hero" />
+              </template>
+              <template #features>
+                <slot name="home-features" />
+              </template>
+              <template #footer>
+                <slot name="home-footer" />
+              </template>
+            </Home>
+          </slot>
+        </template>
 
-    <Content v-if="isCustomLayout" />
-
-    <template v-else-if="enableHome">
-      <!-- A slot for customizing the entire homepage easily -->
-      <slot name="home">
-        <Home>
-          <template #hero>
-            <slot name="home-hero" />
+        <Page v-else>
+          <template #top>
+            <slot name="page-top" />
           </template>
-          <template #features>
-            <slot name="home-features" />
+          <template #bottom>
+            <slot name="page-bottom" />
           </template>
-          <template #footer>
-            <slot name="home-footer" />
-          </template>
-        </Home>
-      </slot>
-    </template>
-
-    <Page v-else>
-      <template #top>
-        <slot name="page-top-ads">
-          <div
-            id="ads-container"
-            v-if="theme.carbonAds && theme.carbonAds.carbon"
-          >
-            <CarbonAds
-              :key="'carbon' + page.relativePath"
-              :code="theme.carbonAds.carbon"
-              :placement="theme.carbonAds.placement"
-            />
-          </div>
-        </slot>
-        <slot name="page-top" />
-      </template>
-      <template #bottom>
-        <slot name="page-bottom" />
-        <slot name="page-bottom-ads">
-          <BuySellAds
-            v-if="theme.carbonAds && theme.carbonAds.custom"
-            :key="'custom' + page.relativePath"
-            :code="theme.carbonAds.custom"
-            :placement="theme.carbonAds.placement"
-          />
-        </slot>
-      </template>
-    </Page>
-  </div>
-
+        </Page>
+      </a-layout-content>
+    </a-layout>
+  </a-layout>
   <Debug />
 </template>
-
-<style>
-#ads-container {
-  margin: 0 auto;
-}
-
-@media (min-width: 420px) {
-  #ads-container {
-    position: relative;
-    right: 0;
-    float: right;
-    margin: -8px -8px 24px 24px;
-    width: 146px;
-  }
-}
-
-@media (max-width: 420px) {
-  #ads-container {
-    /* Avoid layout shift */
-    height: 105px;
-    margin: 1.75rem 0;
-  }
-}
-
-@media (min-width: 1400px) {
-  #ads-container {
-    position: fixed;
-    right: 8px;
-    bottom: 8px;
-  }
+<style scoped>
+.theme {
+  height: 100vh;
 }
 </style>

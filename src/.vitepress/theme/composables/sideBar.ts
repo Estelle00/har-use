@@ -1,9 +1,9 @@
 import { computed } from "vue";
 import { useRoute, useData } from "vitepress";
-import { Header } from "../../shared";
-import { useActiveSidebarLinks } from "../composables/activeSidebarLink";
+import type { Header } from "../shared/shared";
+import type { SideBarItem } from "../shared/default-theme";
+import { useActiveSidebarLinks } from "./activeSidebarLink";
 import { getSideBarConfig } from "../support/sideBar";
-import { DefaultTheme } from "../config";
 
 export function useSideBar() {
   const route = useRoute();
@@ -48,20 +48,20 @@ export function useSideBar() {
 function resolveAutoSidebar(
   headers: Header[],
   depth: number
-): DefaultTheme.SideBarItem[] {
-  const ret: DefaultTheme.SideBarItem[] = [];
+): SideBarItem[] {
+  const ret: SideBarItem[] = [];
 
   if (headers === undefined) {
     return [];
   }
 
-  let lastH2: DefaultTheme.SideBarItem | undefined = undefined;
+  let lastH2: SideBarItem | undefined = undefined;
   headers.forEach(({ level, title, slug }) => {
     if (level - 1 > depth) {
       return;
     }
 
-    const item: DefaultTheme.SideBarItem = {
+    const item: SideBarItem = {
       text: title,
       link: `#${slug}`,
     };

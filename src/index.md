@@ -1,6 +1,6 @@
 ---
 title: 首页
-navbar: true
+home: true
 tagline: 常用的 composables 方法，便于业务的快速开发
 ---
 

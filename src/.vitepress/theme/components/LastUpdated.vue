@@ -5,16 +5,8 @@ import { useData } from "vitepress";
 const { theme, page } = useData();
 
 const hasLastUpdated = computed(() => {
-  const lu = theme.value.lastUpdated;
-
-  return lu !== undefined && lu !== false && page.value.lastUpdated !== 0;
+  return page.value.lastUpdated !== 0;
 });
-
-const prefix = computed(() => {
-  const p = theme.value.lastUpdated;
-  return p === true ? "Last Updated" : p;
-});
-
 const datetime = ref("");
 onMounted(() => {
   watchEffect(() => {
@@ -25,7 +17,7 @@ onMounted(() => {
 
 <template>
   <p v-if="hasLastUpdated" class="last-updated">
-    <span class="prefix">{{ prefix }}:</span>
+    <span class="prefix">最近更新时间:</span>
     <span class="datetime">{{ datetime }}</span>
   </p>
 </template>

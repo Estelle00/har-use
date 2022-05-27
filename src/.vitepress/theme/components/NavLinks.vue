@@ -1,17 +1,3 @@
-<script setup lang="ts">
-import { computed } from "vue";
-import { useData } from "vitepress";
-import { useLanguageLinks } from "../composables/nav";
-import { useRepo } from "../composables/repo";
-import NavLink from "./NavLink.vue";
-import NavDropdownLink from "./NavDropdownLink.vue";
-
-const { theme } = useData();
-const localeLinks = useLanguageLinks();
-const repo = useRepo();
-const show = computed(() => theme.value.nav || repo.value || localeLinks.value);
-</script>
-
 <template>
   <nav v-if="show" class="nav-links">
     <template v-if="theme.nav">
@@ -20,16 +6,23 @@ const show = computed(() => theme.value.nav || repo.value || localeLinks.value);
         <NavLink v-else :item="item" />
       </div>
     </template>
-
-    <div v-if="localeLinks" class="item">
-      <NavDropdownLink :item="localeLinks" />
-    </div>
-
     <div v-if="repo" class="item">
       <NavLink :item="repo" />
     </div>
   </nav>
 </template>
+<script setup lang="ts">
+import { computed } from "vue";
+import { useData } from "vitepress";
+import { useLanguageLinks } from "../composables/nav";
+import { useRepo } from "../composables/repo";
+import NavLink from "./NavLink.vue";
+import NavDropdownLink from "./NavDropdownLink.vue";
+const { theme } = useData();
+const localeLinks = useLanguageLinks();
+const repo = useRepo();
+const show = computed(() => theme.value.nav || repo.value || localeLinks.value);
+</script>
 
 <style scoped>
 .nav-links {

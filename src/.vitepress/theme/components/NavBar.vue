@@ -7,24 +7,23 @@ defineEmits(["toggle"]);
 </script>
 
 <template>
-  <header class="nav-bar">
-    <ToggleSideBarButton @toggle="$emit('toggle')" />
-
-    <NavBarTitle />
-
-    <div class="flex-grow" />
-
-    <div class="nav">
-      <NavLinks />
-    </div>
-
-    <slot name="search" />
-  </header>
+  <a-layout-header>
+    <a-affix>
+      <div class="nav-bar">
+        <ToggleSideBarButton @toggle="$emit('toggle')" />
+        <NavBarTitle />
+        <div class="flex-grow" />
+        <div class="nav">
+          <NavLinks />
+        </div>
+      </div>
+    </a-affix>
+  </a-layout-header>
 </template>
 
 <style scoped>
 .nav-bar {
-  position: fixed;
+  //position: fixed;
   top: 0;
   right: 0;
   left: 0;
