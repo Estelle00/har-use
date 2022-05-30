@@ -1,14 +1,19 @@
 import { ref } from "vue";
-import { tryOnBeforeMount, tryOnScopeDispose } from "@har/use";
+import {
+  json2MediaQueryString,
+  Json2MediaQueryType,
+  tryOnBeforeMount,
+  tryOnScopeDispose,
+} from "@har/use";
 
-export function useMediaQuery(query: string) {
+export function useMediaQuery(query: Json2MediaQueryType) {
   const isSupported = Boolean(window && "matchMedia" in window);
   let mediaQuery: MediaQueryList;
   const matches = ref(false);
   function update() {
-    console.log(1, query);
     if (!isSupported) return;
-    if (!mediaQuery) mediaQuery = window.matchMedia(query);
+    if (!mediaQuery)
+      mediaQuery = window.matchMedia(json2MediaQueryString(query));
     matches.value = mediaQuery.matches;
   }
   tryOnBeforeMount(() => {

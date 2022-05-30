@@ -30,7 +30,9 @@ const showNavbar = computed(() => {
 
 // sidebar
 const openSideBar = ref(false);
-const isLargeScreen = useMediaQuery("(min-width:720px)");
+const isLargeScreen = useMediaQuery({
+  minWidth: 720
+});
 const showSide = computed(() => {
   return openSideBar.value || isLargeScreen.value
 })

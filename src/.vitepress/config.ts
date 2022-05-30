@@ -6,11 +6,15 @@ import pkg from "../../package.json";
 import path from "node:path";
 import { pascalCase } from "change-case";
 import Token from "markdown-it/lib/token";
+import {fileURLToPath, URL} from "url";
+import {resolve} from "path";
+import createVueDoc from "./plugins/vite-plugin-doc";
 
 function insertStr(source: string, start: number, newStr: string) {
   return source.slice(0, start) + newStr + source.slice(start);
 }
 
+console.log(fileURLToPath(new URL("../index.ts", import.meta.url)));
 export default defineConfig({
   title: "har-use",
   lang: "zh-CN",
@@ -18,6 +22,14 @@ export default defineConfig({
   base: "/har-use/",
   vue: {
     reactivityTransform: true
+  },
+  vite: {
+    resolve: {
+      alias: {
+        "@har/use": fileURLToPath(new URL("../index.ts", import.meta.url)),
+      },
+    },
+    plugins: [createVueDoc()],
   },
   markdown: {
     config: (md) => {
