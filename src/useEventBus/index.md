@@ -1,5 +1,6 @@
-# useEventBus
-
+---
+title: useEventBus
+---
 ### 介绍
 提供简单的事件发布订阅。
 ::: tip

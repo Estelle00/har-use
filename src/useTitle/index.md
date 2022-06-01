@@ -1,4 +1,6 @@
-# useTitle
+---
+title: useTitle
+---
 
 ## 介绍
 响应式修改页面标题

@@ -81,3 +81,14 @@ export function ensureEndingSlash(path: string): string {
 export function removeExtention(path: string): string {
   return path.replace(/(index)?(\.(md|html))?$/, "") || "/";
 }
+export function resolveLink(base: string, path?: string): string | undefined {
+  if (path === undefined) {
+    return path;
+  }
+  // keep relative hash to the same page
+  if (path.startsWith("#")) {
+    return path;
+  }
+
+  return joinUrl(base, path);
+}

@@ -9,8 +9,8 @@ import type {
   Service,
 } from "./types";
 import { getCachePromise, setCachePromise } from "./utils/cachePromise";
-import { createCache } from "../utils/";
-import type { CacheListener } from "../utils/";
+import { createCache } from "@/utils";
+import type { CacheListener } from "@/utils";
 const requestKey = Symbol("useRequest");
 const { getCache, setCache, subscribe } = createCache(requestKey);
 function useState<TData, TParams extends any[]>(

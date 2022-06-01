@@ -12,7 +12,8 @@
     "declaration": true,
     "declarationDir": "dist/types",
     "paths": {
-      "@har/use": ["./src/index.ts"]
+      "@har/use": ["./src/index.ts"],
+      "@/*": ["src/*"]
     },
     "types": ["@dcloudio/types", "ts-jest"]
   },

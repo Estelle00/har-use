@@ -7,7 +7,6 @@
 .sidebar-link-item {
   display: block;
   margin: 0;
-  border-left: 0.25rem solid transparent;
   color: var(--c-text);
 }
 
@@ -20,30 +19,30 @@ a.sidebar-link-item.active {
   color: var(--c-brand);
 }
 
-.sidebar > .sidebar-links {
-  padding: 0.75rem 0 5rem;
-}
-
 @media (min-width: 720px) {
   .sidebar > .sidebar-links {
     padding: 1.5rem 0;
   }
 }
 
-.sidebar > .sidebar-links > .sidebar-link + .sidebar-link {
-  padding-top: 0.5rem;
+.sidebar > .sidebar-links > .sidebar-link {
+  padding: 5px 0;
 }
 
 @media (min-width: 720px) {
-  .sidebar > .sidebar-links > .sidebar-link + .sidebar-link {
-    padding-top: 1.25rem;
+  .sidebar > .sidebar-links > .sidebar-link {
+    padding: 10px 0;
   }
 }
 
 .sidebar > .sidebar-links > .sidebar-link > .sidebar-link-item {
-  padding: 0.35rem 1.5rem 0.35rem 1.25rem;
-  font-size: 1.1rem;
+  padding: 0 20px;
+  font-size: 18px;
   font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  text-overflow: ellipsis;
 }
 
 .sidebar > .sidebar-links > .sidebar-link > a.sidebar-link-item.active {
@@ -58,10 +57,14 @@ a.sidebar-link-item.active {
   > .sidebar-link
   > .sidebar-link-item {
   display: block;
-  padding: 0.35rem 1.5rem 0.35rem 2rem;
+  padding: 5px 20px 5px 38px;
   line-height: 1.4;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 400;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  text-overflow: ellipsis;
 }
 
 .sidebar
@@ -87,6 +90,7 @@ a.sidebar-link-item.active {
   line-height: 1.4;
   font-size: 0.9rem;
   font-weight: 400;
+
 }
 
 .sidebar

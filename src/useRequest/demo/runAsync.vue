@@ -4,7 +4,7 @@
       <a-input v-model="formData.username" />
     </a-form-item>
     <a-form-item>
-      <a-button :loading="loading" @click="run(formData)">提交</a-button>
+      <a-button :loading="loading" @click="onClick">提交</a-button>
     </a-form-item>
   </a-form>
 </template>
@@ -33,15 +33,17 @@ function getUsername(): Promise<TData> {
     }, 1000);
   });
 }
-const { loading, run } = useRequest<TData, [FormDataType]>(getUsername, {
+const { loading, runAsync } = useRequest<TData, [FormDataType]>(getUsername, {
   manual: true,
-  onSuccess(result, params) {
-    if (result.success) {
-      Message.success(`用户名称成功修改为：${params[0].username}`);
-    }
-  },
-  onError(e) {
-    Message.error(e.message);
-  },
 });
+async function onClick() {
+  try {
+    const result = await runAsync(formData);
+    if (result.success) {
+      Message.success(`用户名称成功修改为：${formData.username}`);
+    }
+  } catch (e) {
+    Message.error((e as Error).message);
+  }
+}
 </script>

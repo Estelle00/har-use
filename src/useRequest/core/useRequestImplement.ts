@@ -1,8 +1,7 @@
 import { Options, Plugin, Service, RequestResult } from "./types";
 import { computed } from "vue";
 import useFetch from "./useFetch";
-import { tryOnMounted } from "../tryOnMounted";
-import { tryOnScopeDispose } from "../tryOnScopeDispose";
+import { tryOnMounted, tryOnScopeDispose } from "@har/use";
 
 export default function useRequestImplement<TData, TParams extends any[]>(
   service: Service<TParams>,

@@ -1,5 +1,6 @@
-# useClickAway
-
+---
+title: useClickAway
+---
 ### 介绍
 
 监听点击元素外部的事件。

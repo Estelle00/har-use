@@ -8,16 +8,15 @@ defineEmits(["toggle"]);
 
 <template>
   <a-layout-header>
-    <a-affix>
-      <div class="nav-bar">
-        <ToggleSideBarButton @toggle="$emit('toggle')" />
-        <NavBarTitle />
-        <div class="flex-grow" />
-        <div class="nav">
-          <NavLinks />
-        </div>
+    <div class="nav-bar">
+      <ToggleSideBarButton @toggle="$emit('toggle')" />
+      <NavBarTitle />
+      <div class="flex-grow" />
+      <div class="nav">
+        <NavLinks />
       </div>
-    </a-affix>
+    </div>
+    <div style="height: 64px"></div>
   </a-layout-header>
 </template>
 
@@ -27,15 +26,21 @@ defineEmits(["toggle"]);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--c-divider);
-  padding: 0.7rem 1.5rem 0.7rem 4rem;
-  height: var(--header-height);
-  background-color: var(--c-bg);
+  white-space: nowrap;
+  background: #fff;
+  box-shadow: 0 8px 24px -2px rgb(0 0 0 / 5%);
+  height: 64px;
+  padding: 0 48px;
 }
 
 @media (min-width: 720px) {
   .nav-bar {
-    padding: 0.7rem 1.5rem;
+    position: fixed;
+    width: 100%;
+    padding: 0 20px;
+    top: 0;
+    left: 0;
+    z-index: 999;
   }
 }
 

@@ -43,5 +43,9 @@ const { loading, run } = useRequest<TData, [FormDataType]>(getUsername, {
   onError(e) {
     Message.error(e.message);
   },
+  onFinally(params, result, error) {
+    console.log(params, result, error?.message);
+    Message.info("request finally.");
+  },
 });
 </script>

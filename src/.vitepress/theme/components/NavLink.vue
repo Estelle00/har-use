@@ -21,12 +21,12 @@ const { props: linkProps, isExternal } = useNavLink(propsRefs.item);
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .item {
   display: block;
-  padding: 0 1.5rem;
+  padding: 5px 20px;
   line-height: 36px;
-  font-size: 1rem;
+  font-size: 18px;
   font-weight: 600;
   color: var(--c-text);
   white-space: nowrap;
@@ -38,24 +38,33 @@ const { props: linkProps, isExternal } = useNavLink(propsRefs.item);
   color: var(--c-brand);
 }
 
-.item.external:hover {
-  border-bottom-color: transparent;
-  color: var(--c-text);
+.item.isExternal:hover {
+  &:after {
+    display: none!important;
+  }
 }
 
 @media (min-width: 720px) {
   .item {
-    border-bottom: 2px solid transparent;
     padding: 0;
-    line-height: 24px;
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 500;
+    position: relative;
+    line-height: 64px;
   }
 
   .item:hover,
   .item.active {
-    border-bottom-color: var(--c-brand);
-    color: var(--c-text);
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: -2px;
+      right: -2px;
+      height: 2px;
+      background-color: #4569d4;
+      border-radius: 1px;
+    }
   }
 }
 </style>

@@ -1,13 +1,8 @@
 import { FunctionalComponent, h, VNode } from "vue";
 import { useRoute, useData } from "vitepress";
 import { Header } from "../shared/shared";
-import { SideBarItem, SideBarGroup } from "../shared/default-theme";
+import { SideBarItem, SideBarGroup, HeaderWithChildren } from "../shared/default-theme";
 import { joinUrl, isActive } from "../utils";
-
-interface HeaderWithChildren extends Header {
-  children?: Header[];
-}
-
 export const SideBarLink: FunctionalComponent<{
   item: SideBarItem;
   depth?: number;

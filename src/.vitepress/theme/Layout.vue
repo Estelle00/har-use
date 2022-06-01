@@ -5,6 +5,7 @@ import { isSideBarEmpty, getSideBarConfig } from "./support/sideBar";
 
 // components
 import Home from "./components/Home.vue";
+import PageAnchors from "./components/PageAnchors.vue";
 import NavBar from "./components/NavBar.vue";
 import SideBar from "./components/SideBar.vue";
 import Page from "./components/Page.vue";
@@ -33,9 +34,6 @@ const openSideBar = ref(false);
 const isLargeScreen = useMediaQuery({
   minWidth: 720
 });
-const showSide = computed(() => {
-  return openSideBar.value || isLargeScreen.value
-})
 const showSidebar = computed(() => {
   if (frontmatter.value.home || frontmatter.value.sidebar === false) {
     return false;
@@ -61,7 +59,14 @@ watch(route, hideSidebar);
   <a-layout class="theme">
     <NavBar v-if="showNavbar" @toggle="toggleSidebar" />
     <a-layout class="theme-layout" :has-sider="showSidebar">
-      <SideBar v-if="showSidebar" :open="showSide" />
+      <template v-if="showNavbar">
+        <a-layout-sider v-if="isLargeScreen" >
+          <SideBar fixed/>
+        </a-layout-sider>
+        <a-drawer :closable="false" v-else v-model:visible="openSideBar" placement="left" :fixed="false" :footer="false">
+          <SideBar />
+        </a-drawer>
+      </template>
       <a-layout-content>
         <Content v-if="isCustomLayout" />
 
@@ -91,6 +96,7 @@ watch(route, hideSidebar);
           </template>
         </Page>
       </a-layout-content>
+      <page-anchors v-if="showNavbar && isLargeScreen"/>
     </a-layout>
   </a-layout>
   <Debug />

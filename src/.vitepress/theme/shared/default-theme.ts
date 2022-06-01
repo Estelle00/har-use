@@ -1,3 +1,5 @@
+import {Header} from "@/.vitepress/theme/shared/shared";
+
 export interface Config {
   logo?: string;
   nav?: NavItem[] | false;
@@ -58,11 +60,6 @@ export interface Config {
 
   prevLinks?: boolean;
   nextLinks?: boolean;
-
-  locales?: Record<string, LocaleConfig & Omit<Config, "locales">>;
-
-  algolia?: AlgoliaSearchOptions;
-
   carbonAds?: {
     carbon: string;
     custom?: string;
@@ -117,28 +114,6 @@ export interface SideBarGroup {
   children: SideBarItem[];
 }
 
-// algolia  ------------------------------------------------------------------
-// partially copied from @docsearch/react/dist/esm/DocSearch.d.ts
-export interface AlgoliaSearchOptions {
-  appId: string;
-  apiKey: string;
-  indexName: string;
-  placeholder?: string;
-  searchParameters?: any;
-  disableUserPersonalization?: boolean;
-  initialQuery?: string;
-}
-
-// locales -------------------------------------------------------------------
-
-export interface LocaleConfig {
-  /**
-   * Text for the language dropdown.
-   */
-  selectText?: string;
-
-  /**
-   * Label for this locale in the language dropdown.
-   */
-  label?: string;
+export interface HeaderWithChildren extends Header {
+  children?: Header[];
 }

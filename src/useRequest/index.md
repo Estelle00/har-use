@@ -1,5 +1,6 @@
-# useRequest
-
+---
+title: 快速上手
+---
 `useRequset` 由 [ahooks](https://ahooks.js.org/zh-CN/hooks/use-request/index) 中的 useRequest 移植过来的，但是不完全一致。
 
 目前已有能力包括：

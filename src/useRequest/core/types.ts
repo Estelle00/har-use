@@ -1,9 +1,9 @@
 import { ComputedRef, Ref, ShallowReactive } from "vue";
 import type { DebounceSettings, ThrottleSettings } from "lodash";
 
-export type Service<TParams extends unknown[]> = (
+export type Service<TData, TParams extends unknown[]> = (
   ...args: TParams
-) => Promise<unknown>;
+) => Promise<TData>;
 export interface CacheType {
   cacheKey?: string;
   cacheTime?: number;
