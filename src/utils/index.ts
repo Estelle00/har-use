@@ -76,3 +76,10 @@ export function json2MediaQueryString(query: Json2MediaQueryType) {
   }
   return query as string;
 }
+
+export function isFunction(fn: unknown): fn is Function {
+  return fn instanceof Function;
+}
+export function isObject(val: unknown): val is Record<any, any> {
+  return val !== null && typeof val === "object";
+}

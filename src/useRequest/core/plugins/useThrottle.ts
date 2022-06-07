@@ -1,11 +1,8 @@
-import { Plugin } from "../types";
 import type { DebouncedFunc } from "lodash";
 import { ref } from "vue";
 import throttle from "lodash/throttle";
-const useThrottle: Plugin<any, any[]> = (
-  instance,
-  { throttleWait, throttleOptions }
-) => {
+import { definePlugin } from "../definePlugin";
+export default definePlugin((instance, { throttleWait, throttleOptions }) => {
   if (!throttleWait) {
     return {};
   }
@@ -32,5 +29,4 @@ const useThrottle: Plugin<any, any[]> = (
       throttleRef.value?.cancel();
     },
   };
-};
-export default useThrottle;
+});

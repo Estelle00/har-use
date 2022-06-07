@@ -12,3 +12,6 @@ export function filterObjectKeys(
     return newData;
   }, {} as Record<string, any>);
 }
+export function resolvedPromise() {
+  return new Promise<any>(() => {});
+}

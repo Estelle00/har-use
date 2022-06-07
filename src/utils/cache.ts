@@ -46,7 +46,6 @@ class Cache {
     this.cache.delete(key);
   }
   subscribe(key: string, listener: CacheListener) {
-    console.log(this);
     if (!this.listeners[key]) {
       this.listeners[key] = [];
     }

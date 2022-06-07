@@ -1,10 +1,11 @@
-import { Plugin } from "../types";
 import { ref } from "vue";
+import { definePlugin } from "../definePlugin";
 
-const useLoadingDelay: Plugin<any, any[]> = (instance, { loadingDelay }) => {
+export default definePlugin((instance, { loadingDelay }) => {
   if (!loadingDelay) {
     return {};
   }
+  // return {}
   const timerRef = ref<NodeJS.Timeout>();
   const cancelTimeout = () => {
     if (timerRef.value) {
@@ -13,19 +14,14 @@ const useLoadingDelay: Plugin<any, any[]> = (instance, { loadingDelay }) => {
     }
   };
   return {
-    onBeforeRequest() {
+    onBefore() {
       cancelTimeout();
-      instance.setState({
-        loading: false,
-      });
+      instance.loading.value = false;
       timerRef.value = setTimeout(() => {
-        instance.setState({
-          loading: true,
-        });
+        instance.loading.value = true;
       }, loadingDelay);
     },
     onFinally: cancelTimeout,
     onCancel: cancelTimeout,
   };
-};
-export default useLoadingDelay;
+});

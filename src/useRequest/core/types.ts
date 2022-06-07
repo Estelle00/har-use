@@ -1,106 +1,112 @@
-import { ComputedRef, Ref, ShallowReactive } from "vue";
+import { ComputedRef, Ref, ShallowRef, UnwrapNestedRefs } from "vue";
 import type { DebounceSettings, ThrottleSettings } from "lodash";
 
 export type Service<TData, TParams extends unknown[]> = (
   ...args: TParams
 ) => Promise<TData>;
-export interface CacheType {
-  cacheKey?: string;
-  cacheTime?: number;
-  staleTime?: number;
-}
 
-export interface Options<TData, TParams> extends CacheType {
+export type BaseOptions<TData, TParams> = {
   manual?: boolean; // 初始化是否立即执行
+  defaultParams?: TParams;
+  formatResult?: (data: any) => TData;
 
   onBefore?: (params: TParams) => void; // service 执行前
   onSuccess?: (data: TData, params: TParams) => void; // service resolve时触发
   onError?: (e: Error, params: TParams) => void; // service reject时触发
   onFinally?: (params: TParams, data?: TData | undefined, e?: Error) => void; // service执行完成是触发
-
-  defaultParams?: TParams;
-
-  formatResult?: (data: any) => TData;
-
-  // loading delay
-  loadingDelay?: number;
-
-  //refreshDeps
-  refreshDeps?: ReadonlyArray<any>;
-
-  // polling
-  pollingInterval?: number;
-  pollingWhenHidden?: boolean;
-
-  ready?: Ref<boolean> | ComputedRef<boolean>;
-
+};
+export type CacheType = {
+  cacheKey?: string;
+  cacheTime?: number;
+  staleTime?: number;
+};
+export type DebounceType = {
   // debounce
   debounceWait?: number;
   debounceOptions?: DebounceSettings;
-
-  // throttle
-  throttleWait?: number;
-  throttleOptions?: ThrottleSettings;
-
-  // retry
+};
+export type LoadingDelayType = {
+  // loading delay
+  loadingDelay?: number;
+};
+export type PollingType = {
+  pollingInterval?: number;
+  pollingWhenHidden?: boolean;
+};
+export type ReadyType = {
+  ready?: Ref<boolean> | ComputedRef<boolean>;
+};
+export type RefreshDepsType = {
+  refreshDeps?: ReadonlyArray<any>;
+};
+export type RetryType = {
   retryCount?: number;
   retryInterval?: number;
-  [key: string]: any;
-}
+};
+export type ThrottleType = {
+  throttleWait?: number;
+  throttleOptions?: ThrottleSettings;
+};
+export type Options<TData, TParams extends unknown[]> = BaseOptions<
+  TData,
+  TParams
+> &
+  CacheType &
+  DebounceType &
+  LoadingDelayType &
+  PollingType &
+  ReadyType &
+  RefreshDepsType &
+  RetryType &
+  ThrottleType;
 export interface FetchState<TData, TParams> {
-  loading: boolean;
-  params?: TParams;
-  data?: TData;
-  error?: Error;
+  loading: Ref<boolean>;
+  params: Ref<TParams>;
+  data: ShallowRef<TData | undefined>;
+  error: ShallowRef<Error | undefined>;
 }
 export interface PluginReturn<TData, TParams extends unknown[]> {
-  onInit?: (
-    options: Options<TData, TParams>
-  ) => Partial<FetchState<TData, TParams>> | void;
-  onBeforeRequest?: (instance: FetchResult<TData, TParams>) => void;
+  // onInit?: (
+  //   options: Options<TData, TParams>
+  // ) => Partial<FetchState<TData, TParams>> | void;
   onBefore?: (params: TParams) =>
     | ({
-        stopNow?: boolean;
-        returnNow?: boolean;
+        isBreak?: boolean;
+        breakResult?: any;
       } & Partial<FetchState<TData, TParams>>)
     | void;
-  // onRequest?: (
-  //   service: Service<TParams>,
-  //   params: TParams
-  // ) => {
-  //   servicePromise?: Promise<TData>;
-  // };
+  onRequest?: (
+    service: Service<TData, TParams>,
+    params: TParams
+  ) => {
+    servicePromise?: Promise<TData>;
+  };
   onSuccess?: (data: TData, params: TParams) => void;
   onError?: (e: Error, params: TParams) => void;
   onFinally?: (params: TParams, data?: TData, e?: Error) => void;
   onCancel?: () => void;
   onMutate?: (data: TData, params: TParams) => void;
 }
-type PartialState<TData, TParams> = Partial<FetchState<TData, TParams>>;
-export interface StateResult<TData, TParams> {
-  state: ShallowReactive<FetchState<TData, TParams>>;
-  setState: (state: PartialState<TData, TParams>) => void;
-}
-export interface FetchResult<TData, TParams extends unknown[]> {
-  state: StateResult<TData, TParams>["state"];
+export type PluginImplementType<TData, TParams extends unknown[]> = (
+  fetchInstance: FetchResult<TData, TParams>,
+  options: Options<TData, TParams>
+) => PluginReturn<TData, TParams>;
+
+export type PartialState<TData, TParams extends unknown[]> = Partial<
+  UnwrapNestedRefs<FetchState<TData, TParams>>
+>;
+export interface FetchFunction<TData, TParams extends unknown[]> {
   refresh: () => void;
   refreshAsync: () => Promise<TData>;
   run: (...params: TParams) => void;
   runAsync: (...params: TParams) => Promise<TData>;
   cancel: () => void;
-  setState: (s: PartialState<TData, TParams>) => void;
-  mutate: (data: TData | ((oldData?: TData) => TData | undefined)) => void;
+  mutate: (data: TData | ((oldData?: TData) => TData)) => void;
 }
-
-export type Plugin<TData, TParams extends unknown[]> = (
-  fetchInstance: FetchResult<TData, TParams>,
-  options: Options<TData, TParams>
-) => PluginReturn<TData, TParams>;
-
 export interface RequestResult<TData, TParams extends unknown[]>
-  extends Omit<FetchResult<TData, TParams>, "setState" | "state"> {
-  loading: ComputedRef<boolean>;
-  data: ComputedRef<TData | undefined>;
-  params: ComputedRef<TParams | undefined>;
-  error: ComputedRef<Error | undefined>;
+  extends FetchState<TData, TParams>,
+    FetchFunction<TData, TParams> {}
+export interface FetchResult<TData, TParams extends unknown[]>
+  extends RequestResult<TData, TParams> {
+  plugins: Ref<PluginReturn<TData, TParams>[]>;
 }

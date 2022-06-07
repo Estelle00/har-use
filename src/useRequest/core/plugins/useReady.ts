@@ -1,27 +1,26 @@
-import { Plugin } from "../types";
 import { ref, watch } from "vue";
-
-const useReady: Plugin<any, any[]> = (
-  instance,
-  { ready = ref(true), manual }
-) => {
-  watch(
-    () => ready.value,
-    (val) => {
-      if (!manual && val) {
-        instance.refresh();
-        // instance.run(...(instance.state.params || defaultParams || []));
+import { definePlugin } from "../definePlugin";
+export default definePlugin(
+  (instance, { ready = ref(true), manual, defaultParams }) => {
+    watch(
+      ready,
+      (val) => {
+        if (!manual && val) {
+          instance.run(...defaultParams);
+        }
+      },
+      {
+        flush: "sync",
       }
-    }
-  );
-  return {
-    onBefore() {
-      if (!ready.value) {
-        return {
-          stopNow: true,
-        };
-      }
-    },
-  };
-};
-export default useReady;
+    );
+    return {
+      onBefore() {
+        if (!ready.value) {
+          return {
+            isBreak: true,
+          };
+        }
+      },
+    };
+  }
+);

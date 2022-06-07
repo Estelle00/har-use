@@ -1,12 +1,9 @@
-import { Plugin } from "../types";
 import type { DebouncedFunc } from "lodash";
 import { ref } from "vue";
 import debounce from "lodash/debounce";
+import { definePlugin } from "../definePlugin";
 
-const useDebounce: Plugin<any, any[]> = (
-  instance,
-  { debounceWait, debounceOptions }
-) => {
+export default definePlugin((instance, { debounceWait, debounceOptions }) => {
   if (!debounceWait) {
     return {};
   }
@@ -33,5 +30,4 @@ const useDebounce: Plugin<any, any[]> = (
       debounceRef.value?.cancel();
     },
   };
-};
-export default useDebounce;
+});

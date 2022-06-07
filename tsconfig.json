@@ -11,6 +11,8 @@
     "outDir": "./dist",
     "declaration": true,
     "declarationDir": "dist/types",
+    "useUnknownInCatchVariables": false,
+    "suppressImplicitAnyIndexErrors": true,
     "paths": {
       "@har/use": ["./src/index.ts"],
       "@/*": ["src/*"]

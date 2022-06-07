@@ -1,12 +1,12 @@
 import type { CacheKey } from "@/utils";
-const cachePromise = new Map<CacheKey, Promise<any>>();
-
+import { createCache } from "@/utils";
+const { getCache, setCache, deleteCache } = createCache(Symbol("promise"));
 export function getCachePromise(key: CacheKey) {
-  return cachePromise.get(key);
+  return getCache(key)?.data;
 }
 export function setCachePromise(key: CacheKey, promise: Promise<any>) {
-  cachePromise.set(key, promise);
+  setCache(key, promise);
   promise.finally(() => {
-    cachePromise.delete(key);
+    deleteCache(key);
   });
 }

@@ -1,32 +1,35 @@
-import { Options, Plugin, Service, RequestResult } from "./types";
-import { computed } from "vue";
+import { Options, PluginImplementType, Service } from "./types";
 import useFetch from "./useFetch";
 import { tryOnMounted, tryOnScopeDispose } from "@har/use";
 
-export default function useRequestImplement<TData, TParams extends any[]>(
-  service: Service<TParams>,
+export default function useRequestImplement<
+  TData,
+  TParams extends unknown[] = []
+>(
+  service: Service<TData, TParams>,
   options: Options<TData, TParams> = {},
-  plugins: Plugin<TData, TParams>[] = []
-): RequestResult<TData, TParams> {
-  const { state, refresh, refreshAsync, run, runAsync, mutate, cancel } =
-    useFetch(service, options, plugins);
+  plugins: PluginImplementType<TData, TParams>[] = []
+) {
+  const { defaultParams = [] } = options;
+  const instance = useFetch<TData, TParams>(service, options);
+  instance.plugins.value = plugins.map((i) => i(instance, options));
   if (!options.manual) {
     tryOnMounted(() => {
-      const params = state.params || [];
-      run(...(params as TParams));
+      const params = instance.params.value || defaultParams;
+      instance.run(...params);
     });
   }
-  tryOnScopeDispose(cancel);
+  tryOnScopeDispose(instance.cancel);
   return {
-    loading: computed(() => state.loading),
-    data: computed(() => state.data),
-    error: computed(() => state.error),
-    params: computed(() => state.params),
-    refresh,
-    refreshAsync,
-    run,
-    runAsync,
-    mutate,
-    cancel,
-  };
+    loading: instance.loading,
+    data: instance.data,
+    error: instance.error,
+    params: instance.params,
+    run: instance.run,
+    runAsync: instance.runAsync,
+    refresh: instance.refresh,
+    refreshAsync: instance.refreshAsync,
+    mutate: instance.mutate,
+    cancel: instance.cancel,
+  } as const;
 }

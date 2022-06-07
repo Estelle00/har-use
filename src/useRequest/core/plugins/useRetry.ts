@@ -1,9 +1,6 @@
-import { Plugin } from "../types";
 import { ref } from "vue";
-const useRetry: Plugin<any, any[]> = (
-  instance,
-  { retryCount, retryInterval }
-) => {
+import { definePlugin } from "../definePlugin";
+export default definePlugin((instance, { retryCount, retryInterval }) => {
   if (!retryCount) {
     return {};
   }
@@ -45,5 +42,4 @@ const useRetry: Plugin<any, any[]> = (
       stopRetry();
     },
   };
-};
-export default useRetry;
+});

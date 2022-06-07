@@ -1,7 +1,6 @@
-import { Plugin } from "../types";
 import { ref, watch } from "vue";
-
-const useRefreshDeps: Plugin<any, any[]> = (instance, { refreshDeps }) => {
+import { definePlugin } from "../definePlugin";
+export default definePlugin((instance, { refreshDeps }) => {
   if (refreshDeps) {
     const deps = ref(refreshDeps);
     watch(
@@ -15,5 +14,4 @@ const useRefreshDeps: Plugin<any, any[]> = (instance, { refreshDeps }) => {
     );
   }
   return {};
-};
-export default useRefreshDeps;
+});

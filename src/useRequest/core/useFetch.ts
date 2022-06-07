@@ -1,43 +1,44 @@
-import { ref, shallowReactive, ShallowReactive, toRaw } from "vue";
+import { Ref, ref, shallowRef, unref } from "vue";
 import type {
-  CacheType,
   FetchResult,
   FetchState,
   Options,
-  Plugin,
   PluginReturn,
   Service,
 } from "./types";
-import { getCachePromise, setCachePromise } from "./utils/cachePromise";
-import { createCache } from "@/utils";
-import type { CacheListener } from "@/utils";
-const requestKey = Symbol("useRequest");
-const { getCache, setCache, subscribe } = createCache(requestKey);
-function useState<TData, TParams extends any[]>(
+import { resolvedPromise } from "./utils";
+import { PartialState } from "./types";
+import { isFunction, isObject } from "@/utils";
+function useState<TData, TParams extends unknown[]>(
   fetchState: FetchState<TData, TParams>
-): [
-  ShallowReactive<FetchState<TData, TParams>>,
-  (s: Partial<FetchState<TData, TParams>>) => void
-] {
-  const state = shallowReactive<FetchState<TData, TParams>>(fetchState);
-  function setState(s: Partial<FetchState<TData, TParams>>) {
-    Object.assign(state, s);
-  }
-  return [state, setState];
+) {
+  return (newState: PartialState<TData, TParams>) => {
+    Object.keys(newState).forEach((key) => {
+      fetchState[key].value = newState[key];
+    });
+  };
 }
-
-export function usePlugins<TData, TParams extends any[]>(
-  plugins: Plugin<TData, TParams>[],
-  instance: FetchResult<TData, TParams>,
+export default function useFetch<TData, TParams extends unknown[]>(
+  service: Service<TData, TParams>,
   options: Options<TData, TParams>
 ) {
-  // 初始化插件
-  const pluginImpls = plugins.map((p) => p(instance, options));
+  const loading = ref(!options.manual && (options?.ready?.value ?? true));
+  const params = ref() as Ref<TParams>;
+  const data = shallowRef<TData>();
+  const error = shallowRef(undefined);
+  const setState = useState<TData, TParams>({
+    loading,
+    params,
+    data,
+    error,
+  });
+  const plugins = ref([]) as FetchResult<TData, TParams>["plugins"];
+
   function runPluginHandler(
     event: keyof PluginReturn<TData, TParams>,
     ...rest: any[]
   ) {
-    const r = pluginImpls
+    const r = plugins.value
       .map((i) => {
         // @ts-ignore
         return i[event]?.(...rest);
@@ -45,189 +46,74 @@ export function usePlugins<TData, TParams extends any[]>(
       .filter(Boolean);
     return Object.assign({}, ...r);
   }
-  // runPluginHandler("onInit", instance);
-  return runPluginHandler;
-}
 
-function useSubscribe(key: string, callback: CacheListener) {
-  const unsubscribe = ref<() => void>();
-  function on() {
-    unsubscribe.value = subscribe(key, callback);
-  }
-  function off() {
-    unsubscribe.value && unsubscribe.value();
-  }
-  return [on, off];
-}
-
-function useCache<TData, TParams extends unknown[]>(
-  { cacheKey, cacheTime = 5 * 60 * 1000, staleTime = 0 }: CacheType,
-  setState: (s: Partial<FetchState<TData, TParams>>) => void
-): [
-  () => TData | false | void,
-  (service: Service<TParams>, args: TParams) => Promise<TData>,
-  (data: TData, params: TParams) => void
-] {
-  function getServicePromise(
-    service: Service<TParams>,
-    args: TParams
-  ): Promise<any> {
-    return service(...args);
-  }
-  if (!cacheKey) {
-    return [() => {}, getServicePromise, () => {}];
-  }
-  const subscribeRef = ref();
-  const promiseRef = ref();
-  const cacheData = getCache(cacheKey);
-  if (cacheData) {
-    setState({
-      data: cacheData.data,
-      params: cacheData.params,
-    });
-  }
-  // 启动缓存发送变化时同步更新data
-  subscribeRef.value = useSubscribe(cacheKey, (data) => {
-    setState({ data });
-  });
-  subscribeRef.value[0]();
-  function onChange(data: TData, params: TParams) {
-    const [on, off] = subscribeRef.value!;
-    off();
-    setCache(cacheKey!, data, cacheTime, params);
-    on();
-  }
-  function onBefore() {
-    const d = getCache(cacheKey!);
-    if (d && (staleTime === -1 || Date.now() - d.time <= staleTime)) {
-      return d.data;
-    }
-    return false;
-  }
-  function onRequest(service: Service<TParams>, args: TParams): Promise<any> {
-    const cachePromise = getCachePromise(cacheKey!);
-    if (cachePromise && cachePromise !== promiseRef.value) {
-      return cachePromise;
-    }
-    const servicePromise = getServicePromise(service, args);
-    promiseRef.value = servicePromise;
-    setCachePromise(cacheKey!, servicePromise);
-    return servicePromise;
-  }
-  return [onBefore, onRequest, onChange];
-}
-
-export default function useFetch<TData, TParams extends any[]>(
-  service: Service<TParams>,
-  options: Options<TData, TParams>,
-  plugins: Plugin<TData, TParams>[]
-): FetchResult<TData, TParams> {
-  const initState = {
-    loading: !options.manual && (options?.ready?.value ?? true),
-    params: options.defaultParams || undefined,
-    data: undefined,
-    error: undefined,
-  };
-  const [state, setState] = useState<TData, TParams>(initState);
-
-  // cache
-  const { cacheKey, cacheTime, staleTime } = options;
-  const [onCacheBefore, onCacheRequest, onCacheChange] = useCache<
-    TData,
-    TParams
-  >({ cacheKey, cacheTime, staleTime }, setState);
   const count = ref(0);
-  const result = {
-    state,
-    runAsync,
-    run,
-    refresh,
-    refreshAsync,
-    cancel,
-    setState,
-    mutate,
-  };
-
-  // 初始化插件
-  const runPluginHandler = usePlugins(plugins, result, options);
-  async function runAsync(...params: TParams): Promise<TData> {
-    count.value++;
-    const currentCount = toRaw(count.value);
-    const cache = onCacheBefore();
-    if (cache) {
-      return Promise.resolve(cache);
+  async function runAsync(...args: TParams): Promise<TData> {
+    setState({
+      loading: true,
+      params: args,
+    });
+    count.value += 1;
+    const currentCount = unref(count);
+    const { isBreak = false, breakResult = resolvedPromise() } =
+      runPluginHandler("onBefore", params);
+    if (isBreak) {
+      return breakResult;
     }
-    const {
-      stopNow = false,
-      returnNow = false,
-      ...others
-    } = runPluginHandler("onBefore", params);
-    if (stopNow) {
-      return new Promise(() => {});
-    }
-    if (returnNow) {
-      // runPluginHandler("onSuccess", others.data, params);
-      // runPluginHandler("onFinally", params, others.data, state.error);
-      return Promise.resolve(others.data);
-    }
-    options.onBefore?.(params);
+    options.onBefore?.(args);
     try {
-      setState({
-        loading: true,
-        params,
-        ...others,
-      });
-      // 特殊场景使用，不推荐业务插件接入
-      runPluginHandler("onBeforeRequest");
-      const result = await onCacheRequest(service, params);
-      let res: TData;
+      let { servicePromise } = runPluginHandler(
+        "onRequest",
+        service,
+        params.value
+      );
+      if (!servicePromise) {
+        servicePromise = service(...params.value);
+      }
+      let res = await servicePromise;
       if (currentCount !== count.value) {
-        return new Promise(() => {});
+        return resolvedPromise();
       }
       if (options.formatResult) {
-        res = options.formatResult(result);
-      } else {
-        res = result;
+        res = options.formatResult(res);
       }
       setState({
         data: res,
         error: undefined,
         loading: false,
       });
-      options.onSuccess?.(res, params);
-      runPluginHandler("onSuccess", res, params);
-      onCacheChange(res, params);
+      options.onSuccess?.(res, args);
+      runPluginHandler("onSuccess", res, params.value);
       return res;
-    } catch (error) {
+    } catch (e) {
       if (currentCount !== count.value) {
-        return new Promise(() => {});
+        return resolvedPromise();
       }
       setState({
-        error: error as Error,
+        error: e,
         loading: false,
       });
-      options.onError?.(error as Error, params);
-      runPluginHandler("onError", error, params);
+      options.onError?.(error.value!, args);
+      runPluginHandler("onError", error.value, args);
       throw error;
     } finally {
-      const { data, error } = state;
-      options.onFinally?.(params, data, error);
-      runPluginHandler("onFinally", params, data, error);
+      options.onFinally?.(args, data.value, error.value);
+      runPluginHandler("onFinally", params.value, data.value, error.value);
     }
   }
   function run(...params: TParams) {
     // 运行插件重写方法
-    result.runAsync(...params).catch((e) => {
+    runAsync(...params).catch((e) => {
       if (!options.onError) {
         console.error(e);
       }
     });
   }
   function refresh() {
-    run(...(state.params as TParams));
+    run(...params.value);
   }
   function refreshAsync() {
-    return runAsync(...(state.params as TParams));
+    return runAsync(...params.value);
   }
   function cancel() {
     count.value++;
@@ -237,14 +123,28 @@ export default function useFetch<TData, TParams extends any[]>(
     runPluginHandler("onCancel");
   }
   // 直接修改data；
-  function mutate(data: TData | ((oldData?: TData) => TData | undefined)) {
-    // @ts-ignore
-    const targetData = typeof data === "function" ? data(state.data) : data;
-    runPluginHandler("onMutate", targetData, state.params);
-    onCacheChange(targetData, state.params!);
+  function mutate(x: TData | ((oldData?: TData) => TData)) {
+    const targetData = isFunction(x) ? x(data.value) : x;
+    const _targetData = isObject(targetData)
+      ? Object.assign({}, targetData)
+      : targetData;
+    runPluginHandler("onMutate", _targetData, params.value);
     setState({
-      data: targetData,
+      data: _targetData,
     });
   }
-  return result;
+
+  return {
+    loading,
+    params,
+    data,
+    error,
+    run,
+    runAsync,
+    refresh,
+    refreshAsync,
+    cancel,
+    mutate,
+    plugins,
+  } as const;
 }
