@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import {
+  inBrowser,
   json2MediaQueryString,
   Json2MediaQueryType,
   tryOnBeforeMount,
@@ -7,6 +8,7 @@ import {
 } from "@har/use";
 
 export function useMediaQuery(query: Json2MediaQueryType) {
+  if (!inBrowser) return;
   const isSupported = Boolean(window && "matchMedia" in window);
   let mediaQuery: MediaQueryList;
   const matches = ref(false);

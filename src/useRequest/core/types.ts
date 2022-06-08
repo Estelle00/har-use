@@ -5,7 +5,7 @@ export type Service<TData, TParams extends unknown[]> = (
   ...args: TParams
 ) => Promise<TData>;
 
-export type BaseOptions<TData, TParams> = {
+export type BaseOptions<TData, TParams extends unknown[]> = {
   manual?: boolean; // 初始化是否立即执行
   defaultParams?: TParams;
   formatResult?: (data: any) => TData;

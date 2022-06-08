@@ -1,5 +1,5 @@
 import { Ref, unref } from "vue";
-import { isWindow } from "../utils";
+import { isWindow } from "@/utils";
 
 type Target = Element | Window;
 function makeDOMRect(width: number, height: number) {
