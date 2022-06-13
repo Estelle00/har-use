@@ -1,3 +1,21 @@
+
+
+# [2.3.0](https://git.huianrong.com/frontend/har-use/compare/2.2.4...2.3.0) (2022-06-13)
+
+
+### Bug Fixes
+
+* **useCountDown:** 兼容处理 ([b200f1b](https://git.huianrong.com/frontend/har-use/commits/b200f1b5cc730f38bbcf1b39b1dcbd16206ef9da))
+* **useMediaQuery:** 兼容ssr ([a841b03](https://git.huianrong.com/frontend/har-use/commits/a841b03bb1bde8ecbc75bca1a9ab0b70f0c128d1))
+* **useStorage:** 初始化获取数据异常 ([4648358](https://git.huianrong.com/frontend/har-use/commits/4648358012371a19b4cbdb9c0b8bf1de183c1495))
+* **useStorage:** 同步存储异常 ([8cfb65c](https://git.huianrong.com/frontend/har-use/commits/8cfb65c0ae5f0c83391d78c76bbaa69d433b95a1))
+
+
+### Features
+
+* **useMediaQuery:** 方法添加 ([d4268a2](https://git.huianrong.com/frontend/har-use/commits/d4268a2c067c2cdf6979a263dd53ef026e31f8c0))
+* **useStorage:** 基础功能添加 ([0e6da01](https://git.huianrong.com/frontend/har-use/commits/0e6da014bc50cafc855331e2c154767f04f5aad7))
+
 ## [2.2.5](https://git.huianrong.com/frontend/har-use/compare/2.2.4...2.2.5) (2022-05-05)
 
 
@@ -152,4 +170,3 @@
 
 
 # [1.0.0-beta.0](https://192.168.3.199:10022/frontend/har-use/compare/1.0.0...1.0.1) (2021-11-30)
-
