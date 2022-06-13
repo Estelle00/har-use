@@ -1,13 +1,16 @@
-import { Ref, watch, isRef, unref } from "vue";
-import { onMountedOrActivated } from "../onMountedOrActivated";
-import { tryOnScopeDispose } from "../tryOnScopeDispose";
-import { inBrowser } from "../utils";
-import { GeneralEventListener } from "../type";
-
-type TargetRef = EventTarget | Ref<EventTarget | undefined>;
+import { watch } from "vue";
+import {
+  MaybeElementRef,
+  noop,
+  tryOnScopeDispose,
+  unrefElement,
+} from "@har/use";
+import { inBrowser } from "@/utils";
+import { GeneralEventListener } from "@/type";
+// todo 类型推断不够完善后续优化
 export type UseEventListenerOptions = {
   // 绑定事件的元素 default: window
-  target?: TargetRef;
+  target?: MaybeElementRef;
   // 是否在事件捕获阶段触发 default: false
   capture?: boolean;
   // 设置为 `true` 时，表示 `listener` 永远不会调用 `preventDefault` default: false
@@ -25,27 +28,23 @@ export function useEventListener<EventType = Event>(
     return;
   }
   const { target = window, capture = false, passive = false } = options;
-  let attached: boolean;
-  function add(target?: TargetRef) {
-    const element = unref(target);
-    if (element && !attached) {
-      element.addEventListener(type, listener as any, { capture, passive });
-      attached = true;
+  let cleanup = noop;
+  const stopWatch = watch(
+    () => unrefElement(target as unknown as MaybeElementRef),
+    (el) => {
+      if (!el) return;
+      el.addEventListener(type, listener as any, { capture, passive });
+      cleanup = () => el.removeEventListener(type, listener as any, capture);
+    },
+    {
+      immediate: true,
+      flush: "post",
     }
+  );
+  function stop() {
+    stopWatch();
+    cleanup();
   }
-  function remove(target?: TargetRef) {
-    const element = unref(target);
-    if (element && attached) {
-      element.removeEventListener(type, listener as any, capture);
-      attached = false;
-    }
-  }
-  tryOnScopeDispose(() => remove(target));
-  onMountedOrActivated(() => add(target));
-  if (isRef(target)) {
-    watch(target, (val, oldValue) => {
-      remove(oldValue);
-      add(val);
-    });
-  }
+  tryOnScopeDispose(stop);
+  return stop;
 }

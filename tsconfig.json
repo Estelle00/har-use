@@ -14,8 +14,8 @@
     "useUnknownInCatchVariables": false,
     "suppressImplicitAnyIndexErrors": true,
     "paths": {
+      "@/*": ["src/*"],
       "@har/use": ["./src/index.ts"],
-      "@/*": ["src/*"]
     },
     "types": ["@dcloudio/types", "ts-jest"]
   },

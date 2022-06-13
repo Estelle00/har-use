@@ -83,3 +83,4 @@ export function isFunction(fn: unknown): fn is Function {
 export function isObject(val: unknown): val is Record<any, any> {
   return val !== null && typeof val === "object";
 }
+export function noop() {}
