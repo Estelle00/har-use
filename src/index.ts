@@ -19,3 +19,4 @@ export * from "./pausableWatch";
 export * from "./utils";
 export * from "./useMediaQuery";
 export * from "./unrefElement";
+export * from "./type";

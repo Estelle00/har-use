@@ -1,8 +1,8 @@
-import type { MayBeRef, StorageLike } from "../type";
+import type { MayBeRef, StorageLike } from "@/type";
 import { nextTick, ref, unref } from "vue";
-import { typeOf, createCache } from "../utils";
-import { pausableWatch } from "../pausableWatch";
-import { tryOnScopeDispose } from "../tryOnScopeDispose";
+import { typeOf, createCache } from "@/utils";
+import { pausableWatch } from "@/pausableWatch";
+import { tryOnScopeDispose } from "@/tryOnScopeDispose";
 const { setCache, subscribe, deleteCache } = createCache(Symbol("useStorage"));
 export interface Serializer<T> {
   read: (v: string) => T;
