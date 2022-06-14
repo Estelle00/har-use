@@ -3,10 +3,10 @@ export type EventBusOff = () => void;
 export type EventBusOn<T = unknown> = (fn: Listener<T>) => EventBusOff;
 export type EventBusTrigger<T = unknown> = (params?: T) => void;
 
-export interface EventBus<T = unknown> {
+export type EventBus<T = unknown> = {
   on: EventBusOn<T>;
   trigger: EventBusTrigger<T>;
-}
+};
 export function useEventBus<T = unknown>(): EventBus<T> {
   const fns: Listener<T>[] = [];
   function on(fn: Listener<T>) {

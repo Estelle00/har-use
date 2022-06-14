@@ -6,12 +6,6 @@
   "module": "./dist/es/index.js",
   "packageManager": "pnpm@7.1.2",
   "typings": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/es/index.js",
-      "require": "./dist/lib/index.js"
-    }
-  },
   "files": [
     "dist"
   ],
