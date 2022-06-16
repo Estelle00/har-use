@@ -7,6 +7,7 @@ export default defineConfig(() => {
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
+        "@har/use": fileURLToPath(new URL("./src", import.meta.url)),
       },
     },
     plugins: [dts()],

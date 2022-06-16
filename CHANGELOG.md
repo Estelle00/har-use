@@ -1,5 +1,7 @@
 
 
+## [2.3.2](https://git.huianrong.com/frontend/har-use/compare/2.3.0...2.3.2) (2022-06-14)
+
 ## [2.3.1](https://git.huianrong.com/frontend/har-use/compare/2.3.0...2.3.1) (2022-06-13)
 
 # [2.3.0](https://git.huianrong.com/frontend/har-use/compare/2.2.4...2.3.0) (2022-06-13)
