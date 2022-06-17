@@ -13,12 +13,15 @@ title: 快速上手
 - 错误重试
 - 缓存
 
-### 默认用法
+## 默认用法
+
 useRequest 的第一个参数是一个异步函数，在组件初次加载时，会自动触发该函数执行。同时自动管理该异步函数的 `loading` , `data` , `error` 等状态。
 
-@import "./demo/index.vue"
+@[preview](./demo/index.vue)
 
-### 手动触发
+
+## 手动触发
+
 如果设置 `options.manual = true` ，则 useRequest 不会默认执行，需要通过 `run` 来触发执行。
 
-@import "./demo/manual.vue"
+@[preview](./demo/manual.vue)

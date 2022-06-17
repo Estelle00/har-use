@@ -1,23 +1,29 @@
-import type { Theme } from "vitepress";
+import theme from "vitepress/theme";
 import "./styles/index.less";
 import ArcoVue from "@arco-design/web-vue";
 // @ts-ignore
 import ArcoIcon from "@arco-design/web-vue/lib/icon";
-import CellDemo from "./components/cell-demo/index.vue";
-import CellCode from "./components/cell-code/index.vue";
-import CodeBlock from "./components/code-block/index.vue";
-import Layout from "./Layout.vue";
-import NotFound from "./NotFound.vue";
-const theme: Theme = {
-  Layout,
-  NotFound,
+import type { Theme } from "vitepress";
+import { registerGlobalComponents } from "./utils/registerGlobalComponents";
+export default {
+  ...theme,
   enhanceApp({ app }) {
-    app.component(CellDemo.name, CellDemo);
-    app.component(CellCode.name, CellCode);
-    app.component(CodeBlock.name, CodeBlock);
+    registerGlobalComponents(app);
     app.use(ArcoVue);
     app.use(ArcoIcon);
+      const node = window?.document.querySelector("html");
+      if (node) {
+        new MutationObserver((mutationRecord) => {
+          const classList = (mutationRecord[0].target as HTMLElement).classList;
+          if (classList.contains("dark")) {
+            document.body.setAttribute("arco-theme", "dark");
+          } else {
+            document.body.removeAttribute("arco-theme");
+          }
+        }).observe(node, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
+      }
   },
-};
-
-export default theme;
+} as Theme;

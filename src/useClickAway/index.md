@@ -1,7 +1,7 @@
 ---
 title: useClickAway
 ---
-### 介绍
+## 介绍
 
 监听点击元素外部的事件。
 
@@ -12,35 +12,14 @@ title: useClickAway
 ## 代码演示
 
 ### 基本用法
-@import "./demo/index.vue"
+
+@[preview](./demo/index.vue)
+
 ### 自定义事件
 
 通过 `eventName` 选项可以自定义需要监听的事件类型。
 
-@import "./demo/customizeEvent.vue"
-```html
-<div ref="root" />
-```
-
-```js
-import { ref } from 'vue';
-import { useClickAway } from '@vant/use';
-
-export default {
-  setup() {
-    const root = ref();
-    useClickAway(
-      root,
-      () => {
-        console.log('touch outside!');
-      },
-      { eventName: 'touchstart' }
-    );
-
-    return { root };
-  },
-};
-```
+@[preview](./demo/customizeEvent.vue)
 
 ## API
 
@@ -57,3 +36,5 @@ export default {
 | 参数      | 说明           | 类型     | 默认值  |
 | --------- | -------------- | -------- | ------- |
 | eventName | 监听的事件类型 | _string_ | `click` |
+
+<script setup></script>

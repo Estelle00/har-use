@@ -89,9 +89,11 @@ function handleClickCopy() {
   margin-top: 10px;
   &-content {
     margin-top: 10px;
-    overflow: hidden;
-    background-color: var(--color-fill-1);
+    overflow-y: hidden;
     transition: all 200ms;
+    :slotted(div[class*='language-']) {
+      margin: 0;
+    }
   }
 
   &-operation {
