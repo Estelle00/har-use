@@ -36,5 +36,3 @@ title: useClickAway
 | 参数      | 说明           | 类型     | 默认值  |
 | --------- | -------------- | -------- | ------- |
 | eventName | 监听的事件类型 | _string_ | `click` |
-
-<script setup></script>

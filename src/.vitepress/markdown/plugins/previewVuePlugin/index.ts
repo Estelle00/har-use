@@ -20,7 +20,7 @@ export const previewVuePlugin = defineMarkdownPlugin((md) => {
       }
     });
     if (!setupToken) {
-      setupToken = new state.Token("script", "", 0);
+      setupToken = new state.Token("html_block", "", 0);
       setupToken.content = "<script setup></script>\n"
       setupToken.meta = 14;
       state.tokens.push(setupToken);
@@ -62,7 +62,7 @@ export const previewVuePlugin = defineMarkdownPlugin((md) => {
     if (!/\.vue$/.test(filePath)) {
       return code + "<!-- ";
     }
-    return `<code-block>
+    return `\n<code-block>
           <cell-demo>
             <${componentName} />
           </cell-demo>
