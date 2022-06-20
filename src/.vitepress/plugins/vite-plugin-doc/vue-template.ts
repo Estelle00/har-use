@@ -7,14 +7,7 @@ export function getDemoVue({
   code,
 }: DemoVueType) {
   return `<template>
-    <code-block>
-      <cell-demo>
         <virtual-demo />
-      </cell-demo>
-      <cell-code>
-        <slot />
-      </cell-code>
-    </code-block>
 </template>
 <script setup>
 import VirtualDemo from "${virtualPath}";

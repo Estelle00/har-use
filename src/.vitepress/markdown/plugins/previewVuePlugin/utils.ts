@@ -20,7 +20,6 @@ export function addScriptRuler(md: MarkdownIt) {
   });
 }
 
-let SETUP_NUMBER = 14;
 export function addFileImport(md: MarkdownIt) {
   md.core.ruler.push("file_import", (state) => {
     let setupToken: Token;
@@ -64,6 +63,15 @@ export function addFileImport(md: MarkdownIt) {
     if (!/\.vue$/.test(filePath)) {
       return code + "<!-- ";
     }
-    return `<${componentName}>${code}</${componentName}>`;
+    return `
+    <code-block>
+      <cell-demo>
+        <${componentName} />
+      </cell-demo>
+      <cell-code>
+        ${code}
+      </cell-code>
+    </code-block>`
+    // return `<${componentName}>${code}</${componentName}>`;
   };
 }
