@@ -1,7 +1,7 @@
 ---
 title: useCountDown
 ---
-### 介绍
+## 介绍
 提供倒计时管理能力。
 ::: tip
 兼容uni-app
@@ -10,16 +10,17 @@ title: useCountDown
 ## 代码演示
 
 ### 基本用法
-@import "./demo/index.vue"
+
+@[preview](./demo/index.vue)
 
 ### 毫秒级渲染
 
 倒计时默认每秒渲染一次，设置 millisecond 选项可以开启毫秒级渲染。
 
-@import "./demo/millisecond.vue"
+@[preview](./demo/millisecond.vue)
 
 ### 验证码倒计时
-@import "./demo/codeCountDown.vue"
+@[preview](./demo/codeCountDown.vue)
 
 ## API
 
@@ -51,3 +52,4 @@ title: useCountDown
 | minutes      | 剩余分钟               | _number_ |
 | seconds      | 剩余秒数               | _number_ |
 | milliseconds | 剩余毫秒               | _number_ |
+

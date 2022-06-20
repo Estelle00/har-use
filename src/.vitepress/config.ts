@@ -25,7 +25,7 @@ export default defineConfig({
         "@": fileURLToPath(new URL("..", import.meta.url)),
       },
     },
-    // plugins: [createVueDoc()],
+    plugins: [createVueDoc()],
   },
   markdown: {
     config: (md) => {

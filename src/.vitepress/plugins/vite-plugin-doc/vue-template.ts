@@ -8,12 +8,11 @@ export function getDemoVue({
 }: DemoVueType) {
   return `<template>
     <code-block>
-    <slot />
       <cell-demo>
         <virtual-demo />
       </cell-demo>
       <cell-code>
-        123<slot />
+        <slot />
       </cell-code>
     </code-block>
 </template>
