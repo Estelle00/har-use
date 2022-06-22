@@ -1,0 +1,14 @@
+{
+  "name": "har-use",
+  "version": "2.3.3",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json",
+    "clean": "rimraf lib *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@har-use/core": "workspace:*"
+  },
+  "files": ["lib"]
+}

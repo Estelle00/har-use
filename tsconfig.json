@@ -1,24 +1,11 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "strict": true,
-    "target": "ES2019",
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "lib": ["ESNext", "dom"],
-    "outDir": "./dist",
-    "declaration": true,
-    "declarationDir": "dist/types",
-    "useUnknownInCatchVariables": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "paths": {
-      "@/*": ["src/*"],
-      "@har/use": ["./src/index.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.build.json"
     },
-    "types": ["@dcloudio/types", "ts-jest"]
-  },
-  "include": ["src/**/*"],
-  "exclude": ["src/.vitepress/*", "src/vite.config.ts"]
+    {
+      "path": "./docs/tsconfig.json"
+    }
+  ],
+  "exclude": ["node_modules", ".temp", ".cache", "lib", "dist"]
 }

@@ -1,0 +1,11 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "declaration": true,
+    "composite": true
+  },
+  "include": ["./src"],
+  "exclude": ["node_modules", "**/__tests__/*"]
+}
