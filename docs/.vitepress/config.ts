@@ -4,7 +4,10 @@ import pkg from "../../package.json";
 import createMarkdown from "./markdown";
 import type { DefaultTheme } from "vitepress";
 
-function getRouterConfig(router: Array<DefaultTheme.SidebarGroup | DefaultTheme.SidebarItem>, prefix) {
+function getRouterConfig(
+  router: Array<DefaultTheme.SidebarGroup | DefaultTheme.SidebarItem>,
+  prefix
+) {
   return router.map((item) => {
     let link = prefix;
     if ("link" in item) {
@@ -57,19 +60,19 @@ export default defineConfig({
       },
     ],
     nav: [
-        {
-          text: "core",
-          link: "/core/use-toggle",
-          activeMatch: "/core/"
-        },
-        {
-          text: "browser",
-          link: "/browser",
-        },
-        {
-          text: "uni-app",
-          link: "/uni",
-        },
+      {
+        text: "core",
+        link: "/core/use-toggle",
+        activeMatch: "/core/",
+      },
+      {
+        text: "browser",
+        link: "/browser",
+      },
+      {
+        text: "uni-app",
+        link: "/uni",
+      },
     ],
     sidebar: {
       "/core/": getRouterConfig(
@@ -79,16 +82,21 @@ export default defineConfig({
             items: [
               {
                 text: "tryOnBeforeMount",
-                link: "try-before-mount"
+                link: "try-before-mount",
               },
               {
                 text: "onMountedOrActivated",
-                link: "mounted-or-activated"
+                link: "mounted-or-activated",
               },
               {
-              text: "useToggle",
-              link: "use-toggle"
-            }],
+                text: "useToggle",
+                link: "use-toggle",
+              },
+              {
+                text: "useCountDown",
+                link: "use-count-down",
+              },
+            ],
           },
         ],
         "/core/"

@@ -14,5 +14,5 @@ export declare function tryOnBeforeMount(fn: () => void, sync = true): void;
 
 | 参数   | 说明 | 类型           | 默认值  |
 |------|--|--------------|------|
-| fn   | 回调方法 | `() => void` |      |
+| fn   | 回调方法 | `() => void` |   -   |
 | sync | 当回调事件未在实例组件中时，是否立即回调 | `boolean`    | true |

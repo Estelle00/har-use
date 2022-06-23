@@ -1,4 +1,5 @@
 import type { Ref } from "vue";
+export * from "./EventBus";
 export interface GeneralEventListener<E = Event> {
   (evt: E): void;
 }
@@ -8,4 +9,13 @@ export interface StorageLike {
   getItem(key: string): string | null;
   setItem(key: string, value: string): void;
   removeItem(key: string): void;
+}
+
+export const inBrowser = typeof window !== "undefined";
+export const isWindow = (val: unknown): val is Window => val === window;
+export function raf(fn: FrameRequestCallback): number {
+  return inBrowser ? requestAnimationFrame(fn) : setTimeout(fn, 1000 / 60);
+}
+export function cancelRaf(id: number) {
+  inBrowser ? cancelAnimationFrame(id) : clearTimeout(id);
 }

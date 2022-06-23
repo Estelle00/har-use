@@ -2,3 +2,8 @@ export * from "./useToggle";
 export * from "./onMountedOrActivated";
 export * from "./tryOnBeforeMount";
 export * from "./pausableWatch";
+export * from "./tryOnMounted";
+export * from "./tryOnScopeDispose";
+export * from "./tryOnUnmounted";
+export * from "./useCountDown";
+export * from "./useGlobalState";

@@ -13,5 +13,5 @@ export declare function onMountedOrActivated(hook: () => void): void;
 ### 参数
 
 | 参数   | 说明   | 类型          | 默认值 |
-|------|------|-------------| ----- |
-| hook | 回调方法 | `() => void` |  |
+|------|------|-------------|-----|
+| hook | 回调方法 | `() => void` | -   |

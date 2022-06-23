@@ -5,6 +5,7 @@
     "build:tsc": "tsc -b tsconfig.build.json",
     "dev:tsc": "pnpm build:tsc --watch",
     "build:all": "pnpm -r --stream build",
+    "clean": "pnpm --parallel --stream clean",
     "docs:build": "pnpm --filter=docs docs:build",
     "docs:dev": "pnpm --filter=docs docs:dev"
   },

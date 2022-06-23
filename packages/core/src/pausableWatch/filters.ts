@@ -5,23 +5,24 @@ export interface ConfigurableEventFilter {
   eventFilter?: EventFilter;
 }
 
-export type FunctionArgs<Args extends any[] = any[], Return = void> = (
+export type FunctionArgs<Args extends unknown[] = unknown[], Return = void> = (
   ...args: Args
 ) => Return;
 
 export interface FunctionWrapperOptions<
-  Args extends any[] = any[],
-  This = any
+  Args extends unknown[] = unknown[],
+  This = unknown
 > {
   fn: FunctionArgs<Args, This>;
   args: Args;
   thisArg: This;
 }
 
-export type EventFilter<Args extends any[] = any[], This = any> = (
+export type EventFilter<Args extends unknown[] = unknown[], This = unknown> = (
   invoke: Fn,
   options: FunctionWrapperOptions<Args, This>
 ) => void;
+
 export const bypassFilter: EventFilter = (invoke: Fn) => {
   return invoke();
 };
@@ -29,11 +30,12 @@ export function createFilterWrapper<T extends FunctionArgs>(
   filter: EventFilter,
   fn: T
 ) {
-  function wrapper(this: any, ...args: any[]) {
+  function wrapper(this: unknown, ...args: unknown[]) {
     filter(() => fn.apply(this, args), { fn, thisArg: this, args });
   }
   return wrapper as T;
 }
+
 export function pausableFilter(cb = bypassFilter) {
   const [isActive, toggle] = useToggle(true);
   function pause() {
@@ -52,5 +54,5 @@ export function pausableFilter(cb = bypassFilter) {
     pause,
     resume,
     eventFilter,
-  };
+  } as const;
 }
