@@ -50,7 +50,7 @@ export default defineConfig({
     outlineTitle: " ",
     lastUpdatedText: "最近更新时间",
     editLink: {
-      pattern: "https://git.huianrong.com/frontend/har-use/packages/:path",
+      pattern: "https://git.huianrong.com/frontend/har-use/-/tree/next/docs/:path",
       text: "编辑这个文档",
     },
     socialLinks: [
@@ -81,20 +81,28 @@ export default defineConfig({
             text: "core",
             items: [
               {
-                text: "tryOnBeforeMount",
-                link: "try-before-mount",
-              },
-              {
                 text: "onMountedOrActivated",
                 link: "mounted-or-activated",
               },
               {
-                text: "useToggle",
-                link: "use-toggle",
+                text: "tryOnBeforeMount",
+                link: "try-before-mount",
               },
               {
                 text: "useCountDown",
                 link: "use-count-down",
+              },
+              {
+                text: "useGlobalState",
+                link: "use-global-state",
+              },
+              {
+                text: "useStorage",
+                link: "use-storage",
+              },
+              {
+                text: "useToggle",
+                link: "use-toggle",
               },
             ],
           },

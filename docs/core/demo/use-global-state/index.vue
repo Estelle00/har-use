@@ -9,7 +9,7 @@
   </a-form>
 </template>
 <script setup lang="ts">
-import { useGlobalState } from "har-use";
+import { useGlobalState } from "@har-use/core";
 import { reactive } from "vue";
 const useState = useGlobalState(() => {
   return reactive({

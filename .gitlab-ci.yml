@@ -3,7 +3,7 @@ before_script:
   - npm i pnpm -g
   - pnpm install --registry=https://nexus.huianrong.com/repository/npm-group/
 pages:
-  stage: deploy
+  stage: docs
   cache:
     paths:
       - node_modules/

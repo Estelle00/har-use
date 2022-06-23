@@ -7,3 +7,4 @@ export * from "./tryOnScopeDispose";
 export * from "./tryOnUnmounted";
 export * from "./useCountDown";
 export * from "./useGlobalState";
+export * from "./useStorage";

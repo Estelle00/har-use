@@ -7,6 +7,6 @@
   </a-space>
 </template>
 <script setup lang="ts">
-import { useToggle } from "har-use";
+import { useToggle } from "@har-use/core";
 const [show, toggle] = useToggle(false);
 </script>

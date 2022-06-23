@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCountDown } from "har-use";
+import { useCountDown } from "@har-use/core";
 
 const { start, current } = useCountDown({
   // 倒计时 24 小时

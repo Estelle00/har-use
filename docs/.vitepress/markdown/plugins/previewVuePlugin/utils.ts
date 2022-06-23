@@ -63,7 +63,6 @@ export function addFileImport(md: MarkdownIt) {
     if (/\.md$/i.test(filePath)) {
       return `<${componentName} />`;
     }
-    console.log(env);
     const __data = md.__data;
     const code = md.render(`@[code](${filePath})`);
     md.__data = __data;

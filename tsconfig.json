@@ -7,5 +7,6 @@
       "path": "./docs/tsconfig.json"
     }
   ],
+  "files": [],
   "exclude": ["node_modules", ".temp", ".cache", "lib", "dist"]
 }

@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCountDown } from "har-use";
+import { useCountDown } from "@har-use/core";
 import { computed } from "vue";
 import { Message } from "@arco-design/web-vue";
 const remain = 10000;
