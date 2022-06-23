@@ -5,6 +5,7 @@ node_modules
 /.idea
 /coverage
 .temp
+lib/
 
 # local env files
 .env.local
