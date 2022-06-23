@@ -19,9 +19,11 @@ export const importCodePlugin = defineMarkdownPlugin<ImportCodePluginOptions>(
     // add import_code renderer rule
     md.renderer.rules.import_code = (tokens, idx, options, env, slf) => {
       const token = tokens[idx];
-      console.log(env);
       // use imported code as token content
-      const { importFilePath, importCode } = resolveImportCode(token.meta, env);
+      const { importFilePath, importCode } = resolveImportCode(
+        token.meta,
+        md
+      );
       token.content = importCode;
 
       // extract imported files to env

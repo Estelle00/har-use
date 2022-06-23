@@ -1,10 +1,11 @@
 import * as path from "node:path";
 import * as fs from "node:fs";
 import type { ImportCodeTokenMeta } from "./types";
+import type { MarkdownIt } from "../previewVuePlugin/utils";
 
 export const resolveImportCode = (
   { importPath, lineStart, lineEnd }: ImportCodeTokenMeta,
-  { filePath }: any
+  md: MarkdownIt
 ): {
   importFilePath: string | null;
   importCode: string;
@@ -14,13 +15,13 @@ export const resolveImportCode = (
   if (!path.isAbsolute(importPath)) {
     // if the importPath is relative path, we need to resolve it
     // according to the markdown filePath
-    if (!filePath) {
+    if (!md.__path) {
       return {
         importFilePath: null,
         importCode: "Error when resolving path",
       };
     }
-    importFilePath = path.resolve(filePath, "..", importPath);
+    importFilePath = path.resolve(md.__path, "..", importPath);
   }
 
   // check file existence

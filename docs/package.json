@@ -10,8 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@arco-design/web-vue": "^2.31.0",
-    "@har/use": "workspace:*",
-    "vue": "^3.2.37"
+    "har-use": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^16.11.41",

@@ -1,4 +1,4 @@
-import path from "node:path";
+import * as path from "node:path";
 import type { RuleBlock } from "markdown-it/lib/parser_block";
 import type { ImportCodePluginOptions } from "./index";
 import type { ImportCodeTokenMeta } from "./types";

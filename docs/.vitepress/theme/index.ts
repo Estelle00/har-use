@@ -1,6 +1,7 @@
 import theme from "vitepress/theme";
 import "./styles/index.less";
-import ArcoVue, { Icon } from "@arco-design/web-vue";
+import ArcoVue from "@arco-design/web-vue";
+import ArcoIcon from "@arco-design/web-vue/es/icon";
 import type { Theme } from "vitepress";
 import { registerGlobalComponents } from "./utils/registerGlobalComponents";
 export default {
@@ -8,7 +9,7 @@ export default {
   enhanceApp({ app }) {
     registerGlobalComponents(app);
     app.use(ArcoVue);
-    app.use(Icon);
+    app.use(ArcoIcon);
     const node = window?.document.querySelector("html");
     if (node) {
       new MutationObserver((mutationRecord) => {

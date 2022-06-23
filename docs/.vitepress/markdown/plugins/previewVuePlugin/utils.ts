@@ -1,8 +1,8 @@
 import type * as Token from "markdown-it/lib/token";
-import type * as MarkdownIt  from "markdown-it";
+import type * as MD from "markdown-it";
 import { pascalCase } from "change-case";
-import * as fs from "node:fs";
-import * as path from "node:path";
+import type { MarkdownRenderer } from "vitepress";
+export type MarkdownIt  = MarkdownRenderer & MD;
 
 function insertStr(source: string, start: number, newStr: string) {
   return source.slice(0, start) + newStr + source.slice(start);
@@ -57,18 +57,17 @@ export function addFileImport(md: MarkdownIt) {
     }
   });
 
-  md.renderer.rules.file_import = function (tokens, idx) {
+  md.renderer.rules.file_import = function (tokens, idx, env) {
     const token = tokens[idx];
     const { filePath, componentName } = token.meta;
-    let importFilePath = filePath;
-    if (!path.isAbsolute(importFilePath)) {
-      // @ts-ignore
-      importFilePath = path.resolve(md.__path, "..", filePath);
-    }
     if (/\.md$/i.test(filePath)) {
-      return `<${componentName} />`
+      return `<${componentName} />`;
     }
-    const code = md.render(`@[code](${importFilePath})`);
+    console.log(env);
+    const __data = md.__data;
+    const code = md.render(`@[code](${filePath})`);
+    md.__data = __data;
+    // const code = md.render(`@[code](${filePath})`, { filePath: md.__path });
     if (!/\.vue$/.test(filePath)) {
       return code + "<!-- ";
     }
@@ -80,7 +79,6 @@ export function addFileImport(md: MarkdownIt) {
       <cell-code>
         ${code}
       </cell-code>
-    </code-block>`
-    // return `<${componentName}>${code}</${componentName}>`;
+    </code-block>`;
   };
 }
