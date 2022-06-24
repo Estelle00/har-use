@@ -1,3 +1,4 @@
+// @ts-ignore
 import type { Plugin } from "vite";
 import { getCache } from "./cache";
 import { transformDemo } from "./markdownToVue";

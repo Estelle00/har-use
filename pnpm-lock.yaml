@@ -44,6 +44,14 @@ importers:
       markdown-it: 13.0.1
       vitepress: 1.0.0-alpha.2_less@4.1.3
 
+  packages/browser:
+    specifiers:
+      '@har-use/core': workspace:*
+      '@har-use/utils': workspace:*
+    dependencies:
+      '@har-use/core': link:../core
+      '@har-use/utils': link:../utils
+
   packages/core:
     specifiers:
       '@har-use/utils': workspace:*
