@@ -1,6 +1,10 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "declaration": true,
     "declarationMap": true,
     "newLine": "lf",

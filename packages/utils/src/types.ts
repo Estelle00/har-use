@@ -1,5 +1,6 @@
 import type { Ref } from "vue";
 
+export type CacheKey = string | number | symbol;
 export type GeneralEventListener<E = Event> = {
   (evt: E): void;
 };

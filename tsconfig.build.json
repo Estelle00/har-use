@@ -9,6 +9,9 @@
     },
     {
       "path": "./packages/utils/tsconfig.build.json"
+    },
+    {
+      "path": "./packages/browser/tsconfig.build.json"
     }
   ],
   "files": []

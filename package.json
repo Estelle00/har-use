@@ -7,7 +7,8 @@
     "build:all": "pnpm -r --stream build",
     "clean": "pnpm --parallel --stream clean",
     "docs:build": "pnpm --filter=docs docs:build",
-    "docs:dev": "pnpm --filter=docs docs:dev"
+    "docs:dev": "pnpm --filter=docs docs:dev",
+    "release:publish": "pnpm -r publish --tag beta"
   },
   "publishConfig": {
     "registry": "https://nexus.huianrong.com/repository/npm-hosted/"

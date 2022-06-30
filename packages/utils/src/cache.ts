@@ -1,5 +1,6 @@
+import type { CacheKey } from "./types";
+
 type Timer = ReturnType<typeof setTimeout>;
-export type CacheKey = string | number | symbol;
 export type CacheValue = {
   data: any;
   params: any;
