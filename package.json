@@ -8,7 +8,7 @@
     "clean": "pnpm --parallel --stream clean",
     "docs:build": "pnpm --filter=docs docs:build",
     "docs:dev": "pnpm --filter=docs docs:dev",
-    "release:publish": "pnpm -r publish --filter=package/* --tag beta --registry=https://nexus.huianrong.com/repository/npm-hosted/"
+    "release:publish": "pnpm -r publish --filter=@har-use/* --tag beta --registry=https://nexus.huianrong.com/repository/npm-hosted/"
   },
   "dependencies": {
     "vue": "^3.2.37"
