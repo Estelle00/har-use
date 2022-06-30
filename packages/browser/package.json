@@ -1,5 +1,5 @@
 {
-  "name": "@har-use/utils",
+  "name": "@har-use/browser",
   "version": "1.0.0",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
