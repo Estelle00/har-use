@@ -21,6 +21,7 @@ enum Type {
   string = "string",
   object = "object",
   array = "array",
+  number = "number",
 }
 type GuestType = keyof typeof Type | "any";
 function guessType(data: any): GuestType {
@@ -50,6 +51,10 @@ export const storageSerializers: Record<GuestType, Serializer<any>> = {
   },
   string: {
     read: (v) => v,
+    write: (v) => String(v),
+  },
+  number: {
+    read: (v) => Number.parseFloat(v),
     write: (v) => String(v),
   },
   object: {
