@@ -1,5 +1,12 @@
 
 
+## [2.3.4](https://git.huianrong.com/frontend/har-use/compare/2.3.0...2.3.4) (2022-07-07)
+
+
+### Bug Fixes
+
+* **useRequest:** vite热更新时无限触发问题 ([26af522](https://git.huianrong.com/frontend/har-use/commits/26af52271ae429828728c0fb0078a2450763e731))
+
 ## [2.3.3](https://git.huianrong.com/frontend/har-use/compare/2.3.0...2.3.3) (2022-06-16)
 
 ## [2.3.2](https://git.huianrong.com/frontend/har-use/compare/2.3.0...2.3.2) (2022-06-14)
