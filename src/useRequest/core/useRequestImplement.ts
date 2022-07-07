@@ -1,6 +1,6 @@
 import { Options, PluginImplementType, Service } from "./types";
 import useFetch from "./useFetch";
-import { tryOnMounted, tryOnScopeDispose } from "@har/use";
+import { tryOnMounted, tryOnUnmounted } from "@har/use";
 
 export default function useRequestImplement<
   TData,
@@ -19,7 +19,7 @@ export default function useRequestImplement<
       instance.run(...params);
     });
   }
-  tryOnScopeDispose(instance.cancel);
+  tryOnUnmounted(instance.cancel);
   return {
     loading: instance.loading,
     data: instance.data,
