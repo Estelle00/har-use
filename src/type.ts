@@ -9,3 +9,7 @@ export interface StorageLike {
   setItem(key: string, value: string): void;
   removeItem(key: string): void;
 }
+export type RemovableRef<T> = Omit<Ref<T>, "value"> & {
+  get value(): T;
+  set value(value: T | null | undefined);
+};

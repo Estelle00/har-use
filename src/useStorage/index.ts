@@ -1,4 +1,4 @@
-import type { MayBeRef, StorageLike } from "@/type";
+import type { MayBeRef, StorageLike, RemovableRef } from "@/type";
 import { nextTick, ref, unref } from "vue";
 import { typeOf, createCache } from "@/utils";
 import { pausableWatch } from "@/pausableWatch";
@@ -29,14 +29,21 @@ function guessType(data: any): GuestType {
   }
   return "any";
 }
+function parse(val: any) {
+  try {
+    return JSON.parse(val);
+  } catch (e) {
+    return "";
+  }
+}
 // todo any问题后面处理 复杂对象待处理
 export const storageSerializers: Record<GuestType, Serializer<any>> = {
   set: {
-    read: (v) => new Set(JSON.parse(v)),
+    read: (v) => new Set(parse(v)),
     write: (v) => JSON.stringify(Array.from(v)),
   },
   map: {
-    read: (v) => new Set(JSON.parse(v)),
+    read: (v) => new Set(parse(v)),
     write: (v) => JSON.stringify(Array.from(v).entries()),
   },
   date: {
@@ -52,11 +59,11 @@ export const storageSerializers: Record<GuestType, Serializer<any>> = {
     write: (v) => String(v),
   },
   object: {
-    read: (v) => JSON.parse(v),
+    read: (v) => parse(v),
     write: (v) => JSON.stringify(v),
   },
   array: {
-    read: (v) => JSON.parse(v),
+    read: (v) => parse(v),
     write: (v) => JSON.stringify(v),
   },
   any: {
@@ -71,7 +78,7 @@ export function useStorage<T extends string | number | boolean | object | null>(
   options: StorageOptions<T> = {}
 ) {
   const { deep = true } = options;
-  const data = ref(initialValue);
+  const data = ref(initialValue) as RemovableRef<T>;
   if (!storage) return data;
   const rawInit = unref(initialValue);
   const type = guessType(initialValue);
