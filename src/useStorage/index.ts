@@ -76,7 +76,7 @@ export function useStorage<T extends string | number | boolean | object | null>(
   initialValue: MayBeRef<T>,
   storage: StorageLike | undefined,
   options: StorageOptions<T> = {}
-) {
+): RemovableRef<T> {
   const { deep = true } = options;
   const data = ref(initialValue) as RemovableRef<T>;
   if (!storage) return data;
