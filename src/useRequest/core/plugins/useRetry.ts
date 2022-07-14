@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import { definePlugin } from "../definePlugin";
+import { tryOnUnmounted } from "@har/use";
 export default definePlugin((instance, { retryCount, retryInterval }) => {
   if (!retryCount) {
     return {};
@@ -13,6 +14,7 @@ export default definePlugin((instance, { retryCount, retryInterval }) => {
       timerRef.value = undefined;
     }
   };
+  tryOnUnmounted(stopRetry);
   return {
     onBefore() {
       if (!triggerByRetry.value) {

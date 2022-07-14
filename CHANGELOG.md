@@ -1,5 +1,12 @@
 
 
+## [2.3.6](https://git.huianrong.com/frontend/har-use/compare/2.3.5...2.3.6) (2022-07-13)
+
+
+### Bug Fixes
+
+* **useStorage:** 无法设置null问题 ([ec62833](https://git.huianrong.com/frontend/har-use/commits/ec62833c7d1caeb31e184109efae048535262b16))
+
 ## [2.3.5](https://git.huianrong.com/frontend/har-use/compare/2.3.4...2.3.5) (2022-07-13)
 
 

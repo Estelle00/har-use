@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { createPageVisibility } from "@har/use";
+import { createPageVisibility, tryOnUnmounted } from "@har/use";
 import { EventBusOff, useEventBus } from "@har/use";
 import { definePlugin } from "../definePlugin";
 const { on, trigger } = useEventBus();
@@ -17,6 +17,7 @@ export default definePlugin(
       }
       off.value?.();
     };
+    tryOnUnmounted(stopPolling);
     const visible = createPageVisibility((val) => {
       if (val) trigger();
     });
