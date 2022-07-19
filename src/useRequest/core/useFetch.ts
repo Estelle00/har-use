@@ -25,7 +25,7 @@ export default function useFetch<TData, TParams extends unknown[]>(
   const loading = ref(!options.manual && (options?.ready?.value ?? true));
   const params = ref() as Ref<TParams>;
   const data = shallowRef<TData>();
-  const error = shallowRef(undefined);
+  const error = shallowRef<Error>();
   const setState = useState<TData, TParams>({
     loading,
     params,
