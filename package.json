@@ -1,6 +1,6 @@
 {
   "name": "@har/use",
-  "version": "2.3.7",
+  "version": "2.3.8",
   "description": "",
   "main": "./dist/lib/index.js",
   "module": "./dist/es/index.js",

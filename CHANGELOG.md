@@ -1,5 +1,14 @@
 
 
+## [2.3.8](https://git.huianrong.com/frontend/har-use/compare/2.3.5...2.3.8) (2022-07-19)
+
+
+### Bug Fixes
+
+* **useRequest:** 定时任务组件卸载未停止问题 ([db05180](https://git.huianrong.com/frontend/har-use/commits/db051806d88424337a9aeba6ebc241dc6567a4c3))
+* **useRequest:** Error ts 错误 ([e1843e7](https://git.huianrong.com/frontend/har-use/commits/e1843e7119f22409646b14563b22634c7406224e))
+* **useStorage:** 无法设置null问题 ([ec62833](https://git.huianrong.com/frontend/har-use/commits/ec62833c7d1caeb31e184109efae048535262b16))
+
 ## [2.3.6](https://git.huianrong.com/frontend/har-use/compare/2.3.5...2.3.6) (2022-07-13)
 
 
